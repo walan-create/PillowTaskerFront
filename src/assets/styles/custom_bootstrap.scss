@@ -1,0 +1,115 @@
+//--------------------------------------------------------
+// 1. Primero importa solo funciones 
+@import "../../../node_modules/bootstrap/scss/functions";
+//--------------------------------------------------------
+
+// 2. Sobrescribe variables antes de importar variables
+$brown-500: #6B3F28 !default;
+$brown-400: #9E672F !default;
+$brown-300: #D5B36F !default;
+$brown-200: #E5D2A3 !default;
+$brown-100: #F1E8D0 !default;
+
+$primary:   $brown-500; // Cambia el color primary
+$secondary: $brown-400; // Cambia el color secondary
+$tertiary:  $brown-300;
+
+// Sobrescribir el color del texto de los botones
+.btn-tertiary {
+  color: #ffffff !important;
+}
+
+//--------------------------------------------------------
+// 3. Importar variables de Bootstrap
+@import "../../../node_modules/bootstrap/scss/variables";
+//--------------------------------------------------------
+
+// 4. Sobrescribir el mapa $theme-colors para incluir colores personalizados
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "tertiary":   $tertiary,
+  "light-brown":$brown-200,
+  "veige":      $brown-100,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);
+
+//--------------------------------------------------------
+// 5. Opciones Personalizadas
+//--------------------------------------------------------
+
+//Fuentes
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lobster&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+$lobster-font-family: 'Lobster', serif !default;
+$font-family-lato: 'Lato', serif !default; // Cambiar fuente a roboto
+$font-family-base: $font-family-lato; // Cambiar fuente base a roboto
+
+$font-size-base:              18px; // Assumes the browser default, typically `16px`
+$h1-font-size:                $font-size-base * 2; //36px
+$h2-font-size:                $font-size-base * 32/18; //32px
+$h3-font-size:                $font-size-base * 30/18; //30px
+$h4-font-size:                $font-size-base * 24/18; //24px
+$h5-font-size:                $font-size-base * 20/18; //20px
+$h6-font-size:                $font-size-base; //16px
+$small-font-size:             .875em !default;
+$headings-font-weight:        bold;
+
+.bg-card-trs{
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+.logo-text {
+  font-size: 36px; /* Tamaño de fuente */
+  color: $brown-500; /* Color de texto */
+  font-family: $lobster-font-family; /* Tipografía */
+  text-decoration: none; /* Quitar subrayado */
+  font-weight: 400;
+}
+.text-primary {
+  color: $primary;
+}
+
+.text-secondary {
+  color: rgba($secondary, 0.6); /* 60% opaco */
+}
+
+.text-small {
+  color: $tertiary;
+  opacity: 0.8; /* 80% opaco */
+}
+
+
+//Fondos personalizados
+.bg-pasillo {
+  background-image: url('../images/pasillo.jpg'); /* Reemplaza con la ruta de tu imagen */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen en el contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  position: relative;
+}
+
+.overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(225, 226, 229, 0.4) 0%, 
+    rgba(225, 226, 229, 0.7) 50%, 
+    rgba(225, 226, 229, 1) 100%
+  );
+  pointer-events: none; /* Permite interactuar con el contenido debajo */
+}
+
+//--------------------------------------------------------
+// 6. Importar Bootstrap
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+//--------------------------------------------------------
