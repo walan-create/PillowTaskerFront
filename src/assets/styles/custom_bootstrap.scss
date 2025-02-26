@@ -92,6 +92,10 @@ $headings-font-weight:        bold;
   color: $tertiary;
   opacity: 0.8; /* 80% opaco */
 }
+
+.board-num {
+  font-size: 60px;
+}
 //--------------------------------------------------------
 //Fondos personalizados
 .bg-corridor {
@@ -103,6 +107,13 @@ $headings-font-weight:        bold;
 }
 .bg-reception {
   background-image: url('../images/reception.jpg'); /* Reemplaza con la ruta de tu imagen */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen en el contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  position: relative;
+}
+.bg-room {
+  background-image: url('../images/room.jpg'); /* Reemplaza con la ruta de tu imagen */
   background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
   background-position: center; /* Centra la imagen en el contenedor */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -124,6 +135,19 @@ $headings-font-weight:        bold;
 
 .hover-color-transition:hover {
   background-color: $brown-200 !important; /* Cambia este color al que prefieras */
+}
+
+//--------------------------------------------------------
+//Tabla personalizada
+
+.table th {
+ //Nada
+}
+.table td{
+  white-space: nowrap; /* Mantiene el texto en una sola línea */
+  overflow: hidden; /* Oculta el texto que se desborda */
+  text-overflow: ellipsis; /* Agrega los "..." cuando el texto es demasiado largo */
+  max-width: 10px; /* Ajusta según el ancho que quieras permitir */
 }
 
 //--------------------------------------------------------
