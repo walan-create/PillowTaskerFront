@@ -36,7 +36,8 @@ $theme-colors: (
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "dark":       $dark
+  "dark":       $dark,
+  "blue":       $blue,
 );
 
 //--------------------------------------------------------
@@ -60,6 +61,9 @@ $h5-font-size:                $font-size-base * 20/18; //20px
 $h6-font-size:                $font-size-base; //16px
 $small-font-size:             .875em !default;
 $headings-font-weight:        bold;
+
+
+//Variables personalizadas
 
 .bg-card-trs{
   background-color: rgba(255, 255, 255, 0.8) !important;
@@ -88,17 +92,22 @@ $headings-font-weight:        bold;
   color: $tertiary;
   opacity: 0.8; /* 80% opaco */
 }
-
-
+//--------------------------------------------------------
 //Fondos personalizados
-.bg-pasillo {
-  background-image: url('../images/pasillo.jpg'); /* Reemplaza con la ruta de tu imagen */
+.bg-corridor {
+  background-image: url('../images/corridor.jpg'); /* Reemplaza con la ruta de tu imagen */
   background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
   background-position: center; /* Centra la imagen en el contenedor */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   position: relative;
 }
-
+.bg-reception {
+  background-image: url('../images/reception.jpg'); /* Reemplaza con la ruta de tu imagen */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen en el contenedor */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  position: relative;
+}
 .overlay {
   background: linear-gradient(
     to bottom,
@@ -106,7 +115,15 @@ $headings-font-weight:        bold;
     rgba(225, 226, 229, 0.7) 50%, 
     rgba(225, 226, 229, 1) 100%
   );
-  pointer-events: none; /* Permite interactuar con el contenido debajo */
+}
+//--------------------------------------------------------
+
+.hover-color-transition {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.hover-color-transition:hover {
+  background-color: $brown-200 !important; /* Cambia este color al que prefieras */
 }
 
 //--------------------------------------------------------
