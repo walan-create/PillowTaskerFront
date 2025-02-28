@@ -30,7 +30,7 @@ $theme-colors: (
   "secondary":  $secondary,
   "tertiary":   $tertiary,
   "light-brown":$brown-200,
-  "veige":      $brown-100,
+  "beige":      $brown-100,
   "success":    $success,
   "info":       $info,
   "warning":    $warning,
@@ -149,6 +149,45 @@ $headings-font-weight:        bold;
   text-overflow: ellipsis; /* Agrega los "..." cuando el texto es demasiado largo */
   max-width: 10px; /* Ajusta según el ancho que quieras permitir */
 }
+
+
+
+
+
+.custom-input {
+  background-color: #f5e8d8;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.custom-button {
+  background-color: #a36a3f;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.custom-button:hover {
+  background-color: #8b5732;
+}
+
+.modal-content {
+  border-radius: 10px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-close {
+  background-color: transparent;
+  border: none;
+  font-size: 1.2rem;
+}
+
 
 //--------------------------------------------------------
 // 6. Importar Bootstrap

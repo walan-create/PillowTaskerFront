@@ -19,11 +19,10 @@
         <div class="align-items-end d-none d-sm-flex flex-column text-primary">
           <small class="mb-0">Nombre Usuario</small>
           <small class="mb-0">example gmail.com</small>
-          <small class="mb-0">Nombre Hotel</small>
         </div>
     
         <!-- Contenido del Desplegable -->
-        <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" c>
           
           <!-- Encabezado del Desplegable -->
           <div class="offcanvas-header align-items-center px-4" style="height: 90px;">
@@ -39,30 +38,37 @@
            <hr class="my-0 border border-white border-1 opacity-50">
 
           <!-- Cuerpo del desplegable -->
-          <div class="offcanvas-body px-4">
-  
+          <div class="offcanvas-body px-4 d-flex flex-column">
             <div class="list-unstyled" id="list-tab" role="tablist">
              
               <a [routerLink]="'/workspace/home'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                  <i class="fa-solid fa-house fs-2 m-0 ms-2" style="width: 32px;"></i>
-                 <h4 class="my-0 mx-4">Inicio</h4>
+                 <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Inicio</h4>
               </a>
 
               <a [routerLink]="'/workspace/hotels'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-hotel fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">Hoteles</h4>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Hoteles</h4>
               </a>
               
               <a [routerLink]="'/workspace/invitations'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-envelope fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">Invitaciones</h4>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Invitaciones</h4>
               </a>
               
             </div>
             
+            <a [routerLink]="'/landing'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2 mt-auto">
+              <i class="fa-solid fa-arrow-right-from-bracket fs-2 m-0 ms-2" style="width: 32px;"></i>
+              <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Cerrar Sesión</h4>
+            </a>
+
           </div>
+
+         
+          
         </div>
-        
+
       </div>
     </nav>
   </header>

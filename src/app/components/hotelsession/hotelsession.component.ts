@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { BoardComponent } from './board/board.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { RoomsComponent } from './rooms/rooms.component';
-import { ClientsComponent } from '../../clients/clients.component';
+import { ClientsComponent } from './clients/clients.component';
 import { ServicesComponent } from './services/services.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 

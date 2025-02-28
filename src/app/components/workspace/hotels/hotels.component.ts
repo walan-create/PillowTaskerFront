@@ -1,15 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';	
+import { Component } from '@angular/core';
 import { TableComponent } from "../../shared/table/table.component";
 import { ListComponent } from "../../shared/list/list.component";
-import { map } from 'rxjs';
 import { BreakpointService } from '../../../services/breakpoint.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-hotels',
   standalone: true,
   imports: [
+    RouterModule,
     TableComponent,
     ListComponent
   ],

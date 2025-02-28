@@ -23,7 +23,7 @@
         </div>
     
         <!-- Contenido del Desplegable -->
-        <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" style="width: 350px;">
           
           <!-- Encabezado del Desplegable -->
           <div class="offcanvas-header align-items-center px-4" style="height: 90px;">
@@ -39,48 +39,51 @@
            <hr class="my-0 border border-white border-1 opacity-50">
 
           <!-- Cuerpo del desplegable -->
-          <div class="offcanvas-body px-4">
-  
+          <div class="offcanvas-body px-4 d-flex flex-column">
             <div class="list-unstyled" id="list-tab" role="tablist">
-             
-              <a [routerLink]="'/hotelsession/board'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
-                 <i class="fa-solid fa-clipboard-list fs-2 m-0 ms-2" style="width: 32px;"></i>
-                 <h4 class="my-0 mx-4">Tablero</h4>
-              </a>
 
+              <a [routerLink]="'/hotelsession/board'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
+                <i class="fa-solid fa-clipboard-list fs-2 m-0 ms-2" style="width: 32px;"></i>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Tablero</h4>
+              </a>
+          
               <a [routerLink]="'/hotelsession/employees'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-user-gear fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">Empleados</h4>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Empleados</h4>
               </a>
               
               <a [routerLink]="'/hotelsession/rooms'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-bed fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">Habitaciones</h4>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Habitaciones</h4>
               </a>
-
+          
               <a [routerLink]="'/hotelsession/clients'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-users-gear fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">Clientes</h4>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Clientes</h4>
               </a>
-
+          
               <a [routerLink]="'/hotelsession/services'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
-                <i class="fa-solid fa-hand-sparkles fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">Servicios</h4>
+                <i class="fa-solid fa-hands-bubbles fs-2 m-0 ms-2" style="width: 32px;"></i>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Servicios</h4>
               </a>
-
+          
               <a [routerLink]="'/hotelsession/incidents'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-triangle-exclamation fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">Incidencias</h4>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Incidencias</h4>
               </a>
-
+          
               <a [routerLink]="'/hotelsession/reservations'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-bell-concierge fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4">reservas</h4>
+                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">reservas</h4>
               </a>
-              
             </div>
-            
+          
+            <a [routerLink]="'/workspace'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2 mt-auto">
+              <i class="fa-solid fa-door-open fs-2 m-0 ms-2" style="width: 32px;"></i>
+              <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Salir Sesión Hotel</h4>
+            </a>
           </div>
+
         </div>
         
       </div>

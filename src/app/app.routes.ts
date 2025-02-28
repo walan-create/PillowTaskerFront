@@ -7,7 +7,7 @@ import { InvitationsComponent } from './components/workspace/invitations/invitat
 import { BoardComponent } from './components/hotelsession/board/board.component';
 import { EmployeesComponent } from './components/hotelsession/employees/employees.component';
 import { RoomsComponent } from './components/hotelsession/rooms/rooms.component';
-import { ClientsComponent } from './clients/clients.component';
+import { ClientsComponent } from './components/hotelsession/clients/clients.component';
 import { ServicesComponent } from './components/hotelsession/services/services.component';
 import { IncidentsComponent } from './components/hotelsession/incidents/incidents.component';
 import { ReservationsComponent } from './components/hotelsession/reservations/reservations.component';
