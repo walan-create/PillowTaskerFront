@@ -38,6 +38,9 @@ $theme-colors: (
   "light":      $light,
   "dark":       $dark,
   "blue":       $blue,
+  "green":      $green,
+  "gray":       $gray-600,
+  "yellow":     $yellow,
 );
 
 //--------------------------------------------------------
@@ -149,8 +152,6 @@ $headings-font-weight:        bold;
   text-overflow: ellipsis; /* Agrega los "..." cuando el texto es demasiado largo */
   max-width: 10px; /* Ajusta según el ancho que quieras permitir */
 }
-
-
 
 
 

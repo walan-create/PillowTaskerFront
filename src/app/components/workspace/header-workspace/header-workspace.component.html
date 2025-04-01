@@ -22,7 +22,7 @@
         </div>
     
         <!-- Contenido del Desplegable -->
-        <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" c>
+        <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar"  #offcanvasDarkNavbar aria-labelledby="offcanvasDarkNavbarLabel" style="width: 330px;" >
           
           <!-- Encabezado del Desplegable -->
           <div class="offcanvas-header align-items-center px-4" style="height: 90px;">
@@ -43,33 +43,31 @@
              
               <a [routerLink]="'/workspace/home'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                  <i class="fa-solid fa-house fs-2 m-0 ms-2" style="width: 32px;"></i>
-                 <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Inicio</h4>
+                 <h5 class="my-0 mx-4 align-items-center justify-content-center d-flex">Inicio</h5>
               </a>
 
               <a [routerLink]="'/workspace/hotels'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-hotel fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Hoteles</h4>
+                <h5 class="my-0 mx-4 align-items-center justify-content-center d-flex">Hoteles</h5>
               </a>
               
               <a [routerLink]="'/workspace/invitations'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
                 <i class="fa-solid fa-envelope fs-2 m-0 ms-2" style="width: 32px;"></i>
-                <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Invitaciones</h4>
+                <h5 class="my-0 mx-4 align-items-center justify-content-center d-flex">Invitaciones</h5>
               </a>
               
             </div>
             
             <a [routerLink]="'/landing'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2 mt-auto">
               <i class="fa-solid fa-arrow-right-from-bracket fs-2 m-0 ms-2" style="width: 32px;"></i>
-              <h4 class="my-0 mx-4 align-items-center justify-content-center d-flex">Cerrar Sesión</h4>
+              <h5 class="my-0 mx-4 align-items-center justify-content-center d-flex">Cerrar Sesión</h5>
             </a>
 
           </div>
-
-         
-          
         </div>
 
       </div>
     </nav>
+   
   </header>
 

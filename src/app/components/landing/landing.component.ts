@@ -16,11 +16,9 @@ import { RegisterModalComponent } from '../auth-modals/register-modal/register-m
     RegisterModalComponent,
     LoginModalComponent
   ],
-    templateUrl: './landing.component.html',
-  //Si quisieramos personalizar el html del componente landing, lo hariamos de la siguiente manera:
-  //templateUrl: './landing.component.html',
+  templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
- 
+
 }

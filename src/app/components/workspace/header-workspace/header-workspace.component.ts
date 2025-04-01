@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-header-workspace',
@@ -9,5 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header-workspace.component.scss'
 })
 export class HeaderWorkspaceComponent {
+
+  
 
 }
