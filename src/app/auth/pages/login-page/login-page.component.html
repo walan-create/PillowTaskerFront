@@ -1,46 +1,75 @@
-<div class="d-flex align-items-center justify-content-center min-vh-100">
-  <div class="card shadow px-4 py-2" style="max-width: 24rem; width: 100%;">
+<div class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+  <div class="card shadow px-3 py-2" style="max-width: 24rem; width: 100%">
+
     <div class="card-header text-center border-0 bg-transparent">
       <h5 class="fw-bold">Iniciar Sesión</h5>
     </div>
+
     <div class="card-body">
-
-
-      <form
-        class="mb-3"
-        [formGroup]="loginForm"
-        (ngSubmit)="onSubmit()"
-        >
+      <form class="mb-3" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <!-- Correo -->
         <div class="mb-3">
           <label class="form-label fw-bold">Correo</label>
           <input
-          type="text"
-          class="form-control"
-          placeholder="Introduce tu correo electrónico"
-          formControlName="email"
-          required
+            type="text"
+            class="form-control custom-input bg-beige"
+            placeholder="Introduce tu correo electrónico"
+            formControlName="mail"
+            required
           />
         </div>
         <!-- Contraseña -->
         <div class="mb-3">
           <label class="form-label fw-bold">Contraseña</label>
           <div class="input-group">
-            <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Introduce tu contraseña" [(ngModel)]="password" name="password" required />
-            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
-              <i class="bi" [ngClass]="showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control custom-input bg-beige"
+              placeholder="Introduce tu contraseña"
+              formControlName="password"
+              required
+            />
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="togglePasswordVisibility()"
+            >
+              <i
+                class="bi"
+                [ngClass]="
+                  showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+                "
+              ></i>
             </button>
           </div>
         </div>
         <!-- Botón de Login -->
-        <button [routerLink]="'/workspace/home'" type="submit" class="btn btn-secondary w-100">Iniciar sesión</button>
+        <button
+          type="submit"
+          class="btn btn-secondary w-100"
+        >
+          Iniciar sesión
+        </button>
       </form>
 
       <p class="small">
         ¿No tienes una cuenta?
-        <a routerLink="/auth/register" class="text-sm text-primary">Registrate aquí</a>
+        <a routerLink="/auth/register" class="text-sm text-primary"
+          >Registrate aquí</a
+        >
       </p>
 
     </div>
+
   </div>
+
+  @if (hasError()) {
+    <div class="alert alert-danger align-items-center mt-3" role="alert">
+      <div>
+        Por favor verifique la información ingresada.
+      </div>
+    </div>
+
+    }
+
 </div>

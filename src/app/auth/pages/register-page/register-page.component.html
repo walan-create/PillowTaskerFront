@@ -1,52 +1,145 @@
-<div class="d-flex align-items-center justify-content-center min-vh-100">
-  <div class="card shadow px-4 py-2" style="max-width: 24rem; width: 100%;">
+<div class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+  <div class="card shadow px-3 py-2" style="max-width: 24rem; width: 100%">
     <div class="card-header text-center border-0 bg-transparent">
       <h5 class="fw-bold">Crea tu cuenta</h5>
     </div>
+
     <div class="card-body">
-      <form (submit)="register()">
+      <form class="mb-3" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <label class="form-label fw-bold">Datos del usuario</label>
         <!-- Nombre -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">Nombre</label>
-          <input type="text" class="form-control" placeholder="Introduce tu nuevo nombre de usuario" [(ngModel)]="name" name="name" required />
+        <div class="mb-2">
+          <input
+            type="text"
+            class="form-control custom-input bg-beige"
+            placeholder="Nombre"
+            formControlName="name"
+            required
+          />
+        </div>
+        <!-- Surname1 -->
+        <div class="mb-2">
+          <input
+            type="text"
+            class="form-control custom-input bg-beige"
+            placeholder="Primer Apellido"
+            formControlName="surname1"
+            required
+          />
+        </div>
+        <!-- Surname2 -->
+        <div class="mb-2">
+          <input
+            type="text"
+            class="form-control custom-input bg-beige"
+            placeholder="Segundo Apellido"
+            formControlName="surname2"
+            required
+          />
+        </div>
+        <!-- DNI -->
+        <div class="mb-2">
+          <input
+            type="text"
+            class="form-control custom-input bg-beige"
+            placeholder="DNI"
+            formControlName="dni"
+            required
+          />
         </div>
         <!-- Correo -->
         <div class="mb-3">
-          <label class="form-label fw-bold">Correo</label>
-          <input type="email" class="form-control" placeholder="Introduce tu correo electrónico" [(ngModel)]="email" name="email" required />
+          <input
+            type="text"
+            class="form-control custom-input bg-beige"
+            placeholder="Correo electrónico"
+            formControlName="mail"
+            required
+          />
         </div>
+
         <!-- Contraseña -->
-        <div class="mb-3">
+        <div class="mb-2">
           <label class="form-label fw-bold">Contraseña</label>
           <div class="input-group">
-            <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Introduce una contraseña segura" [(ngModel)]="password" name="password" required />
-            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
-              <i class="bi" [ngClass]="showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control custom-input bg-beige"
+              placeholder="Introduce tu contraseña"
+              formControlName="password"
+              required
+            />
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="togglePasswordVisibility()"
+            >
+              <i
+                class="bi"
+                [ngClass]="
+                  showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+                "
+              ></i>
             </button>
           </div>
         </div>
         <!-- Confirmar Contraseña -->
         <div class="mb-3">
-          <label class="form-label fw-bold">Confirmar Contraseña</label>
           <div class="input-group">
-            <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" placeholder="Repite la contraseña" [(ngModel)]="confirmPassword" name="confirmPassword" required />
-            <button type="button" class="btn btn-outline-secondary" (click)="toggleConfirmPasswordVisibility()">
-              <i class="bi" [ngClass]="showConfirmPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              class="form-control custom-input bg-beige"
+              placeholder="Repite la contraseña"
+              name="confirmPassword"
+              formControlName="password2"
+              required
+            />
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="toggleConfirmPasswordVisibility()"
+            >
+              <i
+                class="bi"
+                [ngClass]="
+                  showConfirmPassword
+                    ? 'fa-solid fa-eye'
+                    : 'fa-solid fa-eye-slash'
+                "
+              ></i>
             </button>
           </div>
         </div>
+
         <!-- Checkbox -->
         <div class="form-check mb-3 small">
-          <input class="form-check-input" type="checkbox" id="privacyPolicy" [(ngModel)]="acceptPolicy" name="acceptPolicy" required />
-          <label class="form-check-label" for="privacyPolicy">Acepto la política de privacidad</label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="privacyPolicy"
+            name="acceptPolicy"
+            required
+          />
+          
         </div>
         <!-- Botón de Registro -->
         <button type="submit" class="btn btn-secondary w-100">Crear</button>
       </form>
-      <p class="small mt-3">
+
+      <p class="small">
         ¿Ya tienes una cuenta?
-        <a routerLink="/auth/login" class="text-primary">Inicia sesión aquí</a>
+        <a routerLink="/auth/login" class="text-sm text-primary"
+          >Inicia sesión aquí</a
+        >
       </p>
     </div>
   </div>
+
+  @if (hasError()) {
+  <div class="alert alert-danger align-items-center mt-3" role="alert">
+    <div>Por favor verifique la información ingresada.</div>
+  </div>
+
+  }
+
 </div>

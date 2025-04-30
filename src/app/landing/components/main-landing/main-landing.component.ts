@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'app-main-landing',
@@ -9,5 +10,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './main-landing.component.scss'
 })
 export class MainLandingComponent {
-
+  authService = inject(AuthService);
 }

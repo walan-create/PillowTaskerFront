@@ -26,7 +26,7 @@ export class LoginPageComponent {
 
   //--------------- Definición del formulario -------------------
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]], // Campo de email con validaciones: requerido y formato de email.
+    mail: ['', [Validators.required, Validators.email]], // Campo de email con validaciones: requerido y formato de email.
     password: ['', [Validators.required, Validators.minLength(6)]], // Campo de contraseña con validaciones: requerido y longitud mínima de 6 caracteres.
   });
 
@@ -46,11 +46,11 @@ export class LoginPageComponent {
     }
 
     // Extrae los valores del formulario.
-    const { email = '', password = '' } = this.loginForm.value;
+    const { mail = '', password = '' } = this.loginForm.value;
 
     // Llama al servicio de autenticación para iniciar sesión.
     this.authService
-      .login(email!, password!) // Llama al método `login` del servicio AuthService.
+      .login(mail!, password!) // Llama al método `login` del servicio AuthService.
       .subscribe((isAuthenticated) => {
         if (isAuthenticated) {
           this.router.navigateByUrl('/'); // Si la autenticación es exitosa, redirige al usuario a la página principal.

@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from '@landing/pages/landing-page/landing-page.component';
+import { NotFoundPageComponent } from './workspace/pages/not-found-page/not-found-page.component';
+import { NotAuthenticatedGuard } from '@auth/guards/not-authenticated.guard';
+import { AuthenticatedGuard } from '@auth/guards/authenticated.guard';
 
 export const routes: Routes = [
-
+  {
+    path: 'landing',
+    component: LandingPageComponent,
+  },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.routes'),
@@ -11,23 +17,22 @@ export const routes: Routes = [
       //   console.log('Hola Mundo');
       //   return false; // Si un guard devuelve falso, la ruta no se va a mostrar
       // },
+      NotAuthenticatedGuard
     ],
   },
-
   {
-    path: '',
-    component: LandingPageComponent,
+    path: 'workspace',
+    loadChildren: () => import('./workspace/workspace.routes'),
+    canMatch: [AuthenticatedGuard],
   },
+  { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Página de inicio por defecto
+  // {path: '**',component: NotFoundPageComponent,}, // Esto redirige a la pagina de not found
+  { path: '**', redirectTo: '/landing' }, // Redirección en caso de ruta no encontrada
 
 
 
 
 
-
-  // {
-  //   path: 'landing',
-  //   component: LandingComponent
-  // },
   // //Aqui estoy construyendo la ruta de un componente que tiene componentes hijo
   // {
   //   path: 'workspace',
@@ -55,6 +60,4 @@ export const routes: Routes = [
   //     { path: '**', redirectTo: '/hotelsession/board' } // Redirección en caso de ruta no encontrada
   //   ]
   // },
-  //   { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Página de inicio por defecto
-  //   { path: '**', redirectTo: '/landing' } // Redirección en caso de ruta no encontrada
 ];

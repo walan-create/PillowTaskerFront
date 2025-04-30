@@ -45,10 +45,10 @@ token = computed<string | null>(() => this._token());
 //--------------- Métodos principales -------------------
 
 // Método para iniciar sesión
-login(email: string, password: string): Observable<boolean> {
+login(mail: string, password: string): Observable<boolean> {
   return this.http
     .post<AuthResponse>(`${baseUrl}/auth/login`, {
-      email: email,
+      mail: mail,
       password: password,
     })
     .pipe(
@@ -88,7 +88,7 @@ logout() {
   this._user.set(null); // Limpia los datos del usuario
   this._token.set(null); // Limpia el token
   this._authStatus.set('not-authenticated'); // Cambia el estado a no autenticado
-  // localStorage.removeItem('token'); // Opcional: elimina el token del almacenamiento local
+  localStorage.removeItem('token'); // Opcional: elimina el token del almacenamiento local
 }
 
 //--------------- Métodos privados -------------------

@@ -1,74 +1,167 @@
-<header class="d-grid" style="height: 90px;">
-    <nav class="navbar navbar-expand-sm navbar-light sticky-top bg-white shadow">
-      <div class="container-xxl">
-    
-        <!-- Botón desplegable (Visible en Móvil) -->
-        <button class="navbar-toggler d-sm-none text-white border-0 fs-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
-          <span class="navbar-toggler-icon"></span>
+<header class="d-grid" style="height: 90px">
+  <nav class="navbar navbar-expand-sm navbar-light sticky-top bg-white shadow">
+    <div class="container-xxl">
+      <!-- Botón desplegable (Visible en Móvil) -->
+      <button
+        class="navbar-toggler d-sm-none text-white border-0 fs-1"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasDarkNavbar"
+        aria-controls="offcanvasDarkNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Logo -->
+      <div class="navbar-brand me-auto ms-3">
+        <a class="d-flex align-items-center no-decoration" href="#">
+          <img
+            src="assets/images/almohada-logo.png"
+            alt="Bootstrap"
+            width="60"
+            height="40"
+            class="me-2"
+          />
+          <h3 class="logo-text mb-0">PillowTasker</h3>
+        </a>
+      </div>
+
+      <!-- Botones de Registro e Iniciar Sesión (Visible en Escritorio) -->
+      <div class="container-fluid justify-content-end d-none d-sm-flex">
+
+        <!--  -->
+        @if (authService.authStatus() === 'authenticated') {
+        <button
+        class="btn btn-tertiary me-2 shadow-sm"
+        routerLink="/workspace"
+        >
+          Zona de Trabajo
         </button>
-        <!-- Logo -->
-        <div class="navbar-brand me-auto ms-3">
+        <button (click)="authService.logout()" class="btn btn-danger shadow-sm">
+          Salir
+        </button>
+        }
+        <!--  -->
+        @else if (authService.authStatus() === 'not-authenticated'){
+        <button
+          class="btn btn-tertiary me-2 shadow-sm"
+          type="button"
+          routerLink="/auth/login"
+        >
+          Iniciar Sesión
+        </button>
+        <button
+          class="btn btn-secondary shadow-sm"
+          type="button"
+          routerLink="/auth/register"
+        >
+          Registrarse
+        </button>
+        }
+        <!--  -->
+        @else {
+          <a class="btn">...</a>
+        }
+
+      </div>
+
+      <!-- Contenido del Desplegable -->
+      <div
+        class="offcanvas offcanvas-start text-bg-primary"
+        tabindex="-1"
+        id="offcanvasDarkNavbar"
+        aria-labelledby="offcanvasDarkNavbarLabel"
+      >
+        <!-- Encabezado del Desplegable -->
+        <div
+          class="offcanvas-header align-items-center px-4"
+          style="height: 90px"
+        >
           <a class="d-flex align-items-center no-decoration" href="#">
-            <img src="assets/images/almohada-logo.png" alt="Bootstrap" width="60" height="40" class="me-2">
-            <h3 class="logo-text mb-0 ">PillowTasker</h3>
+            <h3 class="logo-text text-bg-primary">PillowTasker</h3>
           </a>
+          <i
+            type="button"
+            class="fa-solid fa-circle-chevron-left fs-1 ms-auto"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></i>
         </div>
-    
-        <!-- Botones de Registro e Iniciar Sesión (Visible en Escritorio) -->
-        <form class="container-fluid justify-content-end d-none d-sm-flex  ">
-          <button class="btn btn-tertiary me-2 shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar Sesión</button>
-          <button class="btn btn-secondary shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#registerModal">Registrarse</button>
-        </form>
-    
-        <!-- Contenido del Desplegable -->
-        <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-          
-          <!-- Encabezado del Desplegable -->
-          <div class="offcanvas-header align-items-center px-4" style="height: 90px;">
-            <a class="d-flex align-items-center no-decoration" href="#">
-              <h3 class="logo-text text-bg-primary">PillowTasker</h3>
-            </a>
-            <i type="button" class="fa-solid fa-circle-chevron-left fs-1 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></i>
+
+        <!-- Línea horizontal -->
+        <hr class="my-0 border border-white border-1 opacity-50" />
+
+        <div class="offcanvas-body px-4">
+          <!-- Información del footer -->
+          <div class="d-sm-none mt-4">
+            <!-- Sección Sobre Nosotros -->
+            <h5 class="fw-bold">Sobre Nosotros</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Area de prensa</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Publicidad</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Terminos y condiciones</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Privacidad y cookies</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Aviso legal</a
+                >
+              </li>
+            </ul>
+
+            <!-- Sección Contáctanos -->
+            <h5 class="fw-bold">¿Dudas? Contáctanos</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Mis Reservas</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Ir al centro de ayuda</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Haz un ticket</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none fw-light"
+                  >Resolución de litigios</a
+                >
+              </li>
+            </ul>
           </div>
-  
-          <!-- Línea horizontal -->
-           <hr class="my-0 border border-white border-1 opacity-50">
-  
-          <div class="offcanvas-body px-4">
-            <!-- Información del footer -->
-            <div class="d-sm-none mt-4">
-              <!-- Sección Sobre Nosotros -->
-              <h5 class="fw-bold">Sobre Nosotros</h5>
-              <ul class="list-unstyled">
-                <li><a href="#" class="text-white text-decoration-none fw-light">Area de prensa</a></li>
-                <li><a href="#" class="text-white text-decoration-none fw-light">Publicidad</a></li>
-                <li><a href="#" class="text-white text-decoration-none fw-light">Terminos y condiciones</a></li>
-                <li><a href="#" class="text-white text-decoration-none fw-light">Privacidad y cookies</a></li>
-                <li><a href="#" class="text-white text-decoration-none fw-light">Aviso legal</a></li>
-              </ul>
-            
-              <!-- Sección Contáctanos -->
-              <h5 class="fw-bold">¿Dudas? Contáctanos</h5>
-              <ul class="list-unstyled">
-                <li><a href="#" class="text-white text-decoration-none fw-light">Mis Reservas</a></li>
-                <li><a href="#" class="text-white text-decoration-none fw-light">Ir al centro de ayuda</a></li>
-                <li><a href="#" class="text-white text-decoration-none fw-light">Haz un ticket</a></li>
-                <li><a href="#" class="text-white text-decoration-none fw-light">Resolución de litigios</a></li>
-              </ul>
+
+          <!-- Botones de Registro e Iniciar Sesión (Visible en Móvil) -->
+          <div class="d-sm-none text-center mt-5">
+            <div class="d-grid gap-2">
+              <button class="btn btn-lg btn-tertiary" type="button">
+                Iniciar Sesión
+              </button>
+              <button class="btn btn-lg btn-secondary" type="button">
+                Registrarse
+              </button>
             </div>
-  
-            <!-- Botones de Registro e Iniciar Sesión (Visible en Móvil) -->
-            <div class="d-sm-none text-center mt-5">
-              <div class="d-grid gap-2">
-                <button class="btn btn-lg btn-tertiary" type="button">Iniciar Sesión</button>
-                <button class="btn btn-lg btn-secondary" type="button">Registrarse</button>
-              </div>
-            </div>
-  
-            
           </div>
         </div>
       </div>
-    </nav>
-  </header>
-
+    </div>
+  </nav>
+</header>

@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'app-header-landing',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './header-landing.component.html',
-  styleUrl: './header-landing.component.scss'
 })
 export class HeaderLandingComponent {
+
+  authService = inject(AuthService);
 
 }
