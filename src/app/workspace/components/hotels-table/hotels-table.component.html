@@ -2,36 +2,59 @@
   <thead>
       <tr class="text-align-center">
           <th class="text-primary bg-veige border border-secondary">Nombre</th>
+          <th class="text-primary bg-veige border border-secondary">Dirección</th>
           <th class="text-primary bg-veige border border-secondary">Código Postal</th>
-          <th class="text-primary bg-veige border border-secondary">Dirección</th>
-          <th class="text-primary bg-veige border border-secondary">Total de empleados</th>
-          <th class="text-primary bg-veige border border-secondary">Dirección</th>
+          <th class="text-primary bg-veige border border-secondary">Propiedad</th>
+          <th class="text-primary bg-veige border border-secondary">Empleados</th>
+          <th class="text-primary bg-veige border border-secondary">Habitaciones</th>
           <th class="text-primary bg-veige border border-secondary">Acciones</th>
       </tr>
   </thead>
   <tbody>
-      <tr>
-          <td>Hotel Sol</td>
-          <td>100</td>
-          <td>Propio</td>
-          <td>28001</td>
-          <td>Calle Mayor, 1</td>
+
+    @if (hotels()) {
+      @for (hotel of hotels(); track hotel) {
+
+        <tr>
+          <td>{{ hotel.name }}</td>
+          <td>{{ hotel.postalCode }}</td>
+          <td>{{ hotel.address }}</td>
           <td>
-              <div class="d-flex justify-space-between justify-content-center gap-1">
-                  <button class="btn btn-blue d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
-                      <i class="fa-solid fa-right-to-bracket fs-5 text-white"></i>
-                  </button>
-                  <button class="btn btn-warning d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
-                      <i class="fa-solid fa-pencil fs-5 text-white"></i>
-                  </button>
-                  <button class="btn btn-danger d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
-                      <i class="fa-solid fa-trash-can fs-5"></i>
-                  </button>
-              </div>
+            @if (hotel.userId === authService.user()?.id) {
+              Propio
+            }@else{
+              Ajeno
+            }
           </td>
+          <td>{{ hotel.totalEmployees }}</td>
+          <td>{{ hotel.totalRooms }}</td>
+
+              <td>
+                <div class="d-flex justify-content-center gap-1">
+                    <button class="btn btn-blue d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                        <i class="fa-solid fa-right-to-bracket fs-5 text-white"></i>
+                    </button>
+                    @if (hotel.userId === authService.user()?.id) {
+                    <button class="btn btn-warning d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                        <i class="fa-solid fa-pencil fs-5 text-white"></i>
+                    </button>
+                    <button (click)="onDelete(hotel.id)" class="btn btn-danger d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                        <i class="fa-solid fa-trash-can fs-5"></i>
+                    </button>
+                  }
+                </div>
+            </td>
+
       </tr>
 
-
+      }
+    }
 
   </tbody>
 </table>
+@if (hotels().length === 0) {
+  <div class="alert alert-warning text-center" role="alert">
+    No hay Hoteles!
+  </div>
+}
+

@@ -3,11 +3,12 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '@environments/environment';
-import { Invitation } from '../workspace/interfaces/invitation.interface';
+import { Invitation } from '../interfaces/invitation.interface';
 import { AuthService } from '@auth/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class InvitationService {
+  
   private baseUrl = environment.baseUrl;
   private authService = inject(AuthService);
   private http = inject(HttpClient);
@@ -58,11 +59,18 @@ export class InvitationService {
     return stored ? JSON.parse(stored) : [];
   }
 
-  respondToInvitation(invitationId: number, accepted: boolean, password: string): Observable<void> {
+  respondToInvitation(
+    invitationId: number,
+    accepted: boolean,
+    password: string
+  ): Observable<void> {
     const body = { accepted, password };
 
     return this.http
-      .patch<void>(`${this.baseUrl}/users/invitations/${invitationId}/respond`, body)
+      .patch<void>(
+        `${this.baseUrl}/users/invitations/${invitationId}/respond`,
+        body
+      )
       .pipe(
         tap(() => {
           this.invitations.update((invitations) =>
@@ -75,5 +83,4 @@ export class InvitationService {
         })
       );
   }
-  
 }

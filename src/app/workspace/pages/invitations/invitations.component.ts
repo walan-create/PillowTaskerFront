@@ -1,8 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, signal, OnInit, computed } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  computed,
+} from '@angular/core';
 import { InvitationCardComponent } from '../../components/invitation-card/invitation-card.component';
 import { AuthService } from '@auth/services/auth.service';
-import { InvitationService } from '../../../services/invitation.service';
-import { Invitation } from '../../interfaces/invitation.interface';
+import { InvitationService } from '../../services/invitation.service';
 
 @Component({
   selector: 'app-invitations',
@@ -11,7 +16,6 @@ import { Invitation } from '../../interfaces/invitation.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InvitationsComponent implements OnInit {
-
   authService = inject(AuthService);
   invitationService = inject(InvitationService);
 

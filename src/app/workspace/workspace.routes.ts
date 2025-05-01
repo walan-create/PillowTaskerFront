@@ -4,6 +4,7 @@ import { HotelsComponent } from './pages/hotels/hotels.component';
 import { InvitationsComponent } from './pages/invitations/invitations.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { HomeComponent } from './pages/home/home.component';
+import { HotelPageComponent } from './pages/hotel-page/hotel-page.component';
 
 export const workspaceRoutes: Routes = [
 
@@ -23,6 +24,10 @@ export const workspaceRoutes: Routes = [
       {
         path: 'hotels',
         component: HotelsComponent,
+      },
+      {
+        path: 'hotels/:id', // Ruta dinámica para un hotel específico
+        component: HotelPageComponent,
       },
       {
         path: 'invitations',

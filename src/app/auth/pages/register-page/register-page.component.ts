@@ -70,6 +70,7 @@ export class RegisterPageComponent {
 
     // Extrae los valores del formulario y construye el objeto User.
     const user: User = {
+      id: 0,
       mail: this.registerForm.value.mail || '',
       password: this.registerForm.value.password || '',
       name: this.registerForm.value.name || '',
@@ -83,7 +84,7 @@ export class RegisterPageComponent {
       .register(user) // Llama al método `login` del servicio AuthService.
       .subscribe((isAuthenticated) => {
         if (isAuthenticated) {
-          this.router.navigateByUrl('/'); // Si la autenticación es exitosa, redirige al usuario a la página principal.
+          this.router.navigateByUrl('/workspace'); // Si la autenticación es exitosa, redirige al usuario a la página principal.
         } else {
           this.hasError.set(true); // Si falla, activa la señal de error.
           setTimeout(() => {

@@ -10,3 +10,8 @@
     }
   </div>
 </div>
+@if (invitations().length === 0) {
+  <div class="alert alert-warning text-center" role="alert">
+    No hay Invitaciones!
+  </div>
+}

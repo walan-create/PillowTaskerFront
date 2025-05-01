@@ -31,7 +31,7 @@
 
 <!-- Aqui va la tabla -->
 @if(isMobileOrTablet()) { @defer{
-<app-list></app-list>
+<hotels-list [hotels]="hotels()" />
 } } @else { @defer{
-<hotels-table/>
+<hotels-table [hotels]="hotels()"/>
 } }

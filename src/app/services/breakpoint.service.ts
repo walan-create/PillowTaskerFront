@@ -11,7 +11,7 @@ export class BreakpointService {
 
   private isMobileOrTablet$ = this.breakpointObserver
   //.observe([Breakpoints.Handset]) // Detectamos móvil y tablet (funciona mal)
-  .observe(['(max-width: 768px)']) // 📌 Definimos el breakpoint nosotros: <= 1024px es mobile/tablet
+  .observe(['(max-width: 1024px)']) // 📌 Definimos el breakpoint nosotros: <= 1024px es mobile/tablet
   .pipe(
     map(result => result.matches)
   );
