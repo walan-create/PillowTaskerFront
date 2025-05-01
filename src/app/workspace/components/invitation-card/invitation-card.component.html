@@ -1,19 +1,34 @@
 <div class="col">
   <div class="card text-primary p-3 card-body">
-      <h5 class="card-title">Federico González</h5>
-      <p class="card-subtitle mb-2 text-body-secondary">Te ha invitado a unirte a</p>
-      <div>
-          <small class="card-text text-primary bg-veige py-1 px-2 rounded-5"><b>Grand Hotel Miramar</b></small>
-      </div>
-      <form class="d-flex gap-2 mt-3 justify-content-start">
-              <button class="btn btn-sm btn-secondary d-flex justify-content-center align-items-center px-2" type="button">
-                  <i class="fa-solid fa-xmark p-0 m-0 fs-6"></i>
-                  <p class="p-0 m-0 ms-2"><b>Cancelar</b></p>
-              </button>
-              <button class="btn btn-sm btn-tertiary d-flex justify-content-center align-items-center px-2" type="button">
-                  <i class="fa-solid fa-check p-0 m-0 fs-6"></i>
-                  <p class="p-0 m-0 ms-2"><b>Aceptar</b></p>
-              </button>
-      </form>
+    <h5 class="card-title">{{ invitation().hotelName }}</h5>
+    <p class="card-subtitle mb-2 text-body-secondary">
+      Te ha invitado a unirte como:
+    </p>
+    <div class="d-flex gap-2 mt-3 justify-content-between">
+      <small class="card-text text-primary bg-veige py-1 rounded-5"
+        ><b>{{ invitation().credentialType | titlecase }}</b></small
+      >
+      <small class="card-text text-primary bg-veige py-1 rounded-5"
+        ><b>{{ invitation().shippingDate | date : "short" : "GMT" }}</b></small
+      >
+    </div>
+    <form class="d-flex gap-2 mt-3 justify-content-start">
+      <button
+        class="btn btn-sm btn-secondary d-flex justify-content-center align-items-center px-2"
+        type="button"
+        (click)="onResponse(false)"
+      >
+        <i class="fa-solid fa-xmark p-0 m-0 fs-6"></i>
+        <p class="p-0 m-0 ms-2"><b>Cancelar</b></p>
+      </button>
+      <button
+        class="btn btn-sm btn-tertiary d-flex justify-content-center align-items-center px-2"
+        type="button"
+        (click)="onResponse(true)"
+      >
+        <i class="fa-solid fa-check p-0 m-0 fs-6"></i>
+        <p class="p-0 m-0 ms-2"><b>Aceptar</b></p>
+      </button>
+    </form>
   </div>
 </div>
