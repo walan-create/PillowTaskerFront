@@ -1,0 +1,115 @@
+<div class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4">
+  <h2 class="fw-bold mb-4">Nuevo Hotel</h2>
+
+  <form class="w-100 px-3" style="max-width: 30rem;" [formGroup]="hotelForm" (ngSubmit)="onSubmit()">
+    <!-- Nombre del Hotel -->
+    <div class="mb-2">
+      <label class="form-label fw-bold">Nombre del Hotel</label>
+      <input
+        type="text"
+        class="form-control custom-input bg-beige"
+        placeholder="Ej: Villa Nueva"
+        formControlName="name"
+        autocomplete="off"
+        required
+        [class.is-invalid]="hotelForm.get('name')?.invalid && hotelForm.get('name')?.touched"
+      />
+      <form-error-label [control]="hotelForm.get('name')!"></form-error-label>
+    </div>
+
+    <div class="row">
+      <!-- Dirección -->
+      <div class="col-md-8 mb-3">
+        <label class="form-label fw-bold">Dirección</label>
+        <input
+          type="text"
+          class="form-control custom-input bg-beige"
+          placeholder="Ej: Calle Ficticia 23, Estonia"
+          formControlName="address"
+          autocomplete="off"
+          required
+          [class.is-invalid]="hotelForm.get('address')?.invalid && hotelForm.get('address')?.touched"
+        />
+        <form-error-label [control]="hotelForm.get('address')!"></form-error-label>
+      </div>
+      <!-- Código Postal -->
+      <div class="col-md-4 mb-3">
+        <label class="form-label fw-bold">Código Postal</label>
+        <input
+          type="text"
+          class="form-control custom-input bg-beige"
+          placeholder="Ej: 29638"
+          formControlName="postalCode"
+          autocomplete="off"
+          required
+          [class.is-invalid]="hotelForm.get('postalCode')?.invalid && hotelForm.get('postalCode')?.touched"
+        />
+        <form-error-label [control]="hotelForm.get('postalCode')!"></form-error-label>
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Contraseña</label>
+      <div class="input-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control custom-input bg-beige"
+          placeholder="Crea la contraseña para tu credencial"
+          formControlName="password"
+          autocomplete="new-password"
+          required
+          [class.is-invalid]="hotelForm.get('password')?.invalid && hotelForm.get('password')?.touched"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="togglePasswordVisibility()"
+        >
+          <i
+            [ngClass]="
+                showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+              "
+          ></i>
+        </button>
+      </div>
+      <form-error-label [control]="hotelForm.get('password')!"></form-error-label>
+    </div>
+
+    <!-- Confirmar Contraseña -->
+    <div class="mb-4">
+      <label class="form-label fw-bold">Confirmar Contraseña</label>
+      <div class="input-group">
+        <input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          class="form-control custom-input bg-beige"
+          placeholder="Confirma la contraseña"
+          formControlName="confirmPassword"
+          autocomplete="new-password"
+          required
+          [class.is-invalid]="hotelForm.get('confirmPassword')?.invalid && hotelForm.get('confirmPassword')?.touched"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="toggleConfirmPasswordVisibility()"
+        >
+          <i
+            class="bi"
+            [ngClass]="
+              showConfirmPassword
+                ? 'fa-solid fa-eye'
+                : 'fa-solid fa-eye-slash'
+            "
+          ></i>
+        </button>
+      </div>
+      <form-error-label [control]="hotelForm.get('confirmPassword')!"></form-error-label>
+    </div>
+
+    <!-- Botón de Crear -->
+    <button type="submit" class="btn btn-secondary w-100">Crear</button>
+  </form>
+
+  <a routerLink="/workspace/hotels" class="text-sm text-primary mt-3 small">Volver a la lista de hoteles</a>
+</div>

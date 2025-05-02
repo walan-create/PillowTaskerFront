@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { AuthService } from '@auth/services/auth.service';
 import { environment } from '@environments/environment';
 import { Hotel } from '../interfaces/hotel.interface';
+import { HotelCreateDTO } from '../interfaces/hotel-create-dto.interface';
 
 const emptyHotel: Hotel = {
   id: 0,
@@ -16,9 +17,11 @@ const emptyHotel: Hotel = {
   userId: 0,
 };
 
+const baseUrl = environment.baseUrl;
+
+
 @Injectable({ providedIn: 'root' })
 export class HotelsService {
-  private baseUrl = environment.baseUrl;
   private http = inject(HttpClient);
   private authService = inject(AuthService);
 
@@ -26,7 +29,7 @@ export class HotelsService {
 
   getHotelsByUserId(userId: number): Observable<Hotel[]> {
     return this.http
-      .get<Hotel[]>(`${this.baseUrl}/users/${userId}/hotels`)
+      .get<Hotel[]>(`${baseUrl}/users/${userId}/hotels`)
       .pipe(
         tap((hotels) => {
           this.hotels.set(hotels);
@@ -56,7 +59,7 @@ export class HotelsService {
     }
 
     // Si no está en el caché, realiza una petición HTTP
-    return this.http.get<any>(`${this.baseUrl}/hotels/${id}`).pipe(
+    return this.http.get<any>(`${baseUrl}/hotels/${id}`).pipe(
       map((response) => {
         // Transforma la respuesta al formato de la interfaz Hotel
         return {
@@ -80,8 +83,29 @@ export class HotelsService {
     );
   }
 
+  createHotel(hotelData: HotelCreateDTO): Observable<Hotel> {
+    return this.http
+      .post<Hotel>(`${baseUrl}/users/${this.authService.user()?.id}/hotels`, hotelData)
+      .pipe(tap((hotel) => this.hotels().push(hotel)));
+  }
+
+  updateHotel(id: number, hotelData: Partial<Hotel>): Observable<Hotel> {
+    return this.http.patch<Hotel>(`${baseUrl}/hotels/${id}`, hotelData).pipe(
+      tap((updatedHotel) => {
+        // Actualiza el caché local con el hotel actualizado
+        this.hotels.update((hotels) =>
+          hotels.map((hotel) => (hotel.id === id ? updatedHotel : hotel))
+        );
+      }),
+      catchError((error) => {
+        console.error('Error al actualizar el hotel:', error);
+        throw error;
+      })
+    );
+  }
+
   deleteHotel(hotelId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/hotels/${hotelId}`).pipe(
+    return this.http.delete<void>(`${baseUrl}/hotels/${hotelId}`).pipe(
       tap(() => {
         this.hotels.update((hotels) =>
           hotels.filter((hotel) => hotel.id !== hotelId)

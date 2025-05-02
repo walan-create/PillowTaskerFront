@@ -25,6 +25,11 @@ export const routes: Routes = [
     loadChildren: () => import('./workspace/workspace.routes'),
     canMatch: [AuthenticatedGuard],
   },
+  {
+    path: 'hotelsession',
+    loadChildren: () => import('./hotelsession/hotelsession.routes'),
+    canMatch: [AuthenticatedGuard],
+  },
   { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Página de inicio por defecto
   // {path: '**',component: NotFoundPageComponent,}, // Esto redirige a la pagina de not found
   { path: '**', redirectTo: '/landing' }, // Redirección en caso de ruta no encontrada

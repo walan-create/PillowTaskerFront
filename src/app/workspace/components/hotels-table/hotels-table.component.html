@@ -1,60 +1,64 @@
 <table class="table table-hover table-bordered table-striped">
   <thead>
-      <tr class="text-align-center">
-          <th class="text-primary bg-veige border border-secondary">Nombre</th>
-          <th class="text-primary bg-veige border border-secondary">Dirección</th>
-          <th class="text-primary bg-veige border border-secondary">Código Postal</th>
-          <th class="text-primary bg-veige border border-secondary">Propiedad</th>
-          <th class="text-primary bg-veige border border-secondary">Empleados</th>
-          <th class="text-primary bg-veige border border-secondary">Habitaciones</th>
-          <th class="text-primary bg-veige border border-secondary">Acciones</th>
-      </tr>
+    <tr class="text-align-center">
+      <th class="text-primary bg-veige border border-secondary">Nombre</th>
+      <th class="text-primary bg-veige border border-secondary">Dirección</th>
+      <th class="text-primary bg-veige border border-secondary">
+        Código Postal
+      </th>
+      <th class="text-primary bg-veige border border-secondary">Propiedad</th>
+      <th class="text-primary bg-veige border border-secondary">Empleados</th>
+      <th class="text-primary bg-veige border border-secondary">
+        Habitaciones
+      </th>
+      <th class="text-primary bg-veige border border-secondary">Acciones</th>
+    </tr>
   </thead>
   <tbody>
+    @if (hotels()) { @for (hotel of hotels(); track hotel) {
 
-    @if (hotels()) {
-      @for (hotel of hotels(); track hotel) {
+    <tr>
+      <td>{{ hotel.name }}</td>
+      <td>{{ hotel.postalCode }}</td>
+      <td>{{ hotel.address }}</td>
+      <td>
+        @if (hotel.userId === authService.user()?.id) { Propio }@else{ Ajeno }
+      </td>
+      <td>{{ hotel.totalEmployees }}</td>
+      <td>{{ hotel.totalRooms }}</td>
 
-        <tr>
-          <td>{{ hotel.name }}</td>
-          <td>{{ hotel.postalCode }}</td>
-          <td>{{ hotel.address }}</td>
-          <td>
-            @if (hotel.userId === authService.user()?.id) {
-              Propio
-            }@else{
-              Ajeno
-            }
-          </td>
-          <td>{{ hotel.totalEmployees }}</td>
-          <td>{{ hotel.totalRooms }}</td>
+      <td>
+        <div class="d-flex justify-content-center gap-1">
+          <button
+          [routerLink]="['/workspace/hotel-access/', hotel.id]"
+            class="btn btn-blue d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-right-to-bracket fs-5 text-white"></i>
+          </button>
+          @if (hotel.userId === authService.user()?.id) {
+          <button
+            [routerLink]="['/workspace/hotels/', hotel.id]"
+            class="btn btn-warning d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-pencil fs-5 text-white"></i>
+          </button>
+          <button
+            (click)="onDelete(hotel.id)"
+            class="btn btn-danger d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-trash-can fs-5"></i>
+          </button>
+          }
+        </div>
+      </td>
+    </tr>
 
-              <td>
-                <div class="d-flex justify-content-center gap-1">
-                    <button class="btn btn-blue d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
-                        <i class="fa-solid fa-right-to-bracket fs-5 text-white"></i>
-                    </button>
-                    @if (hotel.userId === authService.user()?.id) {
-                    <button class="btn btn-warning d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
-                        <i class="fa-solid fa-pencil fs-5 text-white"></i>
-                    </button>
-                    <button (click)="onDelete(hotel.id)" class="btn btn-danger d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
-                        <i class="fa-solid fa-trash-can fs-5"></i>
-                    </button>
-                  }
-                </div>
-            </td>
-
-      </tr>
-
-      }
-    }
-
+    } }
   </tbody>
 </table>
 @if (hotels().length === 0) {
-  <div class="alert alert-warning text-center" role="alert">
-    No hay Hoteles!
-  </div>
+<div class="alert alert-warning text-center" role="alert">No hay Hoteles!</div>
 }
-

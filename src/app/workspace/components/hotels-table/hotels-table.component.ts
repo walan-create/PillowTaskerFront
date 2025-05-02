@@ -2,10 +2,12 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { Hotel } from '../../interfaces/hotel.interface';
 import { AuthService } from '@auth/services/auth.service';
 import { HotelsService } from '../../services/hotels.service';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'hotels-table',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './hotels-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

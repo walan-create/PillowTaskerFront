@@ -4,10 +4,11 @@ import { HotelsComponent } from './pages/hotels/hotels.component';
 import { InvitationsComponent } from './pages/invitations/invitations.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { HomeComponent } from './pages/home/home.component';
-import { HotelPageComponent } from './pages/hotel-page/hotel-page.component';
+import { HotelCreatePageComponent } from './pages/hotel-create-page/hotel-create-page.component';
+import { HotelEditPageComponent } from './pages/hotel-edit-page/hotel-edit-page.component';
+import { HotelAccessPageComponent } from './pages/hotel-access-page/hotel-access-page.component';
 
 export const workspaceRoutes: Routes = [
-
   {
     path: '',
     component: WorkspaceLayoutComponent,
@@ -26,8 +27,16 @@ export const workspaceRoutes: Routes = [
         component: HotelsComponent,
       },
       {
-        path: 'hotels/:id', // Ruta dinámica para un hotel específico
-        component: HotelPageComponent,
+        path: 'hotels/create',
+        component: HotelCreatePageComponent
+      },
+      {
+        path: 'hotels/:id',
+        component: HotelEditPageComponent
+      },
+      {
+        path: 'hotel-access/:id',
+        component: HotelAccessPageComponent
       },
       {
         path: 'invitations',
@@ -42,9 +51,7 @@ export const workspaceRoutes: Routes = [
   {
     path: '**',
     redirectTo: 'home',
-  }
-
-
-]
+  },
+];
 
 export default workspaceRoutes;
