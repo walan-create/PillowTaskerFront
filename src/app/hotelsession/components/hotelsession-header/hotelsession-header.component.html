@@ -8,18 +8,18 @@
       </button>
 
       <!-- Logo -->
-      <div class="navbar-brand me-auto ms-3">
+      <div class="navbar-brand me-auto ms-3 ">
         <a [routerLink]="'/landing'" class="d-flex align-items-center no-decoration" href="#">
           <img src="assets/images/almohada-logo.png" alt="Bootstrap" width="60" height="40" class="me-2">
-          <h3 class="logo-text mb-0 ">PillowTasker</h3>
+          <h3 class="logo-text mb-0 d-none d-sm-flex">PillowTasker</h3>
         </a>
       </div>
 
       <!-- Informacion Usuario -->
-      <div class="align-items-end d-none d-sm-flex flex-column text-primary">
-        <small class="mb-0">Hotel</small>
-        <small class="mb-0">Nombre Empleado</small>
-        <small class="mb-0">Recepción</small>
+      <div class="align-items-end d-flex flex-column text-primary">
+        <p class="mb-0"><span class="badge text-bg-primary">{{hotelSessionService.hotelSession()?.hotelName}}</span></p>
+        <small class="mb-0"><span class="badge text-bg-secondary">{{hotelSessionService.hotelSession()?.userName}} {{hotelSessionService.hotelSession()?.userSurname1}}</span></small>
+        <small class="mb-0"><span class="badge text-bg-tertiary text-white">{{hotelSessionService.hotelSession()?.rol}}</span></small>
       </div>
 
       <!-- Contenido del Desplegable -->
@@ -78,7 +78,7 @@
             </a>
           </div>
 
-          <a [routerLink]="'/workspace'" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2 mt-auto">
+          <a [routerLink]="'/workspace'" (click)="hotelSessionService.logout()" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2 mt-auto">
             <i class="fa-solid fa-door-open fs-2 m-0 ms-2" style="width: 32px;"></i>
             <h5 class="my-0 mx-4 align-items-center justify-content-center d-flex">Salir Sesión Hotel</h5>
           </a>

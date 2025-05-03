@@ -1,17 +1,13 @@
 <table class="table table-hover table-bordered table-striped">
   <thead>
     <tr class="text-align-center">
-      <th class="text-primary bg-veige border border-secondary">Nombre</th>
-      <th class="text-primary bg-veige border border-secondary">Dirección</th>
-      <th class="text-primary bg-veige border border-secondary">
-        Código Postal
-      </th>
-      <th class="text-primary bg-veige border border-secondary">Propiedad</th>
-      <th class="text-primary bg-veige border border-secondary">Empleados</th>
-      <th class="text-primary bg-veige border border-secondary">
-        Habitaciones
-      </th>
-      <th class="text-primary bg-veige border border-secondary">Acciones</th>
+      <th class="text-primary bg-veige border border-secondary col-2">Nombre</th>
+      <th class="text-primary bg-veige border border-secondary col-2">Dirección</th>
+      <th class="text-primary bg-veige border border-secondary col-1">Código Postal</th>
+      <th class="text-primary bg-veige border border-secondary col-1">Propiedad</th>
+      <th class="text-primary bg-veige border border-secondary col-1">Empleados</th>
+      <th class="text-primary bg-veige border border-secondary col-1">Habitaciones</th>
+      <th class="text-primary bg-veige border border-secondary col-1">Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -19,8 +15,8 @@
 
     <tr>
       <td>{{ hotel.name }}</td>
-      <td>{{ hotel.postalCode }}</td>
       <td>{{ hotel.address }}</td>
+      <td>{{ hotel.postalCode }}</td>
       <td>
         @if (hotel.userId === authService.user()?.id) { Propio }@else{ Ajeno }
       </td>

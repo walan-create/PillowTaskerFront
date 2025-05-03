@@ -1,0 +1,105 @@
+<h2 class="text-primary">Reservas</h2>
+<hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50">
+
+
+@if (board()) {
+  <div class="row m-0 gap-3 mb-3" >
+    <div class="card w-auto">
+      <div class="card-body text-center text-primary" style="min-width: 165px;">
+        <h6 class="card-title mb-0">Clientes Hotel</h6>
+        <h1 class="card-text board-num">{{ board().board()?.totalClients }}</h1>
+        <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+        <a [routerLink]="'/hotelsession/reservations'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+      </div>
+    </div>
+
+    <div class="card w-auto">
+      <div class="card-body text-center text-primary" style="min-width: 165px;">
+        <h6 class="card-title mb-0">Entradas Hoy</h6>
+        <h1 class="card-text board-num">{{ board().board()?.checkInsToday }}</h1>
+        <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+        <a [routerLink]="'/hotelsession/reservations'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+      </div>
+    </div>
+
+    <div class="card w-auto">
+      <div class="card-body text-center text-primary" style="min-width: 165px;">
+        <h6 class="card-title mb-0">Entr. pendientes</h6>
+        <h1 class="card-text board-num">{{ board().board()?.checkInsPendingToday }}</h1>
+        <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+        <a [routerLink]="'/hotelsession/reservations'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+      </div>
+    </div>
+
+    <div class="card w-auto">
+      <div class="card-body text-center text-primary" style="min-width: 165px;">
+        <h6 class="card-title mb-0">Entr. Realizadas</h6>
+        <h1 class="card-text board-num">{{ board().board()?.checkInsDone }}</h1>
+        <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+        <a [routerLink]="'/hotelsession/reservations'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-primary">Estado Habitaciones</h2>
+  <hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50">
+
+
+<div class="row m-0 gap-3" >
+  <div class="card w-auto">
+    <div class="card-body text-center text-primary" style="min-width: 165px;">
+      <h6 class="card-title mb-0">Total</h6>
+      <h1 class="card-text board-num">{{ board().board()?.totalRooms }}</h1>
+      <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+      <a [routerLink]="'/hotelsession/rooms'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+    </div>
+  </div>
+  <div class="card w-auto">
+    <div class="card-body text-center text-primary" style="min-width: 165px;">
+      <h6 class="card-title mb-0">Disponibles</h6>
+      <h1 class="card-text board-num">{{ board().board()?.availableRooms }}</h1>
+      <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+      <a [routerLink]="'/hotelsession/rooms'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+    </div>
+  </div>
+  <div class="card w-auto">
+    <div class="card-body text-center text-primary" style="min-width: 165px;">
+      <h6 class="card-title mb-0">Ocupadas</h6>
+      <h1 class="card-text board-num">{{ board().board()?.occupiedRooms }}</h1>
+      <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+      <a [routerLink]="'/hotelsession/rooms'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+    </div>
+  </div>
+  <div class="card w-auto">
+    <div class="card-body text-center text-primary" style="min-width: 165px;">
+      <h6 class="card-title mb-0">Hab. Limpias</h6>
+      <h1 class="card-text board-num">{{ board().board()?.cleanRooms }}</h1>
+      <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+      <a [routerLink]="'/hotelsession/rooms'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+    </div>
+  </div>
+  <div class="card w-auto">
+    <div class="card-body text-center text-primary" style="min-width: 165px;">
+      <h6 class="card-title mb-0">Hab. Sucias</h6>
+      <h1 class="card-text board-num">{{ board().board()?.dirtyRooms }}</h1>
+      <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+      <a [routerLink]="'/hotelsession/rooms'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+    </div>
+  </div>
+  <div class="card w-auto">
+    <div class="card-body text-center text-primary" style="min-width: 165px;">
+      <h6 class="card-title mb-0">Mantenimiento</h6>
+      <h1 class="card-text board-num">{{ board().board()?.roomsUnderMaintenance }}</h1>
+      <hr class="mt-0 mb-3 border-2 border-primary border-1 opacity-50">
+      <a [routerLink]="'/hotelsession/rooms'" class="btn btn btn-tertiary px-3 py-1"><b>Ver</b></a>
+    </div>
+  </div>
+</div>
+
+}@else{
+  <div class="text-center bg-black">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+}

@@ -7,7 +7,6 @@ import { AuthService } from '@auth/services/auth.service';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './main-landing.component.html',
-  styleUrl: './main-landing.component.scss'
 })
 export class MainLandingComponent {
   authService = inject(AuthService);

@@ -11,14 +11,14 @@
       <div class="navbar-brand me-auto ms-3">
         <a [routerLink]="'/landing'" class="d-flex align-items-center no-decoration" href="#">
           <img src="assets/images/almohada-logo.png" alt="Bootstrap" width="60" height="40" class="me-2">
-          <h3 class="logo-text mb-0 ">PillowTasker</h3>
+          <h3 class="logo-text mb-0 d-none d-sm-flex">PillowTasker</h3>
         </a>
       </div>
 
       <!-- Informacion Usuario -->
-      <div class="align-items-end d-none d-sm-flex flex-column text-primary">
-        <small class="mb-0">{{ authService.user()?.name }} {{ authService.user()?.surname1 }} {{ authService.user()?.surname2 }}</small>
-        <small class="mb-0">{{ authService.user()?.mail }}</small>
+      <div class="align-items-end d-flex flex-column text-primary">
+        <p class="mb-0"><span class="badge text-bg-secondary">{{ authService.user()?.name }} {{ authService.user()?.surname1 }} {{ authService.user()?.surname2 }}</span></p>
+        <p class="mb-0"><span class="badge text-bg-tertiary text-white">{{ authService.user()?.mail }}</span></p>
       </div>
 
       <!-- Contenido del Desplegable -->

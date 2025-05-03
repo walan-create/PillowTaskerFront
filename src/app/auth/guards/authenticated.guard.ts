@@ -19,11 +19,8 @@ export const AuthenticatedGuard: CanMatchFn = async(
   const isAuthenticated = await firstValueFrom(authService.checkStatus());// Devuelve booleano
 
   // Si está autenticado lo dejamos entrar
-  if ( isAuthenticated ){
-    return true;
-  }
+  if ( isAuthenticated ) return true;
 
-  console.log('isAuthenticated', isAuthenticated)
   router.navigateByUrl('/'); //Si no está autenticado redirigimos a la raiz
   return false;
 }

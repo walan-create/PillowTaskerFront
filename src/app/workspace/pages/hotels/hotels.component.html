@@ -4,29 +4,23 @@
 <!-- Aqui va la cabecera de la tabla con los botones -->
 <div class="bg-white rounded-3 d-inline-block mb-3">
   <div class="d-flex px-1">
+
     <div class="p-2">
       <button
         [routerLink]="'/workspace/hotels/create'"
-        class="btn btn-success d-flex align-items-center justify-content-center"
-        style="width: 40px; height: 40px"
-      >
-        <i class="fa-solid fa-plus fs-4"></i>
-      </button>
-    </div>
-    <div
-      class="vr my-3 mx-2 bg-primary opacity-100 rounded"
-      style="width: 2px"
-    ></div>
-    <div class="p-2">
-      <button
-        [routerLink]="'/hotelsession'"
         class="btn btn-secondary d-flex align-items-center justify-content-center"
         style="height: 40px"
       >
-        <i class="fa-solid fa-share fs-4"></i>
-        <h5 class="m-0 ms-2">Entrar a Hotel</h5>
+        <i class="fa-solid fa-plus fs-4"></i>
+        <h5 class="m-0 ms-2">Crear Hotel</h5>
       </button>
     </div>
+
+    <!-- <div
+      class="vr my-3 mx-2 bg-primary opacity-100 rounded"
+      style="width: 2px"
+    ></div> -->
+
   </div>
 </div>
 
@@ -34,5 +28,5 @@
 @if(isMobileOrTablet()) { @defer{
 <hotels-list [hotels]="hotels()" />
 } } @else { @defer{
-<hotels-table [hotels]="hotels()"/>
+<hotels-table [hotels]="hotels()" />
 } }

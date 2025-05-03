@@ -24,6 +24,5 @@ export const NotAuthenticatedGuard: CanMatchFn = async(
     return false;
   }
 
-  console.log('isAuthenticated', isAuthenticated)
   return true; //Si no está autenticado le dejamos ver el login
 }

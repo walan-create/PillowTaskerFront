@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../../services/breakpoint.service';
-import { ListComponent } from '@shared/components/list/list.component';
 import { HotelsTableComponent } from '../../components/hotels-table/hotels-table.component';
 import { AuthService } from '@auth/services/auth.service';
 import { HotelsService } from '../../services/hotels.service';
