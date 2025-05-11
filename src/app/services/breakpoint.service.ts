@@ -7,6 +7,7 @@ import { map } from 'rxjs';
   providedIn: 'root'
 })
 export class BreakpointService {
+  
   private breakpointObserver = inject(BreakpointObserver);
 
   private isMobileOrTablet$ = this.breakpointObserver

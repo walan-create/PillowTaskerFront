@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 import { BoardResponse } from '../../interfaces/board-response.interface';
 import { HotelSessionService } from '../../services/hotel-session.service';
 import { BoardComponentService } from '../../services/board.service';
+import { BoardItemComponent } from '../../components/board-item/board-item.component';
 
 @Component({
   selector: 'app-board',
-  imports: [RouterLink],
+  imports: [RouterLink, BoardItemComponent],
   templateUrl: './board.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

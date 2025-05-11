@@ -14,6 +14,7 @@ const baseUrl = environment.baseUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+
   //--------------- Señales y estado reactivo -------------------
   private _authStatus = signal<AuthStatus>('checking'); // Estado de autenticación
   private _user = signal<User | null>(null); // Datos del usuario autenticado
@@ -101,6 +102,9 @@ export class AuthService {
     this._user.set(null); // Limpia los datos del usuario
     this._token.set(null); // Limpia el token
     this._authStatus.set('not-authenticated'); // Cambia el estado a no autenticado
-    localStorage.removeItem('token'); // Opcional: elimina el token del almacenamiento local
+    localStorage.clear(); // Elimina todo el contenido del localStorage
+    // localStorage.removeItem('token'); // Opcional: elimina el token del almacenamiento local
+    // localStorage.removeItem('userHotels');
+    // localStorage.removeItem('userInvitations');
   }
 }

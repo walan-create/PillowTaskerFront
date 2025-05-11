@@ -14,17 +14,17 @@
     </div>
     <form class="d-flex gap-2 mt-3 justify-content-start">
       <button
-        class="btn btn-sm btn-secondary d-flex justify-content-center align-items-center px-2"
+        class="btn btn-sm btn-secondary d-flex justify-content-center align-items-center w-50"
         type="button"
-        (click)="onResponse(false)"
+        (click)="openCancelInvitationModal()"
       >
         <i class="fa-solid fa-xmark p-0 m-0 fs-6"></i>
-        <p class="p-0 m-0 ms-2"><b>Cancelar</b></p>
+        <p class="p-0 m-0 ms-2"><b>Denegar</b></p>
       </button>
       <button
-        class="btn btn-sm btn-tertiary d-flex justify-content-center align-items-center px-2"
+        class="btn btn-sm btn-tertiary d-flex justify-content-center align-items-center w-50"
         type="button"
-        (click)="onResponse(true)"
+        (click)="openPasswordModal()"
       >
         <i class="fa-solid fa-check p-0 m-0 fs-6"></i>
         <p class="p-0 m-0 ms-2"><b>Aceptar</b></p>
@@ -32,3 +32,13 @@
     </form>
   </div>
 </div>
+
+<!-- Modal -->
+<invitation-confirm-modal
+  (passwordSubmitted)="handleAcceptInvitation ($event)"
+></invitation-confirm-modal>
+
+<reusable-modal
+  [modalText]="'¿Seguro de que quieres cancelar la invitación?'"
+  (accepted)="handleCancelInvitation()"
+></reusable-modal>
