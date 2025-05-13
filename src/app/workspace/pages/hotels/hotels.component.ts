@@ -27,14 +27,14 @@ export class HotelsComponent {
   hotels = computed(() => this.hotelsService.hotels());
 
   ngOnInit() {
-    // Cargar las invitaciones al cargar el componente
+    // Cargar los hoteles al cargar el componente
     this.loadHotels();
   }
 
   loadHotels() {
     this.hotelsService.loadUserHotels().subscribe({
       next: (hotels) => {
-        // Actualizar el signal con las invitaciones obtenidas
+        // Actualizar el signal con los hoteles obtenidos
         this.hotelsService.hotels.set(hotels);
       },
       error: (err) => {
@@ -47,3 +47,4 @@ export class HotelsComponent {
     return this.breakpointService.isMobileOrTablet;
   }
 }
+

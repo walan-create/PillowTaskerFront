@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-rooms',
+  selector: 'app-employees-invite-page',
   imports: [],
-  templateUrl: './rooms.component.html',
+  templateUrl: './employees-invite-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoomsComponent { }
+export class EmployeesInvitePageComponent { }

@@ -19,7 +19,6 @@ const emptyHotel: Hotel = {
 
 const baseUrl = environment.baseUrl;
 
-
 @Injectable({ providedIn: 'root' })
 export class HotelsService {
   private http = inject(HttpClient);

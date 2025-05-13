@@ -1,4 +1,4 @@
-<h2 class="text-primary">Hoteles</h2>
+<h2 class="text-primary">Empleados</h2>
 <hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50" />
 
 <!-- Aqui va la cabecera de la tabla con los botones -->
@@ -21,7 +21,8 @@
 
 <!-- Aqui va la tabla -->
 @if(isMobileOrTablet()) { @defer{
-<hotels-list [hotels]="hotels()" />
+<!-- <employees-list [credentials]="credentials()" /> -->
+<employees-table [credentials]="credentials()" />
 } } @else { @defer{
-<hotels-table [hotels]="hotels()" />
+<employees-table [credentials]="credentials()" />
 } }

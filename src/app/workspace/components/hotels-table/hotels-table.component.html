@@ -11,7 +11,8 @@
     </tr>
   </thead>
   <tbody>
-    @if (hotels()) { @for (hotel of hotels(); track hotel) {
+    @if (hotels()) {
+      @for (hotel of hotels(); track hotel) {
 
     <tr>
       <td>{{ hotel.name }}</td>

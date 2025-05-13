@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { HotelsessionLayoutComponent } from './layout/hotelsession-layout/hotelsession-layout.component';
 import { NotFoundPageComponent } from '../workspace/pages/not-found-page/not-found-page.component';
 import { BoardComponent } from './pages/board/board.component';
-import { RoomsComponent } from './pages/rooms/rooms.component';
+import { EmployeesPageComponent } from './employees/pages/employees-page/employees-page.component';
+import { EmployeesInvitePageComponent } from './employees/pages/employees-invite-page/employees-invite-page.component';
 
 export const hotelessionRoutes: Routes = [
   {
@@ -18,20 +19,17 @@ export const hotelessionRoutes: Routes = [
         path: 'board',
         component: BoardComponent,
       },
-      // {
-      //   path: 'rooms',
-      //   component: RoomsComponent,
-      //   children: [
-      //     {
-      //       path: ':id', // Ruta para detalles de una habitación específica
-      //       component: RoomDetailsComponent,
-      //     },
-      //     {
-      //       path: ':id/edit', // Ruta para editar una habitación específica
-      //       component: RoomEditComponent,
-      //     },
-      //   ],
-      // },
+      //Employees
+      {
+        path: 'employees',
+        component: EmployeesPageComponent,
+      },
+      {
+        path: 'employees/invite',
+        component: EmployeesInvitePageComponent,
+      },
+      //Rooms
+
       {
         path: '**',
         component: NotFoundPageComponent,

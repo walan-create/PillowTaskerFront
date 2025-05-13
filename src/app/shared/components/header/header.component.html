@@ -54,11 +54,11 @@
         @else if (authService.authStatus() === 'not-authenticated'){
           <div class="d-flex gap-2">
             <a [routerLink]="'/auth/login'" class="btn btn-tertiary d-flex py-2 px-3">
-              <i class="fa-solid fa-house fs-3 m-0 d-flex align-items-center"></i>
+              <i class="fa-solid fa-user fs-3 m-0 d-flex align-items-center"></i>
               <p class="my-0 ms-2 align-items-center d-flex"> <b>Inicar Sesión</b> </p>
             </a>
             <a [routerLink]="'/auth/register'" class="btn btn-secondary d-flex py-2 px-3">
-              <i class="fa-solid fa-arrow-right-from-bracket fs-3 m-0 d-flex align-items-center"></i>
+              <i class="fa-solid fa-pen-to-square fs-3 m-0 d-flex align-items-center"></i>
               <p class="my-0 ms-2 align-items-center d-flex"> <b>Registrarse</b> </p>
             </a>
           </div>
@@ -108,7 +108,7 @@
 
           <!-- (LANDING) Información del footer -->
           @if ( currentRoute().startsWith('/landing')) {
-            <div class="d-sm-none mt-4">
+            <div class="d-md-none mt-4">
             <!-- Sección Sobre Nosotros -->
             <h5 class="fw-bold">Sobre Nosotros</h5>
             <ul class="list-unstyled">
@@ -173,7 +173,7 @@
             <!-- Si el area del boton coincide con la ruta actual se muestra -->
             @if ( currentRoute().startsWith(button.area) ) {
               <a [routerLink]="button.routerLink" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
-                <i [class]="button.icon" class="fs-2 m-0 ms-2 d-flex align-items-center" style="width:32px;"></i>
+                <i [class]="button.icon" class="fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
                 <p class="my-0 mx-4 align-items-center justify-content-center d-flex"><b>{{ button.label }}</b> </p>
               </a>
 
@@ -181,23 +181,43 @@
             </div>
           }
 
-          <!-- Entrar y Cerrar Sesion -->
-          @if (!currentRoute().startsWith('/hotelsession') && authService.authStatus() === 'authenticated' ) {
-          <div class="d-flex flex-column mb-2 mt-auto">
+          <!-- (LANDING USUARIO NO VERIFICADO) Login y register -->
+        @if (!currentRoute().startsWith('/hotelsession') && authService.authStatus() === 'authenticated' ) {
+          <div class="d-flex flex-column mt-auto">
             @if (currentRoute().startsWith('/landing')) {
               <a [routerLink]="'/workspace'" class="btn btn-lg btn-tertiary w-100 d-flex mb-2">
-                <i class="fa-solid fa-house fs-2 m-0 ms-2 d-flex align-items-center" style="width:32px;"></i>
+                <i class="fa-solid fa-house fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
                 <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Entrar</b> </p>
               </a>
             }
 
             <a [routerLink]="'/landing'" (click)="authService.logout()" class="btn btn-lg btn-danger w-100 d-flex mb-2">
-              <i class="fa-solid fa-arrow-right-from-bracket fs-2 m-0 ms-2 d-flex align-items-center" style="width:32px;"></i>
+              <i class="fa-solid fa-arrow-right-from-bracket fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
               <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Cerrar Sesión</b> </p>
             </a>
           </div>
-          }
-          <!-- Salir Hotel -->
+        }
+        <!--  -->
+        @else if (authService.authStatus() === 'not-authenticated'){
+          <div class="d-flex flex-column mt-auto">
+            <a [routerLink]="'/auth/login'" class="btn btn-lg btn-tertiary w-100 d-flex mb-2">
+              <i class="fa-solid fa-user fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
+              <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Inicar Sesión</b> </p>
+            </a>
+            <a [routerLink]="'/auth/register'" class="btn btn-lg btn-secondary w-100 d-flex mb-2">
+              <i class="fa-solid fa-pen-to-square fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
+              <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Registrarse</b> </p>
+            </a>
+          </div>
+        }
+        <!--  -->
+        @else {
+          <a class="btn">...</a>
+        }
+
+          <!-- (LANDING-WORKSPACE USUARIO VERIFICADO) Entrar y Cerrar Sesion -->
+
+          <!-- (HOTELSESSION) Salir Hotel -->
           @if (currentRoute().startsWith('/hotelsession') ) {
             <div class="d-flex flex-column mb-2 mt-auto">
               <a [routerLink]="'/workspace'" (click)="hotelSessionService.logout()" class="btn btn-lg btn-danger w-100 d-flex mb-2">
