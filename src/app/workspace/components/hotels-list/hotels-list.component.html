@@ -41,13 +41,13 @@
           @if (hotel.userId === authService.user()?.id) { Propio }@else{ Ajeno }
         </div>
 
-        <div class="d-flex gap-2 pt-2">
+        <div class="d-flex gap-2 pt-2 w-100">
           <!-- Botón de acceso al hotel -->
           <button
             [routerLink]="['/workspace/hotel-access/', hotel.id]"
             class="btn btn-lg btn-blue"
           >
-            <i class="fa-solid fa-right-to-bracket text-white"></i>
+            <i class="fa-solid fa-arrow-right-to-bracket text-white"></i>
           </button>
 
           @if (hotel.userId === authService.user()?.id) {

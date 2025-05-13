@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HotelsessionHeaderComponent } from '../../components/hotelsession-header/hotelsession-header.component';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from '@shared/components/header/header.component';
 
 @Component({
   selector: 'hotelsession-layout',
-  imports: [HotelsessionHeaderComponent, RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './hotelsession-layout.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

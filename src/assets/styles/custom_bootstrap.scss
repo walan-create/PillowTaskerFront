@@ -1,5 +1,5 @@
 //--------------------------------------------------------
-// 1. Primero importa solo funciones 
+// 1. Primero importa solo funciones
 @import "../../../node_modules/bootstrap/scss/functions";
 //--------------------------------------------------------
 
@@ -10,9 +10,21 @@ $brown-300: #D5B36F !default;
 $brown-200: #E5D2A3 !default;
 $brown-100: #F1E8D0 !default;
 
+$custom-yellow: #f2a547 !default;
+// $custom-red:    #B84A3C !default;
+$custom-red:    #B84A3C !default;
+
+$custom-green:  #5E7C4A !default;
+$custom-blue:   #1e81b0 !default;
+
+
 $primary:   $brown-500; // Cambia el color primary
 $secondary: $brown-400; // Cambia el color secondary
 $tertiary:  $brown-300;
+$warning:  $custom-yellow;
+$danger:  $custom-red;
+$green:  $custom-green;
+$blue:  $custom-blue;
 
 // Sobrescribir el color del texto de los botones
 .btn-tertiary {
@@ -125,8 +137,8 @@ $headings-font-weight:        bold;
 .overlay {
   background: linear-gradient(
     to bottom,
-    rgba(225, 226, 229, 0.4) 0%, 
-    rgba(225, 226, 229, 0.7) 50%, 
+    rgba(225, 226, 229, 0.4) 0%,
+    rgba(225, 226, 229, 0.7) 50%,
     rgba(225, 226, 229, 1) 100%
   );
 }
