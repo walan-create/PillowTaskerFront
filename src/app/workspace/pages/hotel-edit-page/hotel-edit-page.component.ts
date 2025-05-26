@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
   signal,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -13,7 +12,6 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { Hotel } from '../../interfaces/hotel.interface';
 import { CommonModule } from '@angular/common';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
-import { HotelCreateDTO } from '../../interfaces/hotel-create-dto.interface';
 
 @Component({
   selector: 'hotel-edit-page',
@@ -27,6 +25,7 @@ import { HotelCreateDTO } from '../../interfaces/hotel-create-dto.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HotelEditPageComponent{
+  
   hotelsService = inject(HotelsService);
   activatedRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder);

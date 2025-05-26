@@ -1,5 +1,5 @@
-<header class="d-grid" style="height: 90px">
-  <nav class="navbar navbar-light sticky-top bg-white shadow">
+<header class="d-grid fixed-top custom-header" style="height: 90px">
+  <nav class="navbar navbar-light shadow">
     <div class="container-xxl">
 
       <!-- Botón desplegable (Visible en Móvil) -->
@@ -63,10 +63,7 @@
             </a>
           </div>
         }
-        <!--  -->
-        @else {
-          <a class="btn">...</a>
-        }
+
 
       </div>
       }
@@ -82,10 +79,10 @@
       <!-- (HOTELSESSION) Informacion HotelSession -->
       @if ( currentRoute().startsWith('/hotelsession') ) {
         <div class="align-items-end d-flex flex-column text-primary">
-        <p class="mb-0"><span class="badge text-bg-primary">{{hotelSessionService.hotelSession()?.hotelName}}</span></p>
-        <small class="mb-0"><span class="badge text-bg-secondary">{{hotelSessionService.hotelSession()?.userName}} {{hotelSessionService.hotelSession()?.userSurname1}}</span></small>
-        <small class="mb-0"><span class="badge text-bg-tertiary text-white">{{hotelSessionService.hotelSession()?.rol}}</span></small>
-      </div>
+          <small class="mb-0"><span class="badge text-bg-primary">{{hotelSessionService.hotelSession()?.hotelName}}</span></small>
+          <small class="mb-0"><span class="badge text-bg-secondary">{{hotelSessionService.hotelSession()?.userName}} {{hotelSessionService.hotelSession()?.userSurname1}}</span></small>
+          <small class="mb-0"><span class="badge text-bg-tertiary text-white">{{hotelSessionService.hotelSession()?.rol | rol}}</span></small>
+        </div>
       }
 
       <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar"  #offcanvasDarkNavbar aria-labelledby="offcanvasDarkNavbarLabel" style="width: 330px;" >
@@ -209,10 +206,6 @@
               <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Registrarse</b> </p>
             </a>
           </div>
-        }
-        <!--  -->
-        @else {
-          <a class="btn">...</a>
         }
 
           <!-- (LANDING-WORKSPACE USUARIO VERIFICADO) Entrar y Cerrar Sesion -->

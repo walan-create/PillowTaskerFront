@@ -1,0 +1,64 @@
+<div
+  class="d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-3 mb-3"
+>
+  <!-- Busqueda y orden -->
+  <div
+    class="bg-white rounded-3 p-2 d-flex flex-column flex-md-row align-items-center gap-3"
+    style="min-width: 0"
+  >
+    <!-- Buscador -->
+    <div class="input-group flex-nowrap" style="max-width: 300px">
+      <span class="input-group-text">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        [placeholder]="searchPlaceholder()"
+        [value]="searchText()"
+        (input)="onSearchTextInput($event)"
+      />
+    </div>
+
+    <!-- Ordenar -->
+    @if (orderFields().length) {
+    <div class="d-flex gap-2 align-items-center">
+      <label for="orderBy" class="mb-0">Ordenar:</label>
+      <select
+        id="orderBy"
+        class="form-select w-auto"
+        [value]="orderBy()"
+        (change)="onOrderByChange($event)"
+      >
+        @for (field of orderFields(); track $index) {
+        <option [value]="field.key">{{ field.label }}</option>
+        }
+      </select>
+      <select
+        class="form-select w-auto"
+        [value]="orderDirection()"
+        (change)="onOrderDirectionChange($event)"
+      >
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
+      </select>
+    </div>
+    }
+  </div>
+
+  <!-- Botón Crear -->
+  @if (showCreateButton()) {
+  <div class="d-flex align-items-center justify-content-start">
+    <div class="bg-white rounded-3 p-2">
+      <button
+        [routerLink]="createButtonLink()"
+        class="btn btn-green d-flex align-items-center justify-content-center"
+        style="height: 40px"
+      >
+        <i class="fa-solid fa-plus fs-5"></i>
+        <span class="m-0 p-0 ms-2"  style="margin: 0; display: inline-block;"><b>{{ createButtonText() }}</b></span>
+      </button>
+    </div>
+  </div>
+  }
+</div>

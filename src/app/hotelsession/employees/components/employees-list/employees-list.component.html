@@ -1,1 +1,53 @@
-<p>employees-list works!</p>,
+<div class="card-container">
+  @if (credentials()) { @for (employee of credentials(); track employee.id) {
+    <div class="card border mb-2 p-2 position-relative">
+      <button
+        class="btn w-100 text-start d-flex align-items-center position-absolute"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#employee-' + employee.id"
+        (click)="toggleCollapse(employee.id)"
+        style="z-index:2;"
+      >
+        @if (isCredentialOpen(employee.id)) {
+          <i class="fa-solid fa-chevron-down me-2 text-primary"></i>
+        } @else {
+          <i class="fa-solid fa-chevron-right me-2 text-primary"></i>
+        }
+      </button>
+
+      <div class="py-0 ms-5">
+        <div class="row">
+          <div class="col-5 fw-bold">Nombre</div>
+          <div class="col-7">{{ employee.name }} {{ employee.surname1 }} {{ employee.surname2 }}</div>
+        </div>
+      </div>
+
+      <div [attr.id]="'employee-' + employee.id" class="collapse py-0 ms-5">
+        <div class="row">
+          <div class="col-5 fw-bold">DNI</div>
+          <div class="col-7">{{ employee.dni }}</div>
+
+          <div class="col-5 fw-bold">Rol</div>
+          <div class="col-7">{{ employee.rol | rol }}</div>
+        </div>
+        <div class="d-flex gap-2 pt-2 w-100">
+          <!-- Botón de edición -->
+          <button
+            [routerLink]="['/hotelsession/employees/', employee.id]"
+            class="btn btn-lg btn-warning"
+          >
+            <i class="fa-solid fa-pencil text-white"></i>
+          </button>
+          <!-- Botón de eliminación -->
+          <button (click)="openDeleteCredentialModal(employee.id)" type="button" class="btn btn-lg btn-danger">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  } }
+</div>
+<reusable-modal
+  [modalText]="'¿Deseas eliminar el empleado de forma permanente?'"
+  (accepted)="handleDeleteCredential()"
+></reusable-modal>

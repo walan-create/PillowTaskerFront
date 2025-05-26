@@ -5,11 +5,12 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { Invitation } from '../interfaces/invitation.interface';
 import { AuthService } from '@auth/services/auth.service';
+import { SendInvitationInterface } from '../../hotelsession/employees/interfaces/send-invitation.interface';
+
+const baseUrl = environment.baseUrl;
 
 @Injectable({ providedIn: 'root' })
 export class InvitationService {
-  
-  private baseUrl = environment.baseUrl;
   private authService = inject(AuthService);
   private http = inject(HttpClient);
 
@@ -17,7 +18,7 @@ export class InvitationService {
 
   getInvitationsByEmail(mail: string): Observable<Invitation[]> {
     return this.http
-      .get<any[]>(`${this.baseUrl}/users/invitations/mail/${mail}`)
+      .get<any[]>(`${baseUrl}/users/invitations/mail/${mail}`)
       .pipe(
         map((response) =>
           response
@@ -59,6 +60,10 @@ export class InvitationService {
     return stored ? JSON.parse(stored) : [];
   }
 
+  sendInvitation(hotelId: number, data: SendInvitationInterface) {
+    return this.http.post(`${baseUrl}/hotels/${hotelId}/invitations`, data);
+  }
+
   respondToInvitation(
     invitationId: number,
     accepted: boolean,
@@ -67,10 +72,7 @@ export class InvitationService {
     const body = { accepted, password };
 
     return this.http
-      .patch<void>(
-        `${this.baseUrl}/users/invitations/${invitationId}/respond`,
-        body
-      )
+      .patch<void>(`${baseUrl}/users/invitations/${invitationId}/respond`, body)
       .pipe(
         tap(() => {
           this.invitations.update((invitations) =>

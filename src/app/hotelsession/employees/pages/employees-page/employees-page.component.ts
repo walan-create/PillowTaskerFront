@@ -9,10 +9,11 @@ import { BreakpointService } from '../../../../services/breakpoint.service';
 import { CredentialsService } from '../../services/credentials.service';
 import { AuthService } from '@auth/services/auth.service';
 import { EmployeesTableComponent } from '../../components/employees-table/employees-table.component';
+import { EmployeesListComponent } from "../../components/employees-list/employees-list.component";
 
 @Component({
   selector: 'app-employees-page',
-  imports: [RouterLink, EmployeesTableComponent],
+  imports: [RouterLink, EmployeesTableComponent, EmployeesListComponent],
   templateUrl: './employees-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -15,6 +15,7 @@ export class HotelSessionService {
   private http = inject(HttpClient);
 
   //--------------- Señales y estado reactivo -------------------
+  
   // Datos del hotel se van llenando poco a poco segun se vayan construyendo los componentes
   private _hotelSession = signal<HotelSession | null>(null);
   // Señal para saber si la sesion de un hotel está activa
@@ -22,6 +23,7 @@ export class HotelSessionService {
   // Señal de la credencial activa
 
 //--------------- Recursos y computados -------------------
+
   // Recurso para verificar el estado de la sesión del hotel al montar el servicio
   checkHotelSessionResource = rxResource({
     loader: () => this.checkHotelSession(),

@@ -4,24 +4,28 @@ import {
   inject,
   input,
   signal,
+  ViewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { Credential } from '../../interfaces/credential.interface';
 import { CredentialsService } from '../../services/credentials.service';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
+import { RouterLink } from '@angular/router';
+import { RolPipe } from '../../../../shared/pipes/rol.pipe';
 
 @Component({
   selector: 'employees-table',
-  imports: [RouterLink, ReusableModalComponent],
+  imports: [ReusableModalComponent, RouterLink, RolPipe],
   templateUrl: './employees-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeesTableComponent {
-
   credentialsService = inject(CredentialsService);
 
   credentials = input.required<Credential[]>();
   credentialIdToDelete = signal<number>(0);
+
+  @ViewChild(ReusableModalComponent)
+  reusableModal!: ReusableModalComponent;
 
   openDeleteCredentialModal(credentialId: number) {
     const modalElement = document.getElementById('reusableModal');
@@ -40,7 +44,7 @@ export class EmployeesTableComponent {
           console.log('Credencial eliminado exitosamente');
         },
         error: (err) => {
-          console.log('Credencial al eliminar el hotel', err);
+          console.log('Error al eliminar el empleado', err);
         },
       });
   }

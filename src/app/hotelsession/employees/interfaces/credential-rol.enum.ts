@@ -1,0 +1,6 @@
+export enum CredentialTypeEnum {
+  RECEPTIONIST = 'RECEPTIONIST',
+  CLEANER = 'CLEANER',
+  MAINTENANCE = 'MAINTENANCE',
+  ADMIN = 'ADMIN'
+}

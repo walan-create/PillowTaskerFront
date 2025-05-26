@@ -1,0 +1,106 @@
+<div
+  class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4"
+>
+  <h2 class="fw-bold mb-5">Invitar al Hotel</h2>
+
+  <form
+    class="w-100 px-3"
+    style="max-width: 30rem"
+    [formGroup]="inviteForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="mb-2">
+      <!-- Mail -->
+      <label class="form-label fw-bold">Mail del usuario a invitar</label>
+      <input
+        type="text"
+        class="form-control custom-input bg-beige"
+        placeholder="Ejm: federico@gmail.com"
+        formControlName="mail"
+        autocomplete="off"
+        required
+      />
+      <!-- <form-error-label [control]="inviteForm.get('mail')!"></form-error-label> -->
+    </div>
+
+    <!-- Rol -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Rol</label>
+      <div class="dropdown w-100">
+        <button
+          class="btn btn-beige dropdown-toggle w-100 text-start"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{
+            inviteForm.value.rol
+              ? (inviteForm.value.rol | rol)
+              : "Selecciona un rol"
+          }}
+        </button>
+        <ul class="dropdown-menu w-100">
+          <li>
+            <span class="dropdown-header" href="#">Selecciona un rol</span>
+          </li>
+          @for (type of credentialTypes; track $index) {
+          <li>
+            <button
+              class="dropdown-item btn btn-secondary"
+              href="#"
+              (click)="
+                inviteForm.get('rol')?.setValue(type); $event.preventDefault()
+              "
+              [ngClass]="{
+                'bg-secondary text-white': inviteForm.value.rol === type
+              }"
+            >
+              {{
+                type === "RECEPTIONIST"
+                  ? "Recepcionista"
+                  : type === "CLEANER"
+                  ? "Limpieza"
+                  : type === "MAINTENANCE"
+                  ? "Mantenimiento"
+                  : type === "ADMIN"
+                  ? "Administrador"
+                  : type
+              }}
+            </button>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Botón de Invitar -->
+    <button
+      type="submit"
+      class="btn btn-secondary w-100"
+      [disabled]="!inviteForm.valid"
+    >
+      Invitar
+    </button>
+  </form>
+
+  <a
+    routerLink="/hotelsession/employees"
+    class="text-sm text-primary mt-3 small"
+    >Volver a la lista de empleados</a
+  >
+
+  @if (wasInvited()) {
+  <div
+    class="alert alert-success mx-3 position-fixed my-4 py-4 shadow"
+    role="alert"
+  >
+    <span>Invitación enviada correctamente</span>
+  </div>
+  }
+
+    @if (globalError()) {
+  <div class="alert alert-danger mt-3" role="alert">
+    {{ globalError() }}
+  </div>
+  }
+</div>

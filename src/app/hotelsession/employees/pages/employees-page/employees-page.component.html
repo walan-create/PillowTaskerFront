@@ -7,12 +7,12 @@
 
     <div class="p-2">
       <button
-        [routerLink]="'/workspace/hotels/create'"
+        [routerLink]="'/hotelsession/employees/invite'"
         class="btn btn-green d-flex align-items-center justify-content-center"
         style="height: 40px"
       >
         <i class="fa-solid fa-plus fs-4"></i>
-        <h5 class="m-0 ms-2">Crear Hotel</h5>
+        <h5 class="m-0 ms-2">Invitar Usuario</h5>
       </button>
     </div>
 
@@ -22,7 +22,7 @@
 <!-- Aqui va la tabla -->
 @if(isMobileOrTablet()) { @defer{
 <!-- <employees-list [credentials]="credentials()" /> -->
-<employees-table [credentials]="credentials()" />
+<employees-list [credentials]="credentials()" />
 } } @else { @defer{
 <employees-table [credentials]="credentials()" />
 } }

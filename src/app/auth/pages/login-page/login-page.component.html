@@ -1,6 +1,7 @@
-<div class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+<div
+  class="d-flex flex-column align-items-center justify-content-center min-vh-100"
+>
   <div class="card shadow px-3 py-2" style="max-width: 24rem; width: 100%">
-
     <div class="card-header text-center border-0 bg-transparent">
       <h5 class="fw-bold">Iniciar Sesión</h5>
     </div>
@@ -44,10 +45,7 @@
           </div>
         </div>
         <!-- Botón de Login -->
-        <button
-          type="submit"
-          class="btn btn-secondary w-100"
-        >
+        <button type="submit" class="btn btn-secondary w-100">
           Iniciar sesión
         </button>
       </form>
@@ -58,18 +56,18 @@
           >Registrate aquí</a
         >
       </p>
-
     </div>
-
   </div>
 
   @if (hasError()) {
-    <div class="alert alert-danger align-items-center mt-3" role="alert">
-      <div>
-        Por favor verifique la información ingresada.
-      </div>
-    </div>
+  <div class="alert alert-danger align-items-center mt-3" role="alert">
+    <div>Por favor verifique la información ingresada.</div>
+  </div>
 
-    }
-
+  }
+  <!-- @if (globalError()) {
+  <div class="alert alert-danger mt-3" role="alert">
+    {{ globalError() }}
+  </div>
+  } -->
 </div>

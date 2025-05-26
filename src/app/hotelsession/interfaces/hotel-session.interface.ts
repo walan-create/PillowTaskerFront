@@ -1,6 +1,6 @@
 import { Client } from "./client.interface";
 import { Incident } from "./incident.interface";
-import { Room } from "./room.interface";
+import { Room } from "../rooms/interfaces/room.interface";
 
 // models/hotel-session.model.ts
 export interface HotelSession {

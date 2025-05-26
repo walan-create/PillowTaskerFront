@@ -1,0 +1,109 @@
+<div
+  class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4"
+>
+  <h2 class="fw-bold mb-4">Editar Empleado</h2>
+
+  <form
+    class="w-100 px-3"
+    style="max-width: 30rem"
+    [formGroup]="roleForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label class="form-label fw-bold mb-0">Nombre</label>
+      <div class="form-control-plaintext mb-0">
+        <p>
+          {{ credentialResource.value()?.name }}
+          {{ credentialResource.value()?.surname1 }}
+          {{ credentialResource.value()?.surname2 }}
+        </p>
+      </div>
+    </div>
+
+    <!-- DNI -->
+    <div class="mb-3">
+      <label class="form-label fw-bold mb-0">DNI</label>
+      <div class="form-control-plaintext mb-0">
+        <p>{{ credentialResource.value()?.dni }}</p>
+      </div>
+    </div>
+
+    <!-- Rol -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Rol</label>
+      <div class="dropdown w-100">
+        <button
+          class="btn btn-beige dropdown-toggle w-100 text-start"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{
+            roleForm.value.rol
+              ? (roleForm.value.rol | rol)
+              : "Selecciona un rol"
+          }}
+        </button>
+        <ul class="dropdown-menu w-100">
+          <li>
+            <span class="dropdown-header" href="#">Selecciona un rol</span>
+          </li>
+
+          @for (type of credentialTypes; track $index) {
+          <li>
+            <button
+              class="dropdown-item btn btn-secondary"
+              href="#"
+              (click)="
+                roleForm.get('rol')?.setValue(type); $event.preventDefault()
+              "
+              [ngClass]="{
+                'bg-secondary text-white': roleForm.value.rol === type
+              }"
+            >
+              {{
+                type === "RECEPTIONIST"
+                  ? "Recepcionista"
+                  : type === "CLEANER"
+                  ? "Limpieza"
+                  : type === "MAINTENANCE"
+                  ? "Mantenimiento"
+                  : type === "ADMIN"
+                  ? "Administrador"
+                  : type
+              }}
+            </button>
+          </li>
+          }
+        </ul>
+      </div>
+      <!-- Si tienes un componente de error, puedes usarlo aquí -->
+      <!-- <form-error-label [control]="roleForm.get('rol')!"></form-error-label> -->
+    </div>
+
+    <!-- Botón de Guardar -->
+    <button
+      type="submit"
+      class="btn btn-secondary w-100"
+      [disabled]="!roleForm.valid"
+    >
+      Guardar
+    </button>
+
+  </form>
+  <a
+    routerLink="/hotelsession/employees"
+    class="text-sm text-primary mt-3 small"
+    >Volver a la lista de empleados</a
+  >
+
+  @if (wasSaved()) {
+  <div
+    class="alert alert-success mx-3 position-fixed my-4 py-4 shadow"
+    role="alert"
+  >
+    <span>Rol actualizado correctamente</span>
+  </div>
+  }
+</div>

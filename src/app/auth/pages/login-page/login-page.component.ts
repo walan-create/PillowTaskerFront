@@ -5,9 +5,15 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@auth/services/auth.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-login-page',
@@ -16,13 +22,14 @@ import { AuthService } from '@auth/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent {
-
-  //--------------- Inyección de dependencias -------------------
+  //--------------- Inyección de dependencias y señales reactivas -------------------
   fb = inject(FormBuilder); // Inyecta el servicio FormBuilder para manejar formularios reactivos.
   hasError = signal<boolean>(false); // Señal para manejar el estado de error en el formulario.
   isPosting = signal<boolean>(false); // Señal para manejar el estado de carga (posting).
   router = inject(Router); // Inyecta el servicio Router para la navegación.
   authService = inject(AuthService); // Inyecta el servicio AuthService para manejar la autenticación.
+  notificationService = inject(NotificationService); //Servicio para manejo de errores
+  globalError = this.notificationService.getError();
 
   //--------------- Definición del formulario -------------------
   loginForm = this.fb.group({
@@ -64,10 +71,8 @@ export class LoginPageComponent {
       });
   }
 
-
   // Método para alternar la visibilidad de la contraseña
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
-
 }
