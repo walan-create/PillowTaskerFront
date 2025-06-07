@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
   signal,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -23,9 +22,8 @@ import { SendInvitationInterface } from '../../interfaces/send-invitation.interf
     RouterLink,
     ReactiveFormsModule,
     CommonModule,
-    RolPipe,
-    FormErrorLabelComponent,
-  ],
+    RolPipe
+],
   templateUrl: './employee-invite-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

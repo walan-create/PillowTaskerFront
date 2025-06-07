@@ -1,1 +1,187 @@
-<p>room-edit-page works!</p>,
+<div class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4">
+  <h2 class="fw-bold mb-4">Editar Habitación</h2>
+
+  <form class="w-100 px-3" style="max-width: 30rem;" [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+
+    <div class="row mb-2">
+        <!-- Codigo de Habitación -->
+    <div class="col-6">
+      <label class="form-label fw-bold">Código</label>
+      <input
+        type="text"
+        class="form-control custom-input bg-beige"
+        placeholder="Ej: 101"
+        formControlName="code"
+        autocomplete="off"
+        required
+        [class.is-invalid]="roomForm.get('code')?.invalid && roomForm.get('code')?.touched"
+      />
+      <form-error-label [control]="roomForm.get('code')!"></form-error-label>
+    </div>
+      <!-- Numero de Cuartos -->
+    <div class="col-6">
+      <label class="form-label fw-bold">Cuartos</label>
+      <input
+        type="number"
+        class="form-control custom-input bg-beige"
+        placeholder="Ej: 101"
+        formControlName="numberOfRooms"
+        autocomplete="off"
+        required
+        [class.is-invalid]="roomForm.get('numberOfRooms')?.invalid && roomForm.get('numberRoom')?.touched"
+      />
+      <form-error-label [control]="roomForm.get('numberOfRooms')!"></form-error-label>
+    </div>
+    </div>
+
+
+    <!-- Capacidad y Cocina en la misma fila -->
+    <div class="row mb-2">
+      <div class="col-6">
+        <label class="form-label fw-bold">Capacidad</label>
+        <input
+          type="number"
+          class="form-control custom-input bg-beige"
+          placeholder="Ej: 2"
+          formControlName="capacity"
+          min="1"
+          required
+          [class.is-invalid]="roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched"
+        />
+        <form-error-label [control]="roomForm.get('capacity')!"></form-error-label>
+      </div>
+      <div class="col-6 d-flex align-items-end">
+        <div>
+          <label class="form-label fw-bold">¿Tiene cocina?</label>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              formControlName="kitchen"
+              id="kitchenCheck"
+            />
+            <label class="form-check-label" for="kitchenCheck">
+              Sí
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tipo de Habitación y Estado en la misma fila -->
+    <div class="row mb-2">
+      <div class="col-6">
+        <label class="form-label fw-bold">Tipo Habitación</label>
+        <div class="dropdown w-100">
+          <button
+            class="btn btn-beige dropdown-toggle w-100 text-start"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{
+              roomForm.value.type === 'SUITE'
+                ? 'Suite'
+                : roomForm.value.type === 'ADAPTABLE'
+                ? 'Adaptable'
+                : roomForm.value.type === 'STANDAR'
+                ? 'Estándar'
+                : 'Selecciona un tipo'
+            }}
+          </button>
+
+          <ul class="dropdown-menu w-100">
+            <li>
+              <span class="dropdown-header">Selecciona un tipo</span>
+            </li>
+            @for (type of roomTypes; track $index) {
+              <li>
+                <button
+                  class="dropdown-item btn btn-secondary"
+                  (click)="roomForm.get('type')?.setValue(type); $event.preventDefault()"
+                  [ngClass]="{
+                    'bg-secondary text-white': roomForm.value.type === type
+                  }"
+                >
+                  {{
+                    type === 'SUITE'
+                      ? 'Suite'
+                      : type === 'ADAPTABLE'
+                      ? 'Adaptable'
+                      : type === 'STANDAR'
+                      ? 'Estándar'
+                      : type
+                  }}
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+        <form-error-label [control]="roomForm.get('type')!"></form-error-label>
+      </div>
+      <div class="col-6">
+        <label class="form-label fw-bold">Estado</label>
+        <div class="dropdown w-100">
+          <button
+            class="btn btn-beige dropdown-toggle w-100 text-start"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{
+              roomForm.value.state === 'AVAILABLE'
+                ? 'Disponible'
+                : roomForm.value.state === 'OCCUPIED'
+                ? 'Ocupada'
+                : roomForm.value.state === 'DIRTY'
+                ? 'Sucia'
+                : roomForm.value.state === 'MAINTENANCE'
+                ? 'Mantenimiento'
+                : 'Selecciona un estado'
+            }}
+          </button>
+          <ul class="dropdown-menu w-100">
+            <li>
+              <span class="dropdown-header">Selecciona un estado</span>
+            </li>
+            @for (state of roomStates; track $index) {
+              <li>
+                <button
+                  class="dropdown-item btn btn-secondary"
+                  (click)="roomForm.get('state')?.setValue(state); $event.preventDefault()"
+                  [ngClass]="{
+                    'bg-secondary text-white': roomForm.value.state === state
+                  }"
+                >
+                  {{
+                    state === 'AVAILABLE'
+                      ? 'Disponible'
+                      : state === 'OCCUPIED'
+                      ? 'Ocupada'
+                      : state === 'DIRTY'
+                      ? 'Sucia'
+                      : state === 'MAINTENANCE'
+                      ? 'Mantenimiento'
+                      : state
+                  }}
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+        <form-error-label [control]="roomForm.get('state')!"></form-error-label>
+      </div>
+    </div>
+
+    <!-- Botón de Guardar -->
+    <button type="submit" class="btn btn-secondary w-100">Guardar</button>
+  </form>
+
+  <a routerLink="/hotelsession/rooms" class="text-sm text-primary mt-3 small">Volver a la lista de habitaciones</a>
+
+  @if (wasSaved()) {
+    <div class="alert alert-success mx-3 position-fixed my-4 py-4 shadow" role="alert" >
+      <span>Datos Actualizados Correctamente</span>
+    </div>
+  }
+</div>

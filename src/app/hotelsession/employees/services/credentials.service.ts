@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { AuthService } from '@auth/services/auth.service';
 import { environment } from '@environments/environment';
 import { Observable, tap, catchError, of } from 'rxjs';
 import { HotelSessionService } from '../../services/hotel-session.service';
@@ -95,7 +94,6 @@ export class CredentialsService {
       id: data.id,
       rol: data.rol,
       password: data.password,
-      incidences: data.incidences ?? [],
     };
     console.log(payload);
     return this.http

@@ -14,6 +14,8 @@ import { ListToolbarComponent } from '../../../../shared/components/list-toolbar
 import { AppTableComponent } from '@shared/components/table/table.component';
 import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
+import { BreakpointService } from '../../../../services/breakpoint.service';
+import { AppListComponent } from '../../../../shared/components/list/list.component';
 
 @Component({
   selector: 'app-rooms-page',
@@ -23,28 +25,31 @@ import { ReusableModalComponent } from '@shared/components/reusable-modal/reusab
     RouterLink,
     ListToolbarComponent,
     ReusableModalComponent,
+    AppListComponent,
   ],
   templateUrl: './rooms-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomsPageComponent implements OnInit {
+  roomsService = inject(RoomsService);
+  breakpointService = inject(BreakpointService);
+
   roomColumns: AppTableColumn<Room>[] = [
-    { key: 'numberRoom', label: 'Número', headerClass: 'col-2' },
-    { key: 'capacity', label: 'Capacidad', headerClass: 'col-2' },
-    { key: 'type', label: 'Tipo', headerClass: 'col-2' },
-    { key: 'state', label: 'Estado', headerClass: 'col-2' },
+    { key: 'code', label: 'Código', headerClass: 'col-1' },
+    { key: 'numberOfRooms', label: 'Habitaciones', headerClass: 'col-1' },
+    { key: 'capacity', label: 'Capacidad', headerClass: 'col-1' },
+    { key: 'type', label: 'Tipo', headerClass: 'col-3' },
+    { key: 'state', label: 'Estado', headerClass: 'col-3' },
     {
       key: 'kitchen',
       label: 'Cocina',
-      headerClass: 'col-2',
+      headerClass: 'col-1',
       cellTemplate: (row: Room) => (row.kitchen ? 'Sí' : 'No'),
     },
   ];
 
-  roomsService = inject(RoomsService);
-
   searchText: string = '';
-  orderBy: keyof Room = 'numberRoom';
+  orderBy: keyof Room = 'numberOfRooms';
   orderDirection: 'asc' | 'desc' = 'asc';
 
   rooms = computed(() => this.roomsService.rooms());
@@ -54,6 +59,10 @@ export class RoomsPageComponent implements OnInit {
   reusableModal!: ReusableModalComponent;
 
   ngOnInit() {
+    this.loadRooms();
+  }
+
+  loadRooms(){
     this.roomsService.loadHotelRooms().subscribe({
       next: (rooms) => this.roomsService.rooms.set(rooms),
       error: (err) => console.error('Error loading rooms:', err),
@@ -84,7 +93,8 @@ export class RoomsPageComponent implements OnInit {
   handleDeleteRoom() {
     const id = this.roomIdToDelete();
     if (id !== null) {
-      this.roomsService.deleteRoom(id).subscribe({
+      this.roomsService
+      .deleteRoom(id).subscribe({
         next: () => {
           console.log('Habitación eliminada exitosamente');
         },
@@ -93,5 +103,9 @@ export class RoomsPageComponent implements OnInit {
         },
       });
     }
+  }
+
+  get isMobileOrTablet() {
+    return this.breakpointService.isMobileOrTablet;
   }
 }

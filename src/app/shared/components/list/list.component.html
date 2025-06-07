@@ -1,1 +1,67 @@
-<p>list works!</p>,
+<div class="card-container">
+  @if (data()) { @for (item of data(); track item[columns()[0].key]) {
+  <div class="card border mb-2 p-2 position-relative">
+    <button
+      class="btn w-100 text-start d-flex align-items-center position-absolute"
+      type="button"
+      (click)="toggleCollapse(item, columns()[0].key)"
+      style="z-index: 2"
+      [attr.data-bs-target]="'#item-' + sanitizeId(item[columns()[0].key])"
+      [attr.aria-expanded]="isOpen(item, columns()[0].key)"
+      [attr.aria-controls]="'item-' + sanitizeId(item[columns()[0].key])"
+    >
+      @if (isOpen(item, columns()[0].key)) {
+      <i class="fa-solid fa-chevron-down me-2 text-primary"></i>
+      } @else {
+      <i class="fa-solid fa-chevron-right me-2 text-primary"></i>
+      }
+    </button>
+
+    <div class="py-0 ms-5">
+      <div class="row">
+        <div class="col-5 fw-bold">{{ columns()[0].label }}</div>
+        <div class="col-7">
+          @if (columns()[0].cellTemplate) {
+          {{ columns()[0].cellTemplate?.(item) }}
+          } @else {
+          {{ item[columns()[0].key] }}
+          }
+        </div>
+      </div>
+    </div>
+
+    <div
+      [attr.id]="'item-' + sanitizeId(item[columns()[0].key])"
+      class="collapse py-0 ms-5"
+      [class.show]="isOpen(item, columns()[0].key)"
+    >
+      <div class="py-0">
+        <div class="row">
+          @for (col of columns().slice(1); track col.key) {
+          <div class="col-5 fw-bold">{{ col.label }}</div>
+          <div class="col-7">
+            @if (col.cellTemplate) {
+            {{ col.cellTemplate(item) }}
+            } @else {
+            {{ item[col.key] }}
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="d-flex gap-2 pt-2 w-100">
+        @if (actionsTemplate()) {
+        <ng-container
+          *ngTemplateOutlet="
+            actionsTemplate() ?? null;
+            context: { $implicit: item }
+          "
+        ></ng-container>
+        }
+      </div>
+    </div>
+  </div>
+  } } @else {
+  <div class="alert alert-warning text-center" role="alert">No hay datos</div>
+  }
+</div>

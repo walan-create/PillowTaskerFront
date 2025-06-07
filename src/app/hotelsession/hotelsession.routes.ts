@@ -8,6 +8,11 @@ import { EmployeeInvitePageComponent } from './employees/pages/employee-invite-p
 import { RoomsPageComponent } from './rooms/pages/rooms-page/rooms-page.component';
 import { RoomCreatePageComponent } from './rooms/pages/room-create-page/room-create-page.component';
 import { RoomEditPageComponent } from './rooms/pages/room-edit-page/room-edit-page.component';
+import { ClientsPageComponent } from './clients/pages/clients-page/clients-page.component';
+import { ClientCreatePageComponent } from './clients/pages/client-create-page/client-create-page.component';
+import { ClientsEditPageComponent } from './clients/pages/clients-edit-page/clients-edit-page.component';
+import { SupportCardComponent } from './supports/components/support-card/support-card.component';
+import { SupportsPageComponent } from './supports/pages/supports-page/supports-page.component';
 
 export const hotelessionRoutes: Routes = [
   {
@@ -51,6 +56,25 @@ export const hotelessionRoutes: Routes = [
         component: RoomEditPageComponent,
       },
 
+      //Clients
+      {
+        path: 'clients',
+        component: ClientsPageComponent,
+      },
+      {
+        path: 'clients/create',
+        component: ClientCreatePageComponent,
+      },
+      {
+        path: 'clients/:id',
+        component: ClientsEditPageComponent,
+      },
+
+      //Supports
+      {
+        path: 'supports',
+        component: SupportsPageComponent,
+      },
 
       {
         path: '**',

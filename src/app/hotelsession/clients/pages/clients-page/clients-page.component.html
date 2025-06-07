@@ -1,39 +1,37 @@
-<!-- Título -->
-<h2 class="text-primary">Habitaciones</h2>
+<h2 class="text-primary">Clientes</h2>
 <hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50" />
 
-<!-- Toolbar -->
 <list-toolbar
   [searchText]="searchText"
   [orderBy]="orderBy"
   [orderDirection]="orderDirection"
   [orderFields]="[
-    { key: 'code', label: 'Código' },
-    { key: 'numberOfRooms', label: 'Habitaciones' },
-    { key: 'capacity', label: 'Capacidad' },
-    { key: 'type', label: 'Tipo' },
-    { key: 'state', label: 'Estado' },
-    { key: 'kitchen', label: 'Cocina' }
+    { key: 'name', label: 'Nombre' },
+    { key: 'surname1', label: 'Apellido 1' },
+    { key: 'surname2', label: 'Apellido 2' },
+    { key: 'nif', label: 'NIF' },
+    { key: 'birthDate', label: 'Nacimiento' },
+    { key: 'nationality', label: 'Nacionalidad' },
+    { key: 'phoneNumber', label: 'Teléfono' }
   ]"
-  [searchPlaceholder]="'Buscar habitación...'"
-  [createButtonLink]="'/hotelsession/rooms/create'"
+  [searchPlaceholder]="'Buscar cliente...'"
+  [createButtonLink]="'/hotelsession/clients/create'"
   [createButtonText]="'Crear'"
   (searchTextChange)="onSearchTextChange($event)"
   (orderByChange)="onOrderByChange($event)"
   (orderDirectionChange)="onOrderDirectionChange($event)"
 />
 
-<!-- Condicional para vista de escritorio o movil -->
 @if(isMobileOrTablet()) { @defer{
 
 <app-list
-  [data]="rooms()"
-  [columns]="roomColumns"
+  [data]="clients()"
+  [columns]="clientColumns"
   [actionsTemplate]="actionsTemplate"
 >
-  <ng-template #actionsTemplate let-room>
+  <ng-template #actionsTemplate let-client>
     <button
-      [routerLink]="['/hotelsession/rooms/', room.id]"
+      [routerLink]="['/hotelsession/clients/', client.id]"
       class="btn btn-warning d-flex align-items-center justify-content-center"
       style="width: 30px; height: 30px"
       title="Editar"
@@ -41,7 +39,7 @@
       <i class="fa-solid fa-pencil fs-5 text-white"></i>
     </button>
     <button
-      (click)="openDeleteRoomModal(room.id)"
+      (click)="openDeleteClientModal(client.id)"
       class="btn btn-danger d-flex align-items-center justify-content-center"
       style="width: 30px; height: 30px"
     >
@@ -51,26 +49,26 @@
 </app-list>
 
 } } @else { @defer{
-<!-- Contenedor scrollable para la tabla -->
+
 <div class="flex-grow-1 overflow-auto">
   <app-table
-    [data]="rooms()"
-    [columns]="roomColumns"
+    [data]="clients()"
+    [columns]="clientColumns"
     [orderBy]="orderBy"
     [orderDirection]="orderDirection"
     [searchText]="searchText"
     [actionsTemplate]="actionsTemplate"
   >
-    <ng-template #actionsTemplate let-room>
+    <ng-template #actionsTemplate let-client>
       <button
-        [routerLink]="['/hotelsession/rooms/', room.id]"
+        [routerLink]="['/hotelsession/clients/', client.id]"
         class="btn btn-warning d-flex align-items-center justify-content-center"
         style="width: 30px; height: 30px"
       >
         <i class="fa-solid fa-pencil fs-5 text-white"></i>
       </button>
       <button
-        (click)="openDeleteRoomModal(room.id)"
+        (click)="openDeleteClientModal(client.id)"
         class="btn btn-danger d-flex align-items-center justify-content-center"
         style="width: 30px; height: 30px"
       >
@@ -82,8 +80,7 @@
 
 } }
 
-<!-- Modal -->
 <reusable-modal
-  [modalText]="'¿Deseas eliminar el empleado de forma permanente?'"
-  (accepted)="handleDeleteRoom()"
+  [modalText]="'¿Deseas eliminar el cliente de forma permanente?'"
+  (accepted)="handleDeleteClient()"
 ></reusable-modal>

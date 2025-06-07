@@ -10,11 +10,11 @@ const baseUrl = environment.baseUrl;
 const emptyRoom: Room = {
   id: 0,
   capacity: 1,
-  roomsNumber: 1,
+  code: '',
   kitchen: false,
   type: undefined as any, // Se debe asignar un valor válido en el uso real
   state: undefined as any,
-  numberRoom: '',
+  numberOfRooms: 1,
 };
 
 @Injectable({ providedIn: 'root' })
@@ -25,18 +25,16 @@ export class RoomsService {
   rooms = signal<Room[]>([]);
 
   getRoomsByHotelId(hotelId: number): Observable<Room[]> {
-    return this.http
-      .get<Room[]>(`${baseUrl}/hotels/${hotelId}/rooms`)
-      .pipe(
-        tap((rooms) => {
-          this.rooms.set(rooms);
-          localStorage.setItem('hotelRooms', JSON.stringify(rooms));
-        }),
-        catchError((error) => {
-          console.error('Error al cargar las habitaciones:', error);
-          return of([]); // Devuelve un array vacío para mantener el flujo
-        })
-      );
+    return this.http.get<Room[]>(`${baseUrl}/hotels/${hotelId}/rooms`).pipe(
+      tap((rooms) => {
+        this.rooms.set(rooms);
+        localStorage.setItem('hotelRooms', JSON.stringify(rooms));
+      }),
+      catchError((error) => {
+        console.error('Error al cargar las habitaciones:', error);
+        return of([]); // Devuelve un array vacío para mantener el flujo
+      })
+    );
   }
 
   deleteRoom(roomId: number): Observable<void> {
@@ -55,43 +53,58 @@ export class RoomsService {
   }
 
   getRoomById(id: number): Observable<Room> {
-    if (id === 0) {
+  const hotelId = this.hotelSessionService.hotelSession()?.hotelId;
+
+  if (id === 0 || !hotelId) {
+    return of(emptyRoom);
+  }
+
+  const cachedRoom: Room | undefined = this.rooms().find(
+    (room) => room.id === id
+  );
+  if (cachedRoom) {
+    return of(cachedRoom);
+  }
+
+  return this.http.get<Room>(`${baseUrl}/hotels/${hotelId}/rooms/${id}`).pipe(
+    tap((room) => {
+      this.rooms.update((rooms) => {
+        // Si ya existe, reemplaza; si no, añade
+        const idx = rooms.findIndex(r => r.id === room.id);
+        if (idx !== -1) {
+          const updated = [...rooms];
+          updated[idx] = room;
+          return updated;
+        }
+        return [...rooms, room];
+      });
+      localStorage.setItem('hotelRooms', JSON.stringify(this.rooms()));
+    }),
+    catchError((error) => {
+      console.error('Error al obtener la habitación:', error);
+      return of(emptyRoom);
+    })
+  );
+}
+
+  updateRoom(roomId: number, roomData: Partial<Room>): Observable<Room> {
+    const hotelId = this.hotelSessionService.hotelSession()?.hotelId;
+
+    if (roomId === 0 || !hotelId) {
       return of(emptyRoom);
     }
 
-    const cachedRoom: Room | undefined = this.rooms().find(
-      (room) => room.id === id
-    );
-    if (cachedRoom) {
-      return of(cachedRoom);
-    }
-
-    return this.http.get<Room>(`${baseUrl}/rooms/${id}`).pipe(
-      tap((room) => {
-        this.rooms.update((rooms) => [...rooms, room]);
-      }),
-      catchError((error) => {
-        console.error('Error al obtener la habitación:', error);
-        return of(emptyRoom);
+    const payload = {
+      ...roomData,
+    };
+    return this.http.put<Room>(`${baseUrl}/hotels/${hotelId}/rooms/${roomId}`, payload).pipe(
+      tap((updated) => {
+        this.rooms.update((rooms) =>
+          rooms.map((r) => (r.id === roomId ? updated : r))
+        );
+        localStorage.setItem('hotelRooms', JSON.stringify(this.rooms()));
       })
     );
-  }
-
-  updateRoom(roomId: number, data: Room): Observable<Room> {
-    // Solo los campos requeridos por el backend
-    const payload = {
-      ...data,
-    };
-    return this.http
-      .put<Room>(`${baseUrl}/rooms/${roomId}`, payload)
-      .pipe(
-        tap((updated) => {
-          this.rooms.update((rooms) =>
-            rooms.map((r) => (r.id === roomId ? updated : r))
-          );
-          localStorage.setItem('hotelRooms', JSON.stringify(this.rooms()));
-        })
-      );
   }
 
   createRoom(data: Omit<Room, 'id'>): Observable<Room> {

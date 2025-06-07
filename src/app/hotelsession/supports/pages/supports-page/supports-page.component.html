@@ -1,0 +1,25 @@
+<h2 class="text-primary">Servicios</h2>
+<hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50" />
+
+<div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-3">
+    @for (room of supportRooms(); track room) {
+      <div class="col">
+        <support-card
+          [room]="room"
+          (solicitarConfirmacion)="openResolveRoomModal($event)"
+        ></support-card>
+      </div>
+    }
+  </div>
+</div>
+@if (supportRooms().length === 0) {
+  <div class="alert alert-warning text-center" role="alert">
+    ¡No hay habitaciones en soporte!
+  </div>
+}
+
+<reusable-modal
+  [modalText]="modalText"
+  (accepted)="handleResolveRoom()"
+></reusable-modal>

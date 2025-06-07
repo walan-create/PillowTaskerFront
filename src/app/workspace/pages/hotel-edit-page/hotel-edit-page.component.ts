@@ -25,7 +25,7 @@ import { FormErrorLabelComponent } from '@shared/components/form-error-label/for
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HotelEditPageComponent{
-  
+
   hotelsService = inject(HotelsService);
   activatedRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder);
@@ -76,7 +76,6 @@ export class HotelEditPageComponent{
   async onSubmit() {
     const isValid = this.hotelForm.valid;
     this.hotelForm.markAllAsTouched();
-    console.log('valido', isValid);
     if (!isValid) return;
 
     const formValue = this.hotelForm.value;

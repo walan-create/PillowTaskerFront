@@ -3,43 +3,107 @@ import {
   Component,
   computed,
   inject,
+  OnInit,
+  signal,
+  ViewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../../../services/breakpoint.service';
 import { CredentialsService } from '../../services/credentials.service';
 import { AuthService } from '@auth/services/auth.service';
-import { EmployeesTableComponent } from '../../components/employees-table/employees-table.component';
-import { EmployeesListComponent } from "../../components/employees-list/employees-list.component";
+import { AppTableComponent } from '@shared/components/table/table.component';
+import { ListToolbarComponent } from '@shared/components/list-toolbar/list-toolbar.component';
+import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
+import { AppListComponent } from '@shared/components/list/list.component';
+import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
+import { Credential } from '../../interfaces/credential.interface';
 
 @Component({
   selector: 'app-employees-page',
-  imports: [RouterLink, EmployeesTableComponent, EmployeesListComponent],
+  standalone: true,
+  imports: [
+    AppTableComponent,
+    RouterLink,
+    ListToolbarComponent,
+    ReusableModalComponent,
+    AppListComponent,
+  ],
   templateUrl: './employees-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeesPageComponent {
+export class EmployeesPageComponent implements OnInit {
   authService = inject(AuthService);
   employeesService = inject(CredentialsService);
   breakpointService = inject(BreakpointService);
 
-  // Señal computada que escucha al GLOBAL del Service (Cualquier actualización se verá reflejada)
-  credentials = computed(() => this.employeesService.credentials());
+  employeeColumns: AppTableColumn<any>[] = [
+    { key: 'name', label: 'Nombre', headerClass: 'col-2' },
+    { key: 'mail', label: 'Correo', headerClass: 'col-2' },
+    { key: 'surname1', label: 'Apellido 1', headerClass: 'col-2' },
+    { key: 'surname2', label: 'Apellido 2', headerClass: 'col-2' },
+    { key: 'dni', label: 'DNI', headerClass: 'col-1' },
+    { key: 'rol', label: 'Rol', headerClass: 'col-1' },
+  ];
+
+  searchText: string = '';
+  orderBy: keyof Credential = 'name';
+  orderDirection: 'asc' | 'desc' = 'asc';
+
+  employees = computed(() => this.employeesService.credentials());
+  employeeIdToDelete = signal<number | null>(null);
+
+  @ViewChild(ReusableModalComponent)
+  reusableModal!: ReusableModalComponent;
 
   ngOnInit() {
-    // Cargar las credenciales al cargar el componente
-    this.loadCredentials();
+    this.loadEmployees();
   }
 
-  loadCredentials() {
+  loadEmployees() {
     this.employeesService.loadHotelCredentials().subscribe({
       next: (credentials) => {
-        // Actualizar el signal con las invitaciones obtenidas
         this.employeesService.credentials.set(credentials);
       },
       error: (err) => {
         console.error('Error al cargar las credenciales de los empleados', err);
       },
     });
+  }
+
+  onSearchTextChange(text: string) {
+    this.searchText = text;
+  }
+
+  onOrderByChange(orderBy: string) {
+    this.orderBy = orderBy as keyof Credential;
+  }
+
+  onOrderDirectionChange(direction: 'asc' | 'desc') {
+    this.orderDirection = direction;
+  }
+
+  openDeleteEmployeeModal(employeeId: number) {
+    const modalElement = document.getElementById('reusableModal');
+    if (modalElement) {
+      this.employeeIdToDelete.set(employeeId);
+      const bootstrapModal = new (window as any).bootstrap.Modal(modalElement);
+      bootstrapModal.show();
+    }
+  }
+
+  handleDeleteEmployee() {
+    const id = this.employeeIdToDelete();
+    if (id !== null) {
+      this.employeesService.deleteCredential(id).subscribe({
+        next: () => {
+          // Recargar empleados después de eliminar
+          this.loadEmployees();
+        },
+        error: (err) => {
+          console.error('Error al eliminar el empleado', err);
+        },
+      });
+    }
   }
 
   get isMobileOrTablet() {

@@ -15,14 +15,14 @@ export class HotelSessionService {
   private http = inject(HttpClient);
 
   //--------------- Señales y estado reactivo -------------------
-  
+
   // Datos del hotel se van llenando poco a poco segun se vayan construyendo los componentes
   private _hotelSession = signal<HotelSession | null>(null);
   // Señal para saber si la sesion de un hotel está activa
   private _hotelSessionActive = signal<boolean>(false); // Estado de autenticación
   // Señal de la credencial activa
 
-//--------------- Recursos y computados -------------------
+  //--------------- Recursos y computados -------------------
 
   // Recurso para verificar el estado de la sesión del hotel al montar el servicio
   checkHotelSessionResource = rxResource({
@@ -72,7 +72,8 @@ export class HotelSessionService {
 
   // Manejo de éxito en las solicitudes de autenticación
   private handleHotelSessionSuccess(resp: HotelSessionResponse) {
-    const hotelSession: HotelSession = mapHotelSessionResponseToHotelSession(resp);
+    const hotelSession: HotelSession =
+      mapHotelSessionResponseToHotelSession(resp);
     this._hotelSession.set(hotelSession); // Guarda los datos del usuario
     this._hotelSessionActive.set(true); // Cambia el estado a a active (true)
     localStorage.setItem('hotelSession', JSON.stringify(hotelSession)); // Persiste el el hotel en almacenamietno local
@@ -83,6 +84,18 @@ export class HotelSessionService {
   private handleAuthError(error: any) {
     this.logout(); // Limpia el estado en caso de error
     return of(false); // Devuelve `false` como resultado
+  }
+
+  isHotelSessionActive$(): Observable<boolean> {
+    const storedSession = localStorage.getItem('hotelSession');
+    if (!storedSession) {
+      this.logout();
+      return of(false);
+    }
+    const parsedSession: HotelSession = JSON.parse(storedSession);
+    this._hotelSession.set(parsedSession);
+    this._hotelSessionActive.set(true);
+    return of(true);
   }
 
   // Método para cerrar sesión

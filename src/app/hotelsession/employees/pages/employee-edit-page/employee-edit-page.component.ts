@@ -80,7 +80,6 @@ export class EmployeeEditPageComponent implements OnInit {
       ...credential,
       rol: formValue.rol as CredentialTypeEnum, // <-- cast explícito
       password: credential.password ?? '',
-      incidences: credential.incidences ?? [],
     };
 
     await firstValueFrom(

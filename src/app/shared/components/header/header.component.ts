@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit {
     },
     {
       area: '/hotelsession',
-      routerLink: '/hotelsession/services',
+      routerLink: '/hotelsession/supports',
       label: 'Servicios',
       icon: 'fa-solid fa-hands-bubbles',
     },

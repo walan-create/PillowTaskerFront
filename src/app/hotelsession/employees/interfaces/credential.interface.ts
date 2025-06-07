@@ -9,5 +9,4 @@ export interface Credential {
   surname2: string;
   dni: string;
   password?: string;
-  incidences?: any[];
 }

@@ -1,27 +1,91 @@
 <h2 class="text-primary">Hoteles</h2>
 <hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50" />
 
-<!-- Aqui va la cabecera de la tabla con los botones -->
-<div class="bg-white rounded-3 d-inline-block mb-3">
-  <div class="d-flex px-1">
+<list-toolbar
+  [searchText]="searchText"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
+  [orderFields]="[
+    { key: 'name', label: 'Nombre' },
+    { key: 'address', label: 'Dirección' },
+    { key: 'postalCode', label: 'Código Postal' },
+    { key: 'userId', label: 'Propiedad' },
+    { key: 'totalRooms', label: 'Habitaciones' },
+    { key: 'totalEmployees', label: 'Empleados' }
+  ]"
+  [searchPlaceholder]="'Buscar hotel...'"
+  [createButtonLink]="'/workspace/hotels/create'"
+  [createButtonText]="'Crear Hotel'"
+  (searchTextChange)="onSearchTextChange($event)"
+  (orderByChange)="onOrderByChange($event)"
+  (orderDirectionChange)="onOrderDirectionChange($event)"
+/>
 
-    <div class="p-2">
-      <button
-        [routerLink]="'/workspace/hotels/create'"
-        class="btn btn-green d-flex align-items-center justify-content-center"
-        style="height: 40px"
-      >
-        <i class="fa-solid fa-plus fs-4"></i>
-        <h5 class="m-0 ms-2">Crear Hotel</h5>
-      </button>
-    </div>
-
-  </div>
-</div>
-
-<!-- Aqui va la tabla -->
 @if(isMobileOrTablet()) { @defer{
-<hotels-list [hotels]="hotels()" />
+<app-list
+  [data]="hotels()"
+  [columns]="hotelColumns"
+  [actionsTemplate]="actionsTemplate"
+>
+  <ng-template #actionsTemplate let-hotel>
+    <button
+      [routerLink]="['/workspace/hotels', hotel.id]"
+      class="btn btn-warning d-flex align-items-center justify-content-center"
+      style="width: 30px; height: 30px"
+      title="Editar"
+    >
+      <i class="fa-solid fa-pencil fs-5 text-white"></i>
+    </button>
+    <button
+      (click)="openDeleteHotelModal(hotel.id)"
+      class="btn btn-danger d-flex align-items-center justify-content-center"
+      style="width: 30px; height: 30px"
+      title="Eliminar"
+    >
+      <i class="fa-solid fa-trash-can fs-5"></i>
+    </button>
+  </ng-template>
+</app-list>
 } } @else { @defer{
-<hotels-table [hotels]="hotels()" />
+<div class="flex-grow-1 overflow-auto">
+  <app-table
+    [data]="hotels()"
+    [columns]="hotelColumns"
+    [orderBy]="orderBy"
+    [orderDirection]="orderDirection"
+    [searchText]="searchText"
+    [actionsTemplate]="actionsTemplate"
+  >
+    <ng-template #actionsTemplate let-hotel>
+      <button
+          [routerLink]="['/workspace/hotel-access/', hotel.id]"
+            class="btn btn-blue d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-arrow-right-to-bracket fs-5 text-white"></i>
+          </button>
+          @if (hotel.userId === authService.user()?.id) {
+          <button
+            [routerLink]="['/workspace/hotels/', hotel.id]"
+            class="btn btn-warning d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-pencil fs-5 text-white"></i>
+          </button>
+          <button
+            (click)="openDeleteHotelModal(hotel.id)"
+            class="btn btn-danger d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-trash-can fs-5"></i>
+          </button>
+          }
+    </ng-template>
+  </app-table>
+</div>
 } }
+
+<reusable-modal
+  [modalText]="'¿Deseas eliminar el hotel de forma permanente?'"
+  (accepted)="handleDeleteHotel()"
+></reusable-modal>

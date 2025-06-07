@@ -52,6 +52,7 @@ $theme-colors: (
   "blue":       $blue,
   "green":      $green,
   "gray":       $gray-600,
+  "darkgray":  $gray-700,
   "yellow":     $yellow,
 );
 
@@ -135,13 +136,14 @@ $headings-font-weight:        bold;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+//! Aquí está el problema de que al abrir el modal la pantalla se vea oscura.
 html, body {
   height: 100%;
-  overflow: hidden; /* evita scroll global */
 }
 
 main {
-  position: fixed;
+
+  position: absolute;
   top: 90px;  /* altura del header */
   bottom: 0;
   left: 0;
@@ -180,9 +182,6 @@ main {
 }
 
 //--------------------------------------------------------
-//Tabla personalizada
-
-//--------
 
 .custom-input {
   background-color: #f5e8d8;
