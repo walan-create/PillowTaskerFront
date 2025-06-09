@@ -126,8 +126,6 @@ export class ClientsService {
       );
   }
 
-  // ...existing code...
-
   getClientById(clientId: number): Observable<Client> {
     const hotelId = this.hotelSessionService.hotelSession()?.hotelId;
 
@@ -161,8 +159,6 @@ export class ClientsService {
         })
       );
   }
-
-  // ...existing code...
 
   loadHotelClients(): Observable<Client[]> {
     const hotelId = this.hotelSessionService.hotelSession()?.hotelId;

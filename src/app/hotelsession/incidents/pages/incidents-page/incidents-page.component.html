@@ -1,0 +1,53 @@
+<h2 class="text-primary">Incidentes</h2>
+<hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50" />
+
+<list-toolbar
+  [searchText]="searchText"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
+  [orderFields]="[
+    { key: 'title', label: 'Título' },
+    { key: 'concept', label: 'Concepto' },
+    { key: 'date', label: 'Fecha' }
+  ]"
+  [searchPlaceholder]="'Buscar incidente...'"
+  [createButtonLink]="'/hotelsession/incidents/create'"
+  [createButtonText]="'Crear'"
+  (searchTextChange)="onSearchTextChange($event)"
+  (orderByChange)="onOrderByChange($event)"
+  (orderDirectionChange)="onOrderDirectionChange($event)"
+/>
+
+<div class="flex-grow-1 overflow-auto">
+  <app-table
+    [data]="incidents()"
+    [columns]="incidentColumns"
+    [orderBy]="orderBy"
+    [orderDirection]="orderDirection"
+    [searchText]="searchText"
+    [actionsTemplate]="actionsTemplate"
+  >
+    <ng-template #actionsTemplate let-incident>
+      <button
+        [routerLink]="['/hotelsession/incidents/', incident.id]"
+        class="btn btn-warning d-flex align-items-center justify-content-center"
+        style="width: 30px; height: 30px"
+        title="Editar"
+      >
+        <i class="fa-solid fa-pencil fs-5 text-white"></i>
+      </button>
+      <button
+        (click)="openDeleteIncidentModal(incident.id)"
+        class="btn btn-danger d-flex align-items-center justify-content-center"
+        style="width: 30px; height: 30px"
+      >
+        <i class="fa-solid fa-trash-can fs-5"></i>
+      </button>
+    </ng-template>
+  </app-table>
+</div>
+
+<reusable-modal
+  [modalText]="'¿Deseas eliminar el incidente de forma permanente?'"
+  (accepted)="handleDeleteIncident()"
+></reusable-modal>

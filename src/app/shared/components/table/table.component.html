@@ -1,41 +1,45 @@
-  <table class="table table-hover table-bordered m-0">
-    <thead>
-      <tr>
-        @for (col of columns(); track $index) {
-        <th
-          [class]="col.headerClass ?? ''"
-          class="text-primary bg-beige border border-primary"
-        >
-          {{ col.label }}
-        </th>
-        } @if (actionsTemplate()) {
-        <th class="text-primary bg-beige border border-primary">Acciones</th>
-        }
-      </tr>
-    </thead>
-    <tbody>
-      @for (row of data() | filterByText:searchText() |
-      orderBy:orderBy():orderDirection(); track $index) {
-      <tr>
-        @for (col of columns(); track $index) {
-        <td>{{ col.cellTemplate ? col.cellTemplate(row) : row[col.key] }}</td>
-        } @if (actionsTemplate()) {
-        <td>
-          <div class="d-flex justify-content-center gap-1">
-            <ng-container
-              *ngTemplateOutlet="
-                actionsTemplate() ?? null;
-                context: { $implicit: row }
-              "
-            ></ng-container>
-          </div>
-        </td>
-        }
-      </tr>
+<table class="table table-hover table-bordered m-0 table-fixed">
+  <thead>
+    <tr>
+      @for (col of columns(); track $index) {
+      <th
+        [class]="col.headerClass ?? ''"
+        class="text-primary bg-beige border border-primary"
+      >
+        {{ col.label }}
+      </th>
+      } @if (actionsTemplate()) {
+      <th class="text-primary bg-beige border border-primary">Acciones</th>
       }
-    </tbody>
-  </table>
-  @if (data().length === 0) {
-  <div class="alert alert-warning text-center" role="alert">No hay datos</div>
-  }
-  <ng-content></ng-content>
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of data() | filterByText:searchText() |
+    orderBy:orderBy():orderDirection(); track $index) {
+    <tr>
+      @for (col of columns(); track $index) {
+      <td class="truncate">
+        <div class="text-truncate">
+          {{ col.cellTemplate ? col.cellTemplate(row) : row[col.key] }}
+        </div>
+      </td>
+      } @if (actionsTemplate()) {
+      <td>
+        <div class="d-flex justify-content-center gap-1">
+          <ng-container
+            *ngTemplateOutlet="
+              actionsTemplate() ?? null;
+              context: { $implicit: row }
+            "
+          ></ng-container>
+        </div>
+      </td>
+      }
+    </tr>
+    }
+  </tbody>
+</table>
+@if (data().length === 0) {
+<div class="alert alert-warning text-center mt-3" role="alert">No hay datos</div>
+}
+<ng-content></ng-content>

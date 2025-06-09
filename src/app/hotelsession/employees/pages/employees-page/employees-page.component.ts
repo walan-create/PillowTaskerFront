@@ -17,6 +17,7 @@ import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
 import { AppListComponent } from '@shared/components/list/list.component';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
 import { Credential } from '../../interfaces/credential.interface';
+import { RolPipe } from '@shared/pipes/rol.pipe';
 
 @Component({
   selector: 'app-employees-page',
@@ -37,12 +38,17 @@ export class EmployeesPageComponent implements OnInit {
   breakpointService = inject(BreakpointService);
 
   employeeColumns: AppTableColumn<any>[] = [
-    { key: 'name', label: 'Nombre', headerClass: 'col-2' },
+    { key: 'name', label: 'Nombre', headerClass: 'col-1' },
     { key: 'mail', label: 'Correo', headerClass: 'col-2' },
     { key: 'surname1', label: 'Apellido 1', headerClass: 'col-2' },
     { key: 'surname2', label: 'Apellido 2', headerClass: 'col-2' },
-    { key: 'dni', label: 'DNI', headerClass: 'col-1' },
-    { key: 'rol', label: 'Rol', headerClass: 'col-1' },
+    { key: 'dni', label: 'DNI', headerClass: 'col-2' },
+    {
+    key: 'rol',
+    label: 'Rol',
+    headerClass: 'col-2',
+    cellTemplate: (row: any) => new RolPipe().transform(row.rol), // Pipe para que el rol salga en español y en TitleCase
+  },
   ];
 
   searchText: string = '';

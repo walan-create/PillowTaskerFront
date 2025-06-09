@@ -14,7 +14,6 @@ export const HotelSessionActiveGuard: CanMatchFn = async (
   const isHotelSessionActive: boolean = await firstValueFrom(
     hotelSessionService.isHotelSessionActive$()
   );// Devuelve booleano
-        console.log(isHotelSessionActive);
 
   // Si la sesion está activa lo dejamos entrar
   if (isHotelSessionActive) {

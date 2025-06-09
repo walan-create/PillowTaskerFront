@@ -13,6 +13,7 @@ import {
 })
 export class ReusableModalComponent {
   @Input() modalText: string = '';
+  @Input() id: string = ''; // <-- Añade esto
 
   @Output() accepted = new EventEmitter<void>();
   @Output() canceled = new EventEmitter<void>();

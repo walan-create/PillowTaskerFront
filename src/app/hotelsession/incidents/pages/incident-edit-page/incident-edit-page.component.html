@@ -1,0 +1,37 @@
+<div class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4">
+  <h2 class="fw-bold mb-4">Editar Incidente</h2>
+
+  <form class="w-100 px-3" style="max-width: 30rem;" [formGroup]="incidentForm" (ngSubmit)="onSubmit()">
+    <div class="mb-2">
+      <label class="form-label fw-bold">Título</label>
+      <input type="text" class="form-control bg-beige" formControlName="title" />
+      <form-error-label [control]="incidentForm.get('title')!"></form-error-label>
+    </div>
+    <div class="mb-2">
+      <label class="form-label fw-bold">Concepto</label>
+      <textarea class="form-control bg-beige" formControlName="concept" style="height: 200px; resize:none"></textarea>
+      <form-error-label [control]="incidentForm.get('concept')!"></form-error-label>
+    </div>
+    <div class="mb-2">
+      <label class="form-label fw-bold">Fecha</label>
+      <input
+        type="date"
+        class="form-control custom-input bg-beige"
+        formControlName="date"
+        required
+        [class.is-invalid]="
+          incidentForm.get('date')?.invalid &&
+          incidentForm.get('date')?.touched
+        "
+      />
+      <form-error-label [control]="incidentForm.get('date')!"></form-error-label>
+    </div>
+    <button type="submit" class="btn btn-secondary w-100">Guardar</button>
+  </form>
+
+  <a routerLink="/hotelsession/incidents" class="text-sm text-primary mt-3 small">Volver a la lista de incidentes</a>
+
+  <div *ngIf="wasSaved()" class="alert alert-success mx-3 position-fixed my-4 py-4 shadow" role="alert">
+    <span>Datos Actualizados Correctamente</span>
+  </div>
+</div>

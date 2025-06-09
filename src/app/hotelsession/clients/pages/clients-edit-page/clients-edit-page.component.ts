@@ -59,31 +59,31 @@ export class ClientsEditPageComponent {
   });
 
   ngOnInit() {
-  const clientId = this.clientId();
-  this.clientsService.getClientById(clientId).subscribe({
-    next: (client) => {
-      if (client) {
-        this.clientForm.patchValue({
-          nif: client.nif,
-          name: client.name,
-          surname1: client.surname1,
-          surname2: client.surname2,
-          birthDate:
-            client.birthDate instanceof Date
-              ? client.birthDate.toISOString().substring(0, 10)
-              : client.birthDate,
-          nationality: client.nationality,
-          address: client.address,
-          postalCode: client.postalCode,
-          phoneNumber: client.phoneNumber,
-        });
-      }
-    },
-    error: (err) => {
-      console.error('Error al obtener el cliente:', err);
-    },
-  });
-}
+    const clientId = this.clientId();
+    this.clientsService.getClientById(clientId).subscribe({
+      next: (client) => {
+        if (client) {
+          this.clientForm.patchValue({
+            nif: client.nif,
+            name: client.name,
+            surname1: client.surname1,
+            surname2: client.surname2,
+            birthDate:
+              client.birthDate instanceof Date
+                ? client.birthDate.toISOString().substring(0, 10)
+                : client.birthDate,
+            nationality: client.nationality,
+            address: client.address,
+            postalCode: client.postalCode,
+            phoneNumber: client.phoneNumber,
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener el cliente:', err);
+      },
+    });
+  }
 
   async onSubmit() {
     this.clientForm.markAllAsTouched();

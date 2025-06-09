@@ -1,0 +1,152 @@
+<div
+  class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4"
+>
+  <h2 class="fw-bold mb-4">Nueva Reserva</h2>
+
+  <form
+    class="w-100 px-3"
+    style="max-width: 30rem"
+    [formGroup]="reservationForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="mb-2">
+      <label class="form-label fw-bold">Titular</label>
+      <input
+        type="text"
+        class="form-control bg-beige"
+        formControlName="reservationsName"
+        required
+        [class.is-invalid]="
+          reservationForm.get('reservationsName')?.invalid &&
+          reservationForm.get('reservationsName')?.touched
+        "
+      />
+      <form-error-label
+        [control]="reservationForm.get('reservationsName')!"
+      ></form-error-label>
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label fw-bold">Habitaciones</label>
+      <!-- Implementa aquí tu selector de habitaciones personalizado -->
+      <!-- Selector de habitaciones personalizado -->
+      <div
+        class="position-relative"
+        tabindex="0"
+        (focusout)="onDropdownFocusOut($event)"
+      >
+        <input
+          type="text"
+          class="form-control bg-beige"
+          [value]="getSelectedRoomsLabel()"
+          placeholder="Selecciona habitaciones"
+          readonly
+          (focus)="showRoomDropdown.set(true)"
+        />
+
+        <div
+          class="dropdown-menu show w-100 mt-1 shadow"
+          *ngIf="showRoomDropdown()"
+          style="
+            max-height: 250px;
+            overflow-y: auto;
+            position: absolute;
+            z-index: 10;
+          "
+        >
+          <div class="px-2 py-1">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              placeholder="Buscar habitación..."
+              [ngModel]="roomSearchText()"
+              (ngModelChange)="roomSearchText.set($event)"
+              [ngModelOptions]="{ standalone: true }"
+              autofocus
+            />
+          </div>
+          <div *ngIf="filteredRooms().length; else noRooms">
+            <div
+              *ngFor="let room of filteredRooms()"
+              class="dropdown-item d-flex align-items-center gap-2"
+              (mousedown)="toggleRoomSelection(room)"
+              [class.active]="isRoomSelected(room)"
+              style="cursor: pointer"
+            >
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="isRoomSelected(room)"
+                tabindex="-1"
+                readonly
+              />
+              <span>
+                <b>{{ room.code }}</b> | {{ room.numberOfRooms }} hab. |
+                {{ room.type | roomType }}
+                <!-- Usa el pipe si es enum numérico -->
+              </span>
+            </div>
+          </div>
+          <ng-template #noRooms>
+            <div class="dropdown-item text-muted">No hay habitaciones</div>
+          </ng-template>
+        </div>
+      </div>
+      <!--  -->
+      <form-error-label
+        [control]="reservationForm.get('rooms')!"
+      ></form-error-label>
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label fw-bold">Fecha de entrada</label>
+      <input
+        type="date"
+        class="form-control bg-beige"
+        formControlName="entryDate"
+        required
+        [class.is-invalid]="
+          reservationForm.get('entryDate')?.invalid &&
+          reservationForm.get('entryDate')?.touched
+        "
+      />
+      <form-error-label
+        [control]="reservationForm.get('entryDate')!"
+      ></form-error-label>
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label fw-bold">Fecha de salida</label>
+      <input
+        type="date"
+        class="form-control bg-beige"
+        formControlName="departureDay"
+        required
+        [class.is-invalid]="
+          reservationForm.get('departureDay')?.invalid &&
+          reservationForm.get('departureDay')?.touched
+        "
+      />
+      <form-error-label
+        [control]="reservationForm.get('departureDay')!"
+      ></form-error-label>
+    </div>
+
+    <button type="submit" class="btn btn-secondary w-100">Crear</button>
+  </form>
+
+  <a
+    routerLink="/hotelsession/reservations"
+    class="text-sm text-primary mt-3 small"
+    >Volver a la lista de reservas</a
+  >
+
+  @if (wasSaved()) {
+  <div
+    class="alert alert-success mx-3 position-fixed my-4 py-4 shadow"
+    role="alert"
+  >
+    <span>Reserva creada correctamente</span>
+  </div>
+  }
+</div>

@@ -11,8 +11,13 @@ import { RoomEditPageComponent } from './rooms/pages/room-edit-page/room-edit-pa
 import { ClientsPageComponent } from './clients/pages/clients-page/clients-page.component';
 import { ClientCreatePageComponent } from './clients/pages/client-create-page/client-create-page.component';
 import { ClientsEditPageComponent } from './clients/pages/clients-edit-page/clients-edit-page.component';
-import { SupportCardComponent } from './supports/components/support-card/support-card.component';
 import { SupportsPageComponent } from './supports/pages/supports-page/supports-page.component';
+import { IncidentsPageComponent } from './incidents/pages/incidents-page/incidents-page.component';
+import { IncidentCreatePageComponent } from './incidents/pages/incident-create-page/incident-create-page.component';
+import { IncidentEditPageComponent } from './incidents/pages/incident-edit-page/incident-edit-page.component';
+import { ReservationsPageComponent } from './reservations/pages/reservations-page/reservations-page.component';
+import { ReservationsCreatePageComponent } from './reservations/pages/reservations-create-page/reservations-create-page.component';
+import { ReservationsCheckinPageComponent } from './reservations/pages/reservations-checkin-page/reservations-checkin-page.component';
 
 export const hotelessionRoutes: Routes = [
   {
@@ -76,12 +81,35 @@ export const hotelessionRoutes: Routes = [
         component: SupportsPageComponent,
       },
 
+      //Incidents
       {
-        path: '**',
-        component: NotFoundPageComponent,
+        path: 'incidents',
+        component: IncidentsPageComponent,
+      },
+      {
+        path: 'incidents/create',
+        component: IncidentCreatePageComponent,
+      },
+      {
+        path: 'incidents/:id',
+        component: IncidentEditPageComponent,
       },
 
-    //-----------------------------------------
+      //Incidents
+      {
+        path: 'reservations',
+        component: ReservationsPageComponent,
+      },
+      {
+        path: 'reservations/create',
+        component: ReservationsCreatePageComponent,
+      },
+      {
+        path: 'reservations/checkin/:id',
+        component: ReservationsCheckinPageComponent,
+      },
+
+      //-----------------------------------------
     ],
   },
   {

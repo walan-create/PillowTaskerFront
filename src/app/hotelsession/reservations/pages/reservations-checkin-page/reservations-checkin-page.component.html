@@ -1,0 +1,22 @@
+<div class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4">
+  <h2 class="fw-bold mb-4">Check-in de Reserva</h2>
+  <form class="w-100 px-3" style="max-width: 30rem;" [formGroup]="checkinForm" (ngSubmit)="onSubmit()">
+    <div class="mb-2">
+      <label class="form-label fw-bold">Clientes</label>
+      <!-- Aquí deberías poner tu navegador/lista de clientes -->
+      <input type="text" class="form-control" formControlName="clientIds" placeholder="Selecciona clientes" readonly />
+      <!-- Implementa aquí tu selector de clientes personalizado -->
+    </div>
+    <div class="mb-2">
+      <label class="form-label fw-bold">Habitaciones</label>
+      <!-- Aquí deberías poner tu navegador/lista de habitaciones -->
+      <input type="text" class="form-control" formControlName="roomIds" placeholder="Selecciona habitaciones" readonly />
+      <!-- Implementa aquí tu selector de habitaciones personalizado -->
+    </div>
+    <button type="submit" class="btn btn-secondary w-100">Check-in</button>
+  </form>
+  <a routerLink="/hotelsession/reservations" class="text-sm text-primary mt-3 small">Volver a la lista de reservas</a>
+  <div *ngIf="wasSaved()" class="alert alert-success mx-3 position-fixed my-4 py-4 shadow" role="alert">
+    <span>Check-in realizado correctamente</span>
+  </div>
+</div>

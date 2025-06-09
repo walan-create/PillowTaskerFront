@@ -217,6 +217,17 @@ main {
   font-size: 1.2rem;
 }
 
+//--------------------------------------------------------
+.table-fixed {
+  table-layout: fixed;
+  width: 100%;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 
 
 

@@ -35,20 +35,20 @@ export class ClientsPageComponent implements OnInit {
   breakpointService = inject(BreakpointService);
 
   clientColumns: AppTableColumn<Client>[] = [
-    { key: 'name', label: 'Nombre', headerClass: 'col-2' },
+    { key: 'name', label: 'Nombre', headerClass: 'col-1' },
     { key: 'surname1', label: 'Apellido 1', headerClass: 'col-2' },
     { key: 'surname2', label: 'Apellido 2', headerClass: 'col-2' },
     { key: 'nif', label: 'NIF', headerClass: 'col-1' },
     {
       key: 'birthDate',
       label: 'Nacimiento',
-      headerClass: 'col-1',
+      headerClass: 'col-2',
       cellTemplate: (row: Client) =>
         row.birthDate instanceof Date && !isNaN(row.birthDate.getTime())
           ? row.birthDate.toLocaleDateString()
           : '',
     },
-    { key: 'nationality', label: 'Nacionalidad', headerClass: 'col-1' },
+    { key: 'nationality', label: 'Nacionalidad', headerClass: 'col-2' },
     { key: 'phoneNumber', label: 'Teléfono', headerClass: 'col-1' },
   ];
 

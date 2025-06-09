@@ -16,6 +16,8 @@ import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
 import { BreakpointService } from '../../../../services/breakpoint.service';
 import { AppListComponent } from '../../../../shared/components/list/list.component';
+import { RoomStatePipe } from '@shared/pipes/room-state.pipe';
+import { RoomTypePipe } from '@shared/pipes/room-type.pipe';
 
 @Component({
   selector: 'app-rooms-page',
@@ -36,10 +38,11 @@ export class RoomsPageComponent implements OnInit {
 
   roomColumns: AppTableColumn<Room>[] = [
     { key: 'code', label: 'Código', headerClass: 'col-1' },
-    { key: 'numberOfRooms', label: 'Habitaciones', headerClass: 'col-1' },
-    { key: 'capacity', label: 'Capacidad', headerClass: 'col-1' },
-    { key: 'type', label: 'Tipo', headerClass: 'col-3' },
-    { key: 'state', label: 'Estado', headerClass: 'col-3' },
+    { key: 'numberOfRooms', label: 'Habitaciones', headerClass: 'col-2' },
+    { key: 'capacity', label: 'Capacidad', headerClass: 'col-2' },
+    { key: 'type', label: 'Tipo', headerClass: 'col-2', cellTemplate: (row: any) => new RoomTypePipe().transform(row.type) },
+    { key: 'state', label: 'Estado', headerClass: 'col-2',  cellTemplate: (row: any) => new RoomStatePipe().transform(row.state),
+ },
     {
       key: 'kitchen',
       label: 'Cocina',

@@ -1,0 +1,109 @@
+<h2 class="text-primary">Reservas</h2>
+<hr class="mt-0 mb-3 border-4 border-primary border-1 opacity-50" />
+
+<list-toolbar
+  [searchText]="searchText"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
+  [orderFields]="[
+    { key: 'reservationsName', label: 'Titular' },
+    { key: 'entryDate', label: 'Entrada' },
+    { key: 'departureDay', label: 'Salida' }
+  ]"
+  [searchPlaceholder]="'Buscar reserva...'"
+  [createButtonLink]="'/hotelsession/reservations/create'"
+  [createButtonText]="'Crear'"
+  (searchTextChange)="onSearchTextChange($event)"
+  (orderByChange)="onOrderByChange($event)"
+  (orderDirectionChange)="onOrderDirectionChange($event)"
+/>
+
+@if(isMobileOrTablet()) { @defer{
+
+<app-list
+  [data]="reservations()"
+  [columns]="reservationColumns"
+  [actionsTemplate]="actionsTemplate"
+>
+  <ng-template #actionsTemplate let-reservation>
+    <button
+      [routerLink]="['/hotelsession/reservations/', reservation.id]"
+      class="btn btn-warning d-flex align-items-center justify-content-center"
+      style="width: 30px; height: 30px"
+      title="Editar"
+    >
+      <i class="fa-solid fa-pencil fs-5 text-white"></i>
+    </button>
+    <button
+      (click)="openDeleteReservationModal(reservation.id)"
+      class="btn btn-danger d-flex align-items-center justify-content-center"
+      style="width: 30px; height: 30px"
+    >
+      <i class="fa-solid fa-trash-can fs-5"></i>
+    </button>
+  </ng-template>
+</app-list>
+
+} } @else { @defer{
+
+<div class="flex-grow-1 overflow-auto">
+  <app-table
+    [data]="reservations()"
+    [columns]="reservationColumns"
+    [orderBy]="orderBy"
+    [orderDirection]="orderDirection"
+    [searchText]="searchText"
+    [actionsTemplate]="actionsTemplate"
+  >
+    <ng-template #actionsTemplate let-reservation>
+      @if (reservation.state === 'PENDING') {
+      <button
+        [routerLink]="['/hotelsession/reservations/check-in', reservation.id]"
+        class="btn btn-tertiary d-flex align-items-center justify-content-center px-1"
+        style="height: 30px"
+      >
+        <i class="fa-solid fa-calendar-check me-1"></i>
+        <small class="d-flex align-items-center"><b>CheckIn</b></small>
+      </button>
+      } @if (reservation.state === 'CHECKED_IN') {
+      <button
+        (click)="openCheckoutReservationModal(reservation.id)"
+        class="btn btn-secondary d-flex align-items-center justify-content-center px-1"
+        style="height: 30px"
+      >
+        <i class="fa-solid fa-calendar-xmark me-1"></i>
+        <small class="d-flex align-items-center"><b>CheckOut</b></small>
+      </button>
+      }
+
+      <button
+        [routerLink]="['/hotelsession/reservations/', reservation.id]"
+        class="btn btn-warning d-flex align-items-center justify-content-center"
+        style="width: 30px; height: 30px"
+      >
+        <i class="fa-solid fa-pencil fs-5 text-white"></i>
+      </button>
+      <button
+        (click)="openDeleteReservationModal(reservation.id)"
+        class="btn btn-danger d-flex align-items-center justify-content-center"
+        style="width: 30px; height: 30px"
+      >
+        <i class="fa-solid fa-trash-can fs-5"></i>
+      </button>
+    </ng-template>
+  </app-table>
+</div>
+
+} }
+
+<reusable-modal
+  [id]="'reusableModalDelete'"
+  [modalText]="'¿Deseas eliminar la reserva de forma permanente?'"
+  (accepted)="handleDeleteReservation()"
+></reusable-modal>
+
+<reusable-modal
+  [id]="'reusableModalCheckout'"
+  [modalText]="'¿Deseas hacer el CheckOut de la reserva?'"
+  (accepted)="handleCheckoutReservation()"
+></reusable-modal>
