@@ -24,7 +24,6 @@ export class FormUtils {
   // Tabla de letras del DNI
   private static dniLetters = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
-
   static getTextError(errors: ValidationErrors) {
     for (const key of Object.keys(errors)) {
       switch (key) {
@@ -52,6 +51,12 @@ export class FormUtils {
           }
 
           return 'Error de patrón contra expresión regular';
+
+        case 'invalidDniFormat':
+          return 'El DNI debe tener 8 números seguidos de una letra mayúscula';
+
+        case 'invalidDniLetter':
+          return 'La letra del DNI no es válida';
 
         default:
           return `Error de validación no controlado ${key}`;

@@ -4,22 +4,23 @@
 <div>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-3">
     @for (room of supportRooms(); track room) {
-      <div class="col">
-        <support-card
-          [room]="room"
-          (solicitarConfirmacion)="openResolveRoomModal($event)"
-        ></support-card>
-      </div>
+    <div class="col">
+      <support-card
+        [room]="room"
+        (solicitarConfirmacion)="openResolveRoomModal($event)"
+      ></support-card>
+    </div>
     }
   </div>
 </div>
 @if (supportRooms().length === 0) {
-  <div class="alert alert-warning text-center" role="alert">
-    ¡No hay habitaciones en soporte!
-  </div>
+<div class="alert alert-warning text-center mt-2" role="alert">
+  ¡No hay habitaciones que requieran acción!
+</div>
 }
 
 <reusable-modal
+  [id]="'reusableModal'"
   [modalText]="modalText"
   (accepted)="handleResolveRoom()"
 ></reusable-modal>

@@ -14,6 +14,7 @@ import { ReusableModalComponent } from '@shared/components/reusable-modal/reusab
 import { AppTableComponent } from '@shared/components/table/table.component';
 import { IncidentsService } from '../../services/incident.service';
 import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
+import { BreakpointService } from '../../../../services/breakpoint.service';
 
 @Component({
   selector: 'app-incidents-page',
@@ -22,12 +23,14 @@ import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
     AppTableComponent,
     RouterLink,
     ListToolbarComponent,
-    ReusableModalComponent
+    ReusableModalComponent,
+    AppListComponent
 ],
   templateUrl: './incidents-page.component.html',
 })
 export class IncidentsPageComponent implements OnInit {
   incidentsService = inject(IncidentsService);
+  breakpointService = inject(BreakpointService);
 
   incidentColumns : AppTableColumn<Incident>[] = [
     { key: 'title', label: 'Título', headerClass: 'col-3' },
@@ -80,6 +83,10 @@ export class IncidentsPageComponent implements OnInit {
       const bootstrapModal = new (window as any).bootstrap.Modal(modalElement);
       bootstrapModal.show();
     }
+  }
+
+  get isMobileOrTablet() {
+    return this.breakpointService.isMobileOrTablet;
   }
 
   handleDeleteIncident() {

@@ -23,17 +23,40 @@
 <app-list
   [data]="reservations()"
   [columns]="reservationColumns"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
+  [searchText]="searchText"
   [actionsTemplate]="actionsTemplate"
 >
   <ng-template #actionsTemplate let-reservation>
+    @if (reservation.state === 'PENDING') {
+    <button
+      [routerLink]="['/hotelsession/reservations/checkin', reservation.id]"
+      class="btn btn-tertiary d-flex align-items-center justify-content-center"
+      style="height: 30px"
+    >
+      <i class="fa-solid fa-calendar-check fs-5 me-2"></i>
+      <b class="d-flex align-items-center"><b>CheckIn</b></b>
+    </button>
+    } @if (reservation.state === 'CHECKED_IN') {
+    <button
+      (click)="openCheckoutReservationModal(reservation.id)"
+      class="btn btn-secondary d-flex align-items-center justify-content-center"
+      style="height: 30px"
+    >
+      <i class="fa-solid fa-calendar-xmark fs-5 me-2"></i>
+      <b class="d-flex align-items-center"><b>CheckOut</b></b>
+    </button>
+    }
+
     <button
       [routerLink]="['/hotelsession/reservations/', reservation.id]"
       class="btn btn-warning d-flex align-items-center justify-content-center"
       style="width: 30px; height: 30px"
-      title="Editar"
     >
       <i class="fa-solid fa-pencil fs-5 text-white"></i>
     </button>
+    @if (reservation.state !== 'CHECKED_IN') {
     <button
       (click)="openDeleteReservationModal(reservation.id)"
       class="btn btn-danger d-flex align-items-center justify-content-center"
@@ -41,6 +64,7 @@
     >
       <i class="fa-solid fa-trash-can fs-5"></i>
     </button>
+    }
   </ng-template>
 </app-list>
 
@@ -58,7 +82,7 @@
     <ng-template #actionsTemplate let-reservation>
       @if (reservation.state === 'PENDING') {
       <button
-        [routerLink]="['/hotelsession/reservations/check-in', reservation.id]"
+        [routerLink]="['/hotelsession/reservations/checkin', reservation.id]"
         class="btn btn-tertiary d-flex align-items-center justify-content-center px-1"
         style="height: 30px"
       >
@@ -75,14 +99,14 @@
         <small class="d-flex align-items-center"><b>CheckOut</b></small>
       </button>
       }
-
       <button
-        [routerLink]="['/hotelsession/reservations/', reservation.id]"
+        [routerLink]="['/hotelsession/reservations/edit/', reservation.id]"
         class="btn btn-warning d-flex align-items-center justify-content-center"
         style="width: 30px; height: 30px"
       >
         <i class="fa-solid fa-pencil fs-5 text-white"></i>
       </button>
+      @if (reservation.state !== 'CHECKED_IN') {
       <button
         (click)="openDeleteReservationModal(reservation.id)"
         class="btn btn-danger d-flex align-items-center justify-content-center"
@@ -90,6 +114,7 @@
       >
         <i class="fa-solid fa-trash-can fs-5"></i>
       </button>
+      }
     </ng-template>
   </app-table>
 </div>

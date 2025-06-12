@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Observable, map, catchError, of } from 'rxjs';
+import { Observable, map, catchError, of, throwError } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { AuthResponse } from '@auth/interfaces/auth-response.interface';
@@ -14,7 +14,6 @@ const baseUrl = environment.baseUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
   //--------------- Señales y estado reactivo -------------------
   private _authStatus = signal<AuthStatus>('checking'); // Estado de autenticación
   private _user = signal<User | null>(null); // Datos del usuario autenticado
@@ -52,8 +51,11 @@ export class AuthService {
         password: password,
       })
       .pipe(
-        map((resp) => this.handleAuthSuccess(resp)), // Manejo de éxito
-        catchError((error: any) => this.handleAuthError(error)) // Manejo de errores
+        map((resp) => this.handleAuthSuccess(resp)),
+        catchError((error: any) => {
+          this.logout();
+          return throwError(() => error); // Propaga el error al componente
+        })
       );
   }
 
@@ -63,7 +65,10 @@ export class AuthService {
       .post<AuthResponse>(`${baseUrl}/auth/register`, userData)
       .pipe(
         map((resp) => this.handleAuthSuccess(resp)),
-        catchError((error: any) => this.handleAuthError(error))
+        catchError((error: any) => {
+          this.logout();
+          return throwError(() => error); // Propaga el error al componente
+        })
       );
   }
 

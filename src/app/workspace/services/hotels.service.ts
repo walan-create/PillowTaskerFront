@@ -72,7 +72,6 @@ export class HotelsService {
         } as Hotel;
       }),
       tap((hotel) => {
-        console.log(hotel); // Debug: imprime el hotel transformado
         this.hotels.update((hotels) => [...hotels, hotel]); // Agrega al caché
       }),
       catchError((error) => {

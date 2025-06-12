@@ -38,7 +38,10 @@
   (passwordSubmitted)="handleAcceptInvitation ($event)"
 ></invitation-confirm-modal>
 
+
 <reusable-modal
+  [id]="'reusableModal'"
   [modalText]="'¿Seguro de que quieres cancelar la invitación?'"
   (accepted)="handleCancelInvitation()"
 ></reusable-modal>
+

@@ -1,22 +1,26 @@
 <div
   class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4"
 >
-  <h2 class="fw-bold mb-4">Check-in de Reserva</h2>
+  <h2 class="fw-bold mb-4">Editar Reserva</h2>
   <form
     class="w-100 px-3"
     style="max-width: 30rem"
-    [formGroup]="checkinForm"
+    [formGroup]="reservationForm"
     (ngSubmit)="onSubmit()"
   >
-    <div class="mb-3">
-      <label class="form-label fw-bold">Titular</label>
-      <div class="form-control-plaintext mb-0">
-        <p>
-          {{ reservation()?.reservationsName }}
-        </p>
+    <div class="row mb-2">
+      <div class="col-12">
+        <label class="form-label fw-bold m-0">Titular</label>
+        <input
+          type="text"
+          class="form-control bg-beige"
+          formControlName="reservationsName"
+          required
+        />
       </div>
     </div>
 
+    <!-- CLIENTES -->
     <div class="mb-3">
       <label class="form-label fw-bold">Clientes</label>
       <div
@@ -26,11 +30,15 @@
       >
         <input
           type="text"
-          class="form-control bg-beige"
+          class="form-control"
+          [ngClass]="{
+            'bg-beige': reservationForm.get('state')?.value !== 'PENDING'
+          }"
           [value]="getSelectedClientsLabel()"
           placeholder="Selecciona clientes"
           readonly
           (focus)="showClientDropdown.set(true)"
+          [disabled]="reservationForm.get('state')?.value === 'PENDING'"
         />
         @if (showClientDropdown()) {
         <div
@@ -84,11 +92,9 @@
         </div>
         }
       </div>
-      <form-error-label
-        [control]="checkinForm.get('clientIds')!"
-      ></form-error-label>
     </div>
 
+    <!-- HABITACIONES -->
     <div class="mb-3">
       <label class="form-label fw-bold">Habitaciones</label>
       <div
@@ -156,53 +162,120 @@
         </div>
         }
       </div>
-      <form-error-label
-        [control]="checkinForm.get('roomIds')!"
-      ></form-error-label>
     </div>
 
-    <div class="row mb-3">
-  <div class="col">
-    <label class="form-label fw-bold">Fecha de entrada</label>
-    <input
-      type="date"
-      class="form-control bg-beige"
-      formControlName="entryDate"
-      required
-      [class.is-invalid]="checkinForm.get('entryDate')?.invalid && checkinForm.get('entryDate')?.touched"
-    />
-    <form-error-label [control]="checkinForm.get('entryDate')!"></form-error-label>
-  </div>
-  <div class="col">
-    <label class="form-label fw-bold">Fecha de salida</label>
-    <input
-      type="date"
-      class="form-control bg-beige"
-      formControlName="departureDay"
-      required
-      [class.is-invalid]="checkinForm.get('departureDay')?.invalid && checkinForm.get('departureDay')?.touched"
-    />
-    <form-error-label [control]="checkinForm.get('departureDay')!"></form-error-label>
-  </div>
-</div>
+    <!-- FECHAS -->
+    <!-- FECHAS -->
+    <div class="row mb-2">
+      <div class="col-6">
+        <label class="form-label fw-bold m-0">Fecha de entrada</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'bg-beige': reservationForm.get('state')?.value !== 'CHECKED_IN',
+            'bg-light-gray':
+              reservationForm.get('state')?.value === 'CHECKED_IN'
+          }"
+          [value]="reservationForm.get('entryDate')?.value"
+          placeholder="Selecciona fecha de entrada"
+          readonly
+          (focus)="(null)"
+          *ngIf="
+            reservationForm.get('state')?.value === 'CHECKED_IN';
+            else editableEntryDate
+          "
+        />
+        <ng-template #editableEntryDate>
+          <input
+            type="date"
+            class="form-control bg-beige"
+            formControlName="entryDate"
+            required
+          />
+        </ng-template>
+      </div>
+      <div class="col-6">
+        <label class="form-label fw-bold m-0">Fecha de salida</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'bg-beige': reservationForm.get('state')?.value !== 'CHECKED_IN',
+            'bg-light-gray':
+              reservationForm.get('state')?.value === 'CHECKED_IN'
+          }"
+          [value]="reservationForm.get('departureDay')?.value"
+          placeholder="Selecciona fecha de salida"
+          readonly
+          (focus)="(null)"
+          *ngIf="
+            reservationForm.get('state')?.value === 'CHECKED_IN';
+            else editableDepartureDate
+          "
+        />
+        <ng-template #editableDepartureDate>
+          <input
+            type="date"
+            class="form-control bg-beige"
+            formControlName="departureDay"
+            required
+          />
+        </ng-template>
+      </div>
+    </div>
 
-    <button type="submit" class="btn btn-secondary w-100">
-      <b>Check-in</b>
-    </button>
+    <!-- ESTADO Y ANTICIPADA -->
+    <div class="row mb-2">
+      <div class="col-6">
+        <label class="form-label fw-bold m-0">Estado</label>
+        <div
+          class="form-control bg-light-gray"
+          style="height: auto; min-height: 38px"
+        >
+          {{ reservationForm.get("state")?.value || "" | reservationState }}
+        </div>
+      </div>
+      <div class="col-6">
+        <label class="form-label fw-bold m-0">Salida anticipada</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'bg-beige': reservationForm.get('state')?.value === 'CHECKED_OUT',
+            'bg-light-gray':
+              reservationForm.get('state')?.value !== 'CHECKED_OUT'
+          }"
+          [value]="reservationForm.get('earlyDeparture')?.value ? 'Sí' : 'No'"
+          placeholder="Selecciona salida anticipada"
+          readonly
+          (focus)="(null)"
+          *ngIf="
+            reservationForm.get('state')?.value !== 'CHECKED_OUT';
+            else editableEarlyDeparture
+          "
+        />
+        <ng-template #editableEarlyDeparture>
+          <select
+            class="form-control bg-beige"
+            formControlName="earlyDeparture"
+            required
+          >
+            <option [value]="false">No</option>
+            <option [value]="true">Sí</option>
+          </select>
+        </ng-template>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-secondary w-100 mt-2">Guardar</button>
   </form>
   <a
     routerLink="/hotelsession/reservations"
     class="text-sm text-primary mt-3 small"
     >Volver a la lista de reservas</a
   >
-  @if (wasSaved()) {
-  <div
-    class="alert alert-success mx-3 position-fixed my-4 py-4 shadow"
-    role="alert"
-  >
-    <span>Check-in realizado correctamente</span>
-  </div>
-  } @if (globalError()) {
+  @if (globalError()) {
   <div class="alert alert-danger mt-3" role="alert">
     {{ globalError() }}
   </div>

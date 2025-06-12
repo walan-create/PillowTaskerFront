@@ -16,6 +16,7 @@ import { Room } from '../../../rooms/interfaces/room.interface';
 import { FormsModule } from '@angular/forms'; // <-- IMPORTANTE
 import { RoomTypePipe } from '../../../../shared/pipes/room-type.pipe'; // <-- Si tienes un pipe para el tipo
 import { ReservationDTO } from '../../interfaces/reservationDTO.interface';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-reservations-create-page',
@@ -36,11 +37,13 @@ export class ReservationsCreatePageComponent implements OnInit {
   roomsService = inject(RoomsService);
   fb = inject(FormBuilder);
   router = inject(Router);
+  notificationService = inject(NotificationService);
 
   allRooms = signal<Room[]>([]);
   roomSearchText = signal<string>('');
   showRoomDropdown = signal<boolean>(false);
   wasSaved = signal<boolean>(false);
+  globalError = this.notificationService.getError();
 
   reservationForm = this.fb.group({
     reservationsName: ['', Validators.required],
@@ -63,7 +66,6 @@ export class ReservationsCreatePageComponent implements OnInit {
   filteredRooms() {
     const search = this.roomSearchText().toLowerCase();
     return this.allRooms()
-      .filter((room) => room.state === 'AVAILABLE')
       .filter(
         (room) =>
           room.code.toLowerCase().includes(search) ||
@@ -108,37 +110,37 @@ export class ReservationsCreatePageComponent implements OnInit {
   }
 
   async onSubmit() {
-  this.reservationForm.markAllAsTouched();
-  if (!this.reservationForm.valid) return;
+    this.reservationForm.markAllAsTouched();
+    if (!this.reservationForm.valid) return;
 
-  const formValue = this.reservationForm.value;
-  const roomIds = (formValue.rooms ?? [])
-    .map((room: Room) => room.id)
-    .filter((id): id is number => id !== null);
+    const formValue = this.reservationForm.value;
+    const roomIds = (formValue.rooms ?? [])
+      .map((room: Room) => room.id)
+      .filter((id): id is number => id !== null);
 
-  // TODO: Obtén los clientIds reales según tu lógica
-  const clientIds = [1]; // <-- Cambia esto por el/los ID(s) reales del cliente
+    const clientIds = [1];
 
-  const reservationCreateData: ReservationDTO = {
-    reservationsName: formValue.reservationsName ?? '',
-    entryDate: formValue.entryDate
-      ? new Date(formValue.entryDate).toISOString()
-      : '',
-    departureDay: formValue.departureDay
-      ? new Date(formValue.departureDay).toISOString()
-      : '',
-    roomIds,
-    clientIds,
-    // state y earlyDeparture los puede poner el backend por defecto
-  };
+    const entryDate = `${formValue.entryDate}T15:00:00`;
+    const departureDay = `${formValue.departureDay}T11:00:00`;
 
-  console.log('Datos enviados:', reservationCreateData);
+    const reservationCreateData: ReservationDTO = {
+      reservationsName: formValue.reservationsName ?? '',
+      entryDate,
+      departureDay,
+      roomIds,
+      clientIds,
+    };
 
-  await firstValueFrom(
-    this.reservationsService.createReservation(reservationCreateData)
-  );
-  this.wasSaved.set(true);
-  setTimeout(() => this.wasSaved.set(false), 3000);
-  this.router.navigate(['/hotelsession/reservations']);
-}
+    try {
+      await firstValueFrom(
+        this.reservationsService.createReservation(reservationCreateData)
+      );
+      this.wasSaved.set(true);
+      setTimeout(() => this.wasSaved.set(false), 3000);
+      this.router.navigate(['/hotelsession/reservations']);
+    } catch (err: any) {
+      const backendMessage = err?.error?.message || 'Error desconocido';
+      this.notificationService.showError(backendMessage);
+    }
+  }
 }

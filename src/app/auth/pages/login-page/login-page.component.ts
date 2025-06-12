@@ -24,12 +24,13 @@ import { NotificationService } from '../../../services/notification.service';
 export class LoginPageComponent {
   //--------------- Inyección de dependencias y señales reactivas -------------------
   fb = inject(FormBuilder); // Inyecta el servicio FormBuilder para manejar formularios reactivos.
-  hasError = signal<boolean>(false); // Señal para manejar el estado de error en el formulario.
-  isPosting = signal<boolean>(false); // Señal para manejar el estado de carga (posting).
   router = inject(Router); // Inyecta el servicio Router para la navegación.
   authService = inject(AuthService); // Inyecta el servicio AuthService para manejar la autenticación.
-  notificationService = inject(NotificationService); //Servicio para manejo de errores
-  globalError = this.notificationService.getError();
+  notificationService = inject(NotificationService); // Servicio para manejo de errores
+
+  hasError = signal<boolean>(false); // Señal para manejar el estado de error en el formulario.
+
+  globalError = this.notificationService.getError(); // Señal reactiva para errores globales
 
   //--------------- Definición del formulario -------------------
   loginForm = this.fb.group({
@@ -37,8 +38,6 @@ export class LoginPageComponent {
     password: ['', [Validators.required, Validators.minLength(6)]], // Campo de contraseña con validaciones: requerido y longitud mínima de 6 caracteres.
   });
 
-  email: string = ''; // Para el email del usuario
-  password: string = ''; // Para la contraseña del usuario
   showPassword: boolean = false; // Para alternar visibilidad de la contraseña
 
   //--------------- Método para manejar el envío del formulario -------------------
@@ -58,16 +57,25 @@ export class LoginPageComponent {
     // Llama al servicio de autenticación para iniciar sesión.
     this.authService
       .login(mail!, password!) // Llama al método `login` del servicio AuthService.
-      .subscribe((isAuthenticated) => {
-        if (isAuthenticated) {
-          this.router.navigateByUrl('/workspace'); // Si la autenticación es exitosa, redirige al usuario a la página principal.
-        } else {
-          this.hasError.set(true); // Si falla, activa la señal de error.
-          setTimeout(() => {
-            this.hasError.set(false); // Desactiva la señal de error después de 2 segundos.
-          }, 2000);
-        }
-        return;
+      .subscribe({
+        next: (isAuthenticated) => {
+          if (isAuthenticated) {
+            this.router.navigateByUrl('/workspace'); // Si la autenticación es exitosa, redirige al usuario a la página principal.
+          } else {
+            this.hasError.set(true);
+            setTimeout(() => this.hasError.set(false), 2000);
+          }
+        },
+        error: (err) => {
+          // Agrega logs para depuración
+          console.log('Error recibido en login:', err);
+          console.log('err.error:', err?.error);
+          console.log('err.error.message:', err?.error?.message);
+
+          // Extrae el mensaje del backend correctamente
+          const backendMessage = err?.error?.message || 'Error desconocido';
+          this.notificationService.showError(backendMessage); // Muestra el error globalmente
+        },
       });
   }
 

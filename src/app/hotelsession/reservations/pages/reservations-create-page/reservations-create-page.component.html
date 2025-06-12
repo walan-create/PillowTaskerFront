@@ -9,7 +9,7 @@
     [formGroup]="reservationForm"
     (ngSubmit)="onSubmit()"
   >
-    <div class="mb-2">
+    <div class="mb-3">
       <label class="form-label fw-bold">Titular</label>
       <input
         type="text"
@@ -26,10 +26,8 @@
       ></form-error-label>
     </div>
 
-    <div class="mb-2">
+    <div class="mb-3">
       <label class="form-label fw-bold">Habitaciones</label>
-      <!-- Implementa aquí tu selector de habitaciones personalizado -->
-      <!-- Selector de habitaciones personalizado -->
       <div
         class="position-relative"
         tabindex="0"
@@ -44,9 +42,9 @@
           (focus)="showRoomDropdown.set(true)"
         />
 
+        @if (showRoomDropdown()) {
         <div
           class="dropdown-menu show w-100 mt-1 shadow"
-          *ngIf="showRoomDropdown()"
           style="
             max-height: 250px;
             overflow-y: auto;
@@ -65,11 +63,13 @@
               autofocus
             />
           </div>
-          <div *ngIf="filteredRooms().length; else noRooms">
+          @if (filteredRooms().length) {
+          <div>
+            @for (room of filteredRooms(); track $index) {
             <div
-              *ngFor="let room of filteredRooms()"
               class="dropdown-item d-flex align-items-center gap-2"
               (mousedown)="toggleRoomSelection(room)"
+              [ngClass]="{ 'bg-secondary': isRoomSelected(room) }"
               [class.active]="isRoomSelected(room)"
               style="cursor: pointer"
             >
@@ -79,6 +79,7 @@
                 [checked]="isRoomSelected(room)"
                 tabindex="-1"
                 readonly
+                style="pointer-events: none"
               />
               <span>
                 <b>{{ room.code }}</b> | {{ room.numberOfRooms }} hab. |
@@ -86,11 +87,15 @@
                 <!-- Usa el pipe si es enum numérico -->
               </span>
             </div>
+            }
           </div>
+          } @else {
           <ng-template #noRooms>
             <div class="dropdown-item text-muted">No hay habitaciones</div>
           </ng-template>
+          }
         </div>
+        }
       </div>
       <!--  -->
       <form-error-label
@@ -98,39 +103,36 @@
       ></form-error-label>
     </div>
 
-    <div class="mb-2">
-      <label class="form-label fw-bold">Fecha de entrada</label>
-      <input
-        type="date"
-        class="form-control bg-beige"
-        formControlName="entryDate"
-        required
-        [class.is-invalid]="
-          reservationForm.get('entryDate')?.invalid &&
-          reservationForm.get('entryDate')?.touched
-        "
-      />
-      <form-error-label
-        [control]="reservationForm.get('entryDate')!"
-      ></form-error-label>
-    </div>
-
-    <div class="mb-2">
-      <label class="form-label fw-bold">Fecha de salida</label>
-      <input
-        type="date"
-        class="form-control bg-beige"
-        formControlName="departureDay"
-        required
-        [class.is-invalid]="
-          reservationForm.get('departureDay')?.invalid &&
-          reservationForm.get('departureDay')?.touched
-        "
-      />
-      <form-error-label
-        [control]="reservationForm.get('departureDay')!"
-      ></form-error-label>
-    </div>
+    <div class="row mb-3">
+  <div class="col">
+    <label class="form-label fw-bold">Fecha de entrada</label>
+    <input
+      type="date"
+      class="form-control bg-beige"
+      formControlName="entryDate"
+      required
+      [class.is-invalid]="
+        reservationForm.get('entryDate')?.invalid &&
+        reservationForm.get('entryDate')?.touched
+      "
+    />
+    <form-error-label [control]="reservationForm.get('entryDate')!"></form-error-label>
+  </div>
+  <div class="col">
+    <label class="form-label fw-bold">Fecha de salida</label>
+    <input
+      type="date"
+      class="form-control bg-beige"
+      formControlName="departureDay"
+      required
+      [class.is-invalid]="
+        reservationForm.get('departureDay')?.invalid &&
+        reservationForm.get('departureDay')?.touched
+      "
+    />
+    <form-error-label [control]="reservationForm.get('departureDay')!"></form-error-label>
+  </div>
+</div>
 
     <button type="submit" class="btn btn-secondary w-100">Crear</button>
   </form>
@@ -149,4 +151,9 @@
     <span>Reserva creada correctamente</span>
   </div>
   }
+  @if (globalError()) {
+  <div class="alert alert-danger mt-3" role="alert">
+    {{ globalError() }}
+  </div>
+}
 </div>

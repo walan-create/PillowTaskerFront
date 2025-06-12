@@ -7,10 +7,12 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
+import { FilterByTextPipe } from '@shared/pipes/filter-by-text.pipe';
+import { OrderByPipe } from '@shared/pipes/order-by.pipe';
 
 @Component({
   selector: 'app-list',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, FilterByTextPipe, OrderByPipe],
   templateUrl: './list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -19,10 +21,15 @@ export class AppListComponent<T extends object> {
   columns = input.required<AppTableColumn<T>[]>();
   actionsTemplate = input<TemplateRef<any> | undefined>();
 
+  searchText = input<string>('');
+  orderBy = input<string>('');
+  orderDirection = input<'asc' | 'desc'>('asc');
+
   openItems = signal<Set<any>>(new Set());
 
   sanitizeId(value: any): string {
-    if (value === undefined || value === null || value === '') return 'item_undefined';
+    if (value === undefined || value === null || value === '')
+      return 'item_undefined';
     return String(value).replace(/[^a-zA-Z0-9_-]/g, '_');
   }
 

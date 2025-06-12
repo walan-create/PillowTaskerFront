@@ -7,12 +7,12 @@
   [orderBy]="orderBy"
   [orderDirection]="orderDirection"
   [orderFields]="[
-    { key: 'name', label: 'Nombre'},
-    { key: 'mail', label: 'Correo'},
-    { key: 'surname1', label: 'Apellido 1'},
-    { key: 'surname2', label: 'Apellido 2'},
-    { key: 'dni', label: 'DNI'},
-    { key: 'rol', label: 'Rol'}
+    { key: 'name', label: 'Nombre' },
+    { key: 'mail', label: 'Correo' },
+    { key: 'surname1', label: 'Apellido 1' },
+    { key: 'surname2', label: 'Apellido 2' },
+    { key: 'dni', label: 'DNI' },
+    { key: 'rol', label: 'Rol' }
   ]"
   [searchPlaceholder]="'Buscar empleado...'"
   [createButtonLink]="'/hotelsession/employees/invite'"
@@ -24,9 +24,52 @@
 
 @if(isMobileOrTablet()) { @defer{
 
-  <app-list
+<app-list
+  [data]="employees()"
+  [columns]="employeeColumns"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
+  [searchText]="searchText"
+  [actionsTemplate]="actionsTemplate"
+>
+  <ng-template #actionsTemplate let-employee>
+    <button
+      [routerLink]="['/hotelsession/employees/', employee.id]"
+      class="btn btn-warning d-flex align-items-center justify-content-center"
+      style="width: 30px; height: 30px"
+      title="Editar"
+    >
+      <i class="fa-solid fa-pencil fs-5 text-white"></i>
+    </button>
+    <button
+      (click)="openDeleteEmployeeModal(employee.id)"
+      class="btn btn-danger d-flex align-items-center justify-content-center"
+      style="width: 30px; height: 30px"
+      title="Eliminar"
+    >
+      <i class="fa-solid fa-trash-can fs-5"></i>
+    </button>
+    <!-- <button
+        (click)="resendInvite(employee.id)"
+        class="btn btn-primary d-flex align-items-center justify-content-center"
+        style="width: 30px; height: 30px"
+        title="Reenviar invitación"
+        *ngIf="employee.state === 'INVITED'"
+      >
+        <i class="fa-solid fa-envelope fs-5"></i>
+      </button> -->
+  </ng-template>
+</app-list>
+
+} } @else { @defer{
+
+<div class="flex-grow-1 overflow-auto">
+  <app-table
     [data]="employees()"
     [columns]="employeeColumns"
+    [orderBy]="orderBy"
+    [orderDirection]="orderDirection"
+    [searchText]="searchText"
     [actionsTemplate]="actionsTemplate"
   >
     <ng-template #actionsTemplate let-employee>
@@ -47,46 +90,6 @@
         <i class="fa-solid fa-trash-can fs-5"></i>
       </button>
       <!-- <button
-        (click)="resendInvite(employee.id)"
-        class="btn btn-primary d-flex align-items-center justify-content-center"
-        style="width: 30px; height: 30px"
-        title="Reenviar invitación"
-        *ngIf="employee.state === 'INVITED'"
-      >
-        <i class="fa-solid fa-envelope fs-5"></i>
-      </button> -->
-    </ng-template>
-  </app-list>
-
-} } @else { @defer{
-
-  <div class="flex-grow-1 overflow-auto">
-    <app-table
-      [data]="employees()"
-      [columns]="employeeColumns"
-      [orderBy]="orderBy"
-      [orderDirection]="orderDirection"
-      [searchText]="searchText"
-      [actionsTemplate]="actionsTemplate"
-    >
-      <ng-template #actionsTemplate let-employee>
-        <button
-          [routerLink]="['/hotelsession/employees/', employee.id]"
-          class="btn btn-warning d-flex align-items-center justify-content-center"
-          style="width: 30px; height: 30px"
-          title="Editar"
-        >
-          <i class="fa-solid fa-pencil fs-5 text-white"></i>
-        </button>
-        <button
-          (click)="openDeleteEmployeeModal(employee.id)"
-          class="btn btn-danger d-flex align-items-center justify-content-center"
-          style="width: 30px; height: 30px"
-          title="Eliminar"
-        >
-          <i class="fa-solid fa-trash-can fs-5"></i>
-        </button>
-        <!-- <button
           (click)="resendInvite(employee.id)"
           class="btn btn-primary d-flex align-items-center justify-content-center"
           style="width: 30px; height: 30px"
@@ -95,13 +98,14 @@
         >
           <i class="fa-solid fa-envelope fs-5"></i>
         </button> -->
-      </ng-template>
-    </app-table>
-  </div>
+    </ng-template>
+  </app-table>
+</div>
 
 } }
 
 <reusable-modal
+  [id]="'reusableModal'"
   [modalText]="'¿Deseas eliminar el empleado de forma permanente?'"
   (accepted)="handleDeleteEmployee()"
 ></reusable-modal>

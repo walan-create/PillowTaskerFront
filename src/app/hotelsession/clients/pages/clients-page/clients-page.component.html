@@ -27,6 +27,9 @@
 <app-list
   [data]="clients()"
   [columns]="clientColumns"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
+  [searchText]="searchText"
   [actionsTemplate]="actionsTemplate"
 >
   <ng-template #actionsTemplate let-client>
@@ -78,9 +81,18 @@
   </app-table>
 </div>
 
-} }
+} } @if (globalError()) {
+<div
+  class="alert alert-danger position-fixed top-50 start-50 translate-middle shadow py-4"
+  style="z-index: 2000; min-width: 320px; max-width: 90vw; text-align: center"
+  role="alert"
+>
+  {{ globalError() }}
+</div>
+}
 
 <reusable-modal
+  [id]="'reusableModal'"
   [modalText]="'¿Deseas eliminar el cliente de forma permanente?'"
   (accepted)="handleDeleteClient()"
 ></reusable-modal>

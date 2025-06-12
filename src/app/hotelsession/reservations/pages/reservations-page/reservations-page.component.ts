@@ -16,6 +16,7 @@ import { Reservation } from '../../interfaces/reservation.interface';
 import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
 import { BreakpointService } from '../../../../services/breakpoint.service';
 import { AppListComponent } from '../../../../shared/components/list/list.component';
+import { ReservationStatePipe } from '@shared/pipes/reservation-state.pipe';
 
 @Component({
   selector: 'app-reservations-page',
@@ -66,7 +67,7 @@ export class ReservationsPageComponent implements OnInit {
           ? row.departureDay.toLocaleDateString()
           : '',
     },
-    { key: 'state', label: 'Estado', headerClass: 'col-2' },
+    { key: 'state', label: 'Estado', headerClass: 'col-2', cellTemplate: (row: any) => new ReservationStatePipe().transform(row.state) },
     {
       key: 'earlyDeparture',
       label: 'Salida Anticipada',

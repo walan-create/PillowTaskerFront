@@ -15,7 +15,7 @@
   ]"
   [searchPlaceholder]="'Buscar hotel...'"
   [createButtonLink]="'/workspace/hotels/create'"
-  [createButtonText]="'Crear Hotel'"
+  [createButtonText]="'Crear'"
   (searchTextChange)="onSearchTextChange($event)"
   (orderByChange)="onOrderByChange($event)"
   (orderDirectionChange)="onOrderDirectionChange($event)"
@@ -25,25 +25,35 @@
 <app-list
   [data]="hotels()"
   [columns]="hotelColumns"
+  [searchText]="searchText"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
   [actionsTemplate]="actionsTemplate"
 >
   <ng-template #actionsTemplate let-hotel>
     <button
-      [routerLink]="['/workspace/hotels', hotel.id]"
-      class="btn btn-warning d-flex align-items-center justify-content-center"
-      style="width: 30px; height: 30px"
-      title="Editar"
-    >
-      <i class="fa-solid fa-pencil fs-5 text-white"></i>
-    </button>
-    <button
-      (click)="openDeleteHotelModal(hotel.id)"
-      class="btn btn-danger d-flex align-items-center justify-content-center"
-      style="width: 30px; height: 30px"
-      title="Eliminar"
-    >
-      <i class="fa-solid fa-trash-can fs-5"></i>
-    </button>
+          [routerLink]="['/workspace/hotel-access/', hotel.id]"
+            class="btn btn-blue d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-arrow-right-to-bracket fs-5 text-white"></i>
+          </button>
+          @if (hotel.userId === authService.user()?.id) {
+          <button
+            [routerLink]="['/workspace/hotels/', hotel.id]"
+            class="btn btn-warning d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-pencil fs-5 text-white"></i>
+          </button>
+          <button
+            (click)="openDeleteHotelModal(hotel.id)"
+            class="btn btn-danger d-flex align-items-center justify-content-center"
+            style="width: 30px; height: 30px"
+          >
+            <i class="fa-solid fa-trash-can fs-5"></i>
+          </button>
+          }
   </ng-template>
 </app-list>
 } } @else { @defer{
@@ -86,6 +96,7 @@
 } }
 
 <reusable-modal
+  [id]="'reusableModal'"
   [modalText]="'¿Deseas eliminar el hotel de forma permanente?'"
   (accepted)="handleDeleteHotel()"
 ></reusable-modal>

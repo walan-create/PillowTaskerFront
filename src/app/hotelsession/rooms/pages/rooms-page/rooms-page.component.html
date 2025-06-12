@@ -29,6 +29,9 @@
 <app-list
   [data]="rooms()"
   [columns]="roomColumns"
+  [orderBy]="orderBy"
+  [orderDirection]="orderDirection"
+  [searchText]="searchText"
   [actionsTemplate]="actionsTemplate"
 >
   <ng-template #actionsTemplate let-room>
@@ -80,10 +83,19 @@
   </app-table>
 </div>
 
-} }
+} } @if (globalError()) {
+<div
+  class="alert alert-danger position-fixed top-50 start-50 translate-middle shadow py-4"
+  style="z-index: 2000; min-width: 320px; max-width: 90vw; text-align: center"
+  role="alert"
+>
+  {{ globalError() }}
+</div>
+}
 
 <!-- Modal -->
 <reusable-modal
+  [id]="'reusableModal'"
   [modalText]="'¿Deseas eliminar el empleado de forma permanente?'"
   (accepted)="handleDeleteRoom()"
 ></reusable-modal>

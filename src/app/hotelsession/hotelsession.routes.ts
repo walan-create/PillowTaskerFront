@@ -18,6 +18,7 @@ import { IncidentEditPageComponent } from './incidents/pages/incident-edit-page/
 import { ReservationsPageComponent } from './reservations/pages/reservations-page/reservations-page.component';
 import { ReservationsCreatePageComponent } from './reservations/pages/reservations-create-page/reservations-create-page.component';
 import { ReservationsCheckinPageComponent } from './reservations/pages/reservations-checkin-page/reservations-checkin-page.component';
+import { ReservationsEditPageComponent } from './reservations/pages/reservations-edit-page/reservations-edit-page.component';
 
 export const hotelessionRoutes: Routes = [
   {
@@ -107,6 +108,10 @@ export const hotelessionRoutes: Routes = [
       {
         path: 'reservations/checkin/:id',
         component: ReservationsCheckinPageComponent,
+      },
+      {
+        path: 'reservations/edit/:id',
+        component: ReservationsEditPageComponent,
       },
 
       //-----------------------------------------

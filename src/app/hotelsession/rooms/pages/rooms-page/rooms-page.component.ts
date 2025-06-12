@@ -18,6 +18,7 @@ import { BreakpointService } from '../../../../services/breakpoint.service';
 import { AppListComponent } from '../../../../shared/components/list/list.component';
 import { RoomStatePipe } from '@shared/pipes/room-state.pipe';
 import { RoomTypePipe } from '@shared/pipes/room-type.pipe';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-rooms-page',
@@ -35,14 +36,24 @@ import { RoomTypePipe } from '@shared/pipes/room-type.pipe';
 export class RoomsPageComponent implements OnInit {
   roomsService = inject(RoomsService);
   breakpointService = inject(BreakpointService);
+  notificationService = inject(NotificationService);
 
   roomColumns: AppTableColumn<Room>[] = [
     { key: 'code', label: 'Código', headerClass: 'col-1' },
     { key: 'numberOfRooms', label: 'Habitaciones', headerClass: 'col-2' },
     { key: 'capacity', label: 'Capacidad', headerClass: 'col-2' },
-    { key: 'type', label: 'Tipo', headerClass: 'col-2', cellTemplate: (row: any) => new RoomTypePipe().transform(row.type) },
-    { key: 'state', label: 'Estado', headerClass: 'col-2',  cellTemplate: (row: any) => new RoomStatePipe().transform(row.state),
- },
+    {
+      key: 'type',
+      label: 'Tipo',
+      headerClass: 'col-2',
+      cellTemplate: (row: any) => new RoomTypePipe().transform(row.type),
+    },
+    {
+      key: 'state',
+      label: 'Estado',
+      headerClass: 'col-2',
+      cellTemplate: (row: any) => new RoomStatePipe().transform(row.state),
+    },
     {
       key: 'kitchen',
       label: 'Cocina',
@@ -51,6 +62,7 @@ export class RoomsPageComponent implements OnInit {
     },
   ];
 
+  globalError = this.notificationService.getError();
   searchText: string = '';
   orderBy: keyof Room = 'numberOfRooms';
   orderDirection: 'asc' | 'desc' = 'asc';
@@ -65,10 +77,14 @@ export class RoomsPageComponent implements OnInit {
     this.loadRooms();
   }
 
-  loadRooms(){
+  loadRooms() {
     this.roomsService.loadHotelRooms().subscribe({
       next: (rooms) => this.roomsService.rooms.set(rooms),
-      error: (err) => console.error('Error loading rooms:', err),
+      error: (err) => {
+        this.notificationService.showError(
+          err?.error?.message || 'Error al cargar habitaciones'
+        );
+      },
     });
   }
 
@@ -96,13 +112,14 @@ export class RoomsPageComponent implements OnInit {
   handleDeleteRoom() {
     const id = this.roomIdToDelete();
     if (id !== null) {
-      this.roomsService
-      .deleteRoom(id).subscribe({
+      this.roomsService.deleteRoom(id).subscribe({
         next: () => {
           console.log('Habitación eliminada exitosamente');
         },
         error: (err) => {
-          console.error('Error al eliminar la habitación', err);
+          this.notificationService.showError(
+            err?.error?.message || 'Error al eliminar la habitación'
+          );
         },
       });
     }

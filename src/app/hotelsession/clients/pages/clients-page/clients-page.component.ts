@@ -16,6 +16,7 @@ import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
 import { BreakpointService } from '../../../../services/breakpoint.service';
 import { AppListComponent } from '../../../../shared/components/list/list.component';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-clients-page',
@@ -33,12 +34,13 @@ import { AppListComponent } from '../../../../shared/components/list/list.compon
 export class ClientsPageComponent implements OnInit {
   clientsService = inject(ClientsService);
   breakpointService = inject(BreakpointService);
+  notificationService = inject(NotificationService);
 
   clientColumns: AppTableColumn<Client>[] = [
     { key: 'name', label: 'Nombre', headerClass: 'col-1' },
     { key: 'surname1', label: 'Apellido 1', headerClass: 'col-2' },
     { key: 'surname2', label: 'Apellido 2', headerClass: 'col-2' },
-    { key: 'nif', label: 'NIF', headerClass: 'col-1' },
+    { key: 'nif', label: 'NIF', headerClass: 'col-2' },
     {
       key: 'birthDate',
       label: 'Nacimiento',
@@ -48,10 +50,11 @@ export class ClientsPageComponent implements OnInit {
           ? row.birthDate.toLocaleDateString()
           : '',
     },
-    { key: 'nationality', label: 'Nacionalidad', headerClass: 'col-2' },
-    { key: 'phoneNumber', label: 'Teléfono', headerClass: 'col-1' },
+    { key: 'nationality', label: 'País', headerClass: 'col-1' },
+    { key: 'phoneNumber', label: 'Teléfono', headerClass: 'col-' },
   ];
 
+  globalError = this.notificationService.getError();
   searchText: string = '';
   orderBy: keyof Client = 'name';
   orderDirection: 'asc' | 'desc' = 'asc';
@@ -88,7 +91,11 @@ export class ClientsPageComponent implements OnInit {
         }));
         this.clientsService.clients.set(parsedClients);
       },
-      error: (err) => console.error('Error loading clients:', err),
+      error: (err) => {
+        this.notificationService.showError(
+          err?.error?.message || 'Error al cargar clientes'
+        );
+      },
     });
   }
 
@@ -121,7 +128,9 @@ export class ClientsPageComponent implements OnInit {
           console.log('Cliente eliminado exitosamente');
         },
         error: (err) => {
-          console.error('Error al eliminar el cliente', err);
+          this.notificationService.showError(
+            err?.error?.message || 'Error al eliminar el cliente'
+          );
         },
       });
     }

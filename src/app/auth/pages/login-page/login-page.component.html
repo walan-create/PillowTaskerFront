@@ -46,8 +46,7 @@
         </div>
         <!-- Botón de Login -->
         <button type="submit" class="btn btn-secondary w-100">
-
-         <b>Iniciar sesión</b>
+          <b>Iniciar sesión</b>
         </button>
       </form>
 
@@ -60,15 +59,10 @@
     </div>
   </div>
 
-  @if (hasError()) {
-  <div class="alert alert-danger align-items-center mt-3" role="alert">
-    <div>Por favor verifique la información ingresada.</div>
-  </div>
 
+  @if (globalError()) {
+    <div class="alert alert-danger mt-3" role="alert">
+      {{ globalError() }}
+    </div>
   }
-  <!-- @if (globalError()) {
-  <div class="alert alert-danger mt-3" role="alert">
-    {{ globalError() }}
-  </div>
-  } -->
 </div>

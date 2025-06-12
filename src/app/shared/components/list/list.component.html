@@ -1,5 +1,9 @@
 <div class="card-container">
-  @if (data()) { @for (item of data(); track item[columns()[0].key]) {
+  @if (data()) {
+    @for (item of data()
+      | filterByText:searchText()
+      | orderBy:orderBy():orderDirection();
+      track item[columns()[0].key]) {
   <div class="card border mb-2 p-2 position-relative">
     <button
       class="btn w-100 text-start d-flex align-items-center position-absolute"

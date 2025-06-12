@@ -5,15 +5,23 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '@auth/interfaces/user.interface';
 import { AuthService } from '@auth/services/auth.service';
 import { FormUtils } from '@utils/form-utils';
+import { NotificationService } from '../../../services/notification.service';
+import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 
 @Component({
   selector: 'app-register-page',
-  imports: [RouterModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, FormsModule, ReactiveFormsModule, FormErrorLabelComponent],
   templateUrl: './register-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -24,7 +32,9 @@ export class RegisterPageComponent {
   isPosting = signal<boolean>(false); // Señal para manejar el estado de carga (posting).
   router = inject(Router); // Inyecta el servicio Router para la navegación.
   authService = inject(AuthService); // Inyecta el servicio AuthService para manejar la autenticación.
+  notificationService = inject(NotificationService); // Servicio para manejo de errores
 
+  globalError = this.notificationService.getError(); // Señal reactiva para errores globales
   password: string = '';
   confirmPassword: string = '';
   acceptPolicy: boolean = false;
@@ -48,7 +58,6 @@ export class RegisterPageComponent {
       validators: [FormUtils.isFieldOneEqualFieldTwo('password', 'password2')],
     }
   );
-
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -80,18 +89,21 @@ export class RegisterPageComponent {
     };
 
     // Llama al servicio de autenticación para iniciar sesión.
-    this.authService
-      .register(user) // Llama al método `login` del servicio AuthService.
-      .subscribe((isAuthenticated) => {
+    this.authService.register(user).subscribe({
+      next: (isAuthenticated) => {
         if (isAuthenticated) {
-          this.router.navigateByUrl('/workspace'); // Si la autenticación es exitosa, redirige al usuario a la página principal.
+          this.router.navigateByUrl('/workspace');
         } else {
-          this.hasError.set(true); // Si falla, activa la señal de error.
-          setTimeout(() => {
-            this.hasError.set(false); // Desactiva la señal de error después de 2 segundos.
-          }, 2000);
+          this.hasError.set(true);
+          setTimeout(() => this.hasError.set(false), 2000);
         }
-        return;
-      });
+      },
+      error: (err) => {
+
+        // Muestra el mensaje personalizado del backend
+        const backendMessage = err?.error?.message || 'Error desconocido';
+        this.notificationService.showError(backendMessage);
+      },
+    });
   }
 }

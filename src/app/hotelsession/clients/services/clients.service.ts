@@ -118,11 +118,8 @@ export class ClientsService {
             clients.filter((client) => client.id !== clientId)
           );
           localStorage.setItem('hotelClients', JSON.stringify(this.clients()));
-        }),
-        catchError((error) => {
-          console.error('Error al eliminar el cliente:', error);
-          return of();
         })
+        // Elimina el catchError de aquí
       );
   }
 

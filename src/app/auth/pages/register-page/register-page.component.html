@@ -18,6 +18,9 @@
             formControlName="name"
             required
           />
+          <form-error-label
+            [control]="registerForm.get('name')!"
+          ></form-error-label>
         </div>
         <!-- Surname1 -->
         <div class="mb-2">
@@ -28,6 +31,9 @@
             formControlName="surname1"
             required
           />
+          <form-error-label
+            [control]="registerForm.get('surname1')!"
+          ></form-error-label>
         </div>
         <!-- Surname2 -->
         <div class="mb-2">
@@ -38,6 +44,9 @@
             formControlName="surname2"
             required
           />
+          <form-error-label
+            [control]="registerForm.get('surname2')!"
+          ></form-error-label>
         </div>
         <!-- DNI -->
         <div class="mb-2">
@@ -48,6 +57,9 @@
             formControlName="dni"
             required
           />
+          <form-error-label
+            [control]="registerForm.get('dni')!"
+          ></form-error-label>
         </div>
         <!-- Correo -->
         <div class="mb-3">
@@ -58,6 +70,9 @@
             formControlName="mail"
             required
           />
+          <form-error-label
+            [control]="registerForm.get('mail')!"
+          ></form-error-label>
         </div>
 
         <!-- Contraseña -->
@@ -84,6 +99,9 @@
               ></i>
             </button>
           </div>
+          <form-error-label
+            [control]="registerForm.get('password')!"
+          ></form-error-label>
         </div>
         <!-- Confirmar Contraseña -->
         <div class="mb-3">
@@ -111,6 +129,13 @@
               ></i>
             </button>
           </div>
+          <form-error-label
+            [control]="registerForm.get('password2')!"
+          ></form-error-label>
+          @if ( registerForm.hasError('passwordsNotEqual') &&
+          registerForm.get('password2')?.touched ) {
+          <div class="text-danger small mt-1">Las contraseñas no coinciden</div>
+          }
         </div>
 
         <!-- Checkbox -->
@@ -141,10 +166,9 @@
     </div>
   </div>
 
-  @if (hasError()) {
-  <div class="alert alert-danger align-items-center mt-3" role="alert">
-    <div>Por favor verifique la información ingresada.</div>
+  @if (globalError()) {
+  <div class="alert alert-danger mt-3" role="alert">
+    {{ globalError() }}
   </div>
-
   }
 </div>
