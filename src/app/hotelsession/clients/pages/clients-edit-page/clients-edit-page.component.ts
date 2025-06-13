@@ -81,10 +81,9 @@ export class ClientsEditPageComponent {
             name: client.name,
             surname1: client.surname1,
             surname2: client.surname2,
-            birthDate:
-              client.birthDate instanceof Date
-                ? client.birthDate.toISOString().substring(0, 10)
-                : client.birthDate,
+            birthDate: client.birthDate
+              ? new Date(client.birthDate).toISOString().substring(0, 10)
+              : '',
             nationality: client.nationality,
             address: client.address,
             postalCode: client.postalCode,

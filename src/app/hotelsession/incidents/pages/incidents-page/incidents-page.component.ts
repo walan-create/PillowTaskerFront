@@ -39,7 +39,8 @@ export class IncidentsPageComponent implements OnInit {
       key: 'date',
       label: 'Fecha',
       headerClass: 'col-2',
-      cellTemplate: (row: Incident) => new Date(row.date).toLocaleString(),
+      cellTemplate: (row: Incident) =>
+        row.date ? new Date(row.date).toLocaleDateString() : '',
     },
   ];
 

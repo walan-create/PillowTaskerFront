@@ -52,7 +52,7 @@ export class IncidentEditPageComponent {
           title: incident.title,
           concept: incident.concept,
           date: incident.date
-            ? new Date(incident.date).toISOString().slice(0, 16)
+            ? new Date(incident.date).toISOString().slice(0, 10) // <-- Solo YYYY-MM-DD
             : '',
         });
       },
