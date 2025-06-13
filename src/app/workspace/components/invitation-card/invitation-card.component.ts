@@ -10,10 +10,11 @@ import { DatePipe, TitleCasePipe } from '@angular/common';
 import { InvitationService } from '../../services/invitation.service';
 import { InvitationConfirmModalComponent } from '../invitation-confirm-modal/invitation-confirm-modal.component';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
+import { RolPipe } from '@shared/pipes/rol.pipe';
 
 @Component({
   selector: 'invitation-card',
-  imports: [TitleCasePipe, DatePipe, InvitationConfirmModalComponent, ReusableModalComponent],
+  imports: [TitleCasePipe, DatePipe, InvitationConfirmModalComponent, ReusableModalComponent, RolPipe],
   templateUrl: './invitation-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

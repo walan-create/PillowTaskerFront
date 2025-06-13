@@ -13,9 +13,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ReservationsService } from '../../services/reservations.service';
-import { RoomsService } from '../../../rooms/services/rooms.service';
-import { ClientsService } from '../../../clients/services/clients.service';
+import { ReservationsService } from '../../../services/reservations.service';
+import { RoomsService } from '../../../services/rooms.service';
+import { ClientsService } from '../../../services/clients.service';
 import { CommonModule } from '@angular/common';
 import { Room } from '../../../rooms/interfaces/room.interface';
 import { Client } from '../../../clients/interfaces/client.interface';

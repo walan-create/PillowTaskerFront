@@ -7,7 +7,7 @@ import {
   computed,
   ViewChild,
 } from '@angular/core';
-import { ReservationsService } from '../../services/reservations.service';
+import { ReservationsService } from '../../../services/reservations.service';
 import { AppTableComponent } from '@shared/components/table/table.component';
 import { RouterLink } from '@angular/router';
 import { ListToolbarComponent } from '@shared/components/list-toolbar/list-toolbar.component';
@@ -67,7 +67,13 @@ export class ReservationsPageComponent implements OnInit {
           ? row.departureDay.toLocaleDateString()
           : '',
     },
-    { key: 'state', label: 'Estado', headerClass: 'col-2', cellTemplate: (row: any) => new ReservationStatePipe().transform(row.state) },
+    {
+      key: 'state',
+      label: 'Estado',
+      headerClass: 'col-2',
+      cellTemplate: (row: any) =>
+        new ReservationStatePipe().transform(row.state),
+    },
     {
       key: 'earlyDeparture',
       label: 'Salida Anticipada',

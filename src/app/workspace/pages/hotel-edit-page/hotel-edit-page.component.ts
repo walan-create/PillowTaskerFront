@@ -24,8 +24,7 @@ import { FormErrorLabelComponent } from '@shared/components/form-error-label/for
   templateUrl: './hotel-edit-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HotelEditPageComponent{
-
+export class HotelEditPageComponent {
   hotelsService = inject(HotelsService);
   activatedRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder);
@@ -34,9 +33,29 @@ export class HotelEditPageComponent{
   wasSaved = signal<boolean>(false);
 
   hotelForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    postalCode: ['', [Validators.required, Validators.minLength(5)]],
-    address: ['', [Validators.required, Validators.minLength(5)]],
+    name: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ,.\\-]{3,}$'), // permite letras, números, espacios y algunos signos
+      ],
+    ],
+    postalCode: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('^[0-9]{5}$'), // exactamente 5 dígitos
+      ],
+    ],
+    address: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ,.\\-]{5,}$'),
+      ],
+    ],
   });
 
   hotelId = toSignal(

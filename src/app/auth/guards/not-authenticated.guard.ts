@@ -20,7 +20,7 @@ export const NotAuthenticatedGuard: CanMatchFn = async(
 
   // Si está autenticado no lo dejamos entrar a la ruta de login porque ya está logeado
   if ( isAuthenticated ){
-    router.navigateByUrl('/');
+    router.navigateByUrl('/workspace');
     return false;
   }
 

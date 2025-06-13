@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Room } from '../../interfaces/room.interface';
-import { RoomsService } from '../../services/rooms.service';
+import { RoomsService } from '../../../services/rooms.service';
 import { RouterLink } from '@angular/router';
 import { ListToolbarComponent } from '../../../../shared/components/list-toolbar/list-toolbar.component';
 import { AppTableComponent } from '@shared/components/table/table.component';

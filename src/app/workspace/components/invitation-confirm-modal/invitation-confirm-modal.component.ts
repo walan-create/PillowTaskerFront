@@ -6,11 +6,7 @@ import {
   inject,
   Output,
 } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 
 @Component({
@@ -26,7 +22,7 @@ export class InvitationConfirmModalComponent {
   @Output() passwordSubmitted = new EventEmitter<string>();
 
   passwordForm = this.fb.group({
-    password: ['', [Validators.required]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   onSubmit() {

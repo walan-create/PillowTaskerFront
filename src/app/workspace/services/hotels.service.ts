@@ -27,6 +27,7 @@ export class HotelsService {
   hotels = signal<Hotel[]>([]); // Aquí se almacenan los hoteles cargados
 
   getHotelsByUserId(userId: number): Observable<Hotel[]> {
+    const token = this.authService.token();
     return this.http
       .get<Hotel[]>(`${baseUrl}/users/${userId}/hotels`)
       .pipe(
@@ -83,7 +84,10 @@ export class HotelsService {
 
   createHotel(hotelData: HotelCreateDTO): Observable<Hotel> {
     return this.http
-      .post<Hotel>(`${baseUrl}/users/${this.authService.user()?.id}/hotels`, hotelData)
+      .post<Hotel>(
+        `${baseUrl}/users/${this.authService.user()?.id}/hotels`,
+        hotelData
+      )
       .pipe(tap((hotel) => this.hotels().push(hotel)));
   }
 

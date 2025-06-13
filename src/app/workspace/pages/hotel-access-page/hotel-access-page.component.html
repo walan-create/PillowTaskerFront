@@ -70,20 +70,32 @@
 
   @if (accessSuccess()) {
   <div
-    class="alert alert-success mx-3 position-fixed my-4 py-4 shadow"
+    class="alert alert-success position-fixed my-4 py-4 shadow"
     role="alert"
+    style="
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 400px;
+      z-index: 3000;
+    "
   >
     <span>Acceso concedido correctamente</span>
   </div>
   }
   @if (hasError()){
-    <div
-    class="alert alert-danger mx-3 position-fixed my-4 py-4 shadow"
+     <div
+    class="alert alert-danger position-fixed my-4 py-4 shadow"
     role="alert"
+    style="
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 400px;
+      z-index: 3000;
+    "
   >
     <span>Acceso Negado</span>
   </div>
   }
-  
+
 </div>
 

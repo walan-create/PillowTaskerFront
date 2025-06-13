@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ReservationsService } from '../../services/reservations.service';
+import { ReservationsService } from '../../../services/reservations.service';
 import { CommonModule } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { FormErrorLabelComponent } from '../../../../shared/components/form-error-label/form-error-label.component';
-import { RoomsService } from '../../../rooms/services/rooms.service';
+import { RoomsService } from '../../../services/rooms.service';
 import { Room } from '../../../rooms/interfaces/room.interface';
 import { FormsModule } from '@angular/forms'; // <-- IMPORTANTE
 import { RoomTypePipe } from '../../../../shared/pipes/room-type.pipe'; // <-- Si tienes un pipe para el tipo
@@ -65,15 +65,14 @@ export class ReservationsCreatePageComponent implements OnInit {
 
   filteredRooms() {
     const search = this.roomSearchText().toLowerCase();
-    return this.allRooms()
-      .filter(
-        (room) =>
-          room.code.toLowerCase().includes(search) ||
-          String(room.numberOfRooms).includes(search) ||
-          (typeof room.type === 'string'
-            ? room.type.toLowerCase().includes(search)
-            : false)
-      );
+    return this.allRooms().filter(
+      (room) =>
+        room.code.toLowerCase().includes(search) ||
+        String(room.numberOfRooms).includes(search) ||
+        (typeof room.type === 'string'
+          ? room.type.toLowerCase().includes(search)
+          : false)
+    );
   }
 
   toggleRoomSelection(room: Room) {

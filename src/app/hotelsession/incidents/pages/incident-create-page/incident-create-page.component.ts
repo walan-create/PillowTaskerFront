@@ -1,10 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Incident } from '../../interfaces/incident.interface';
 import { CommonModule } from '@angular/common';
-import { IncidentsService } from '../../services/incident.service';
-import { FormErrorLabelComponent } from "../../../../shared/components/form-error-label/form-error-label.component";
+import { IncidentsService } from '../../../services/incident.service';
+import { FormErrorLabelComponent } from '../../../../shared/components/form-error-label/form-error-label.component';
 
 @Component({
   selector: 'app-incident-create-page',
@@ -13,8 +18,8 @@ import { FormErrorLabelComponent } from "../../../../shared/components/form-erro
     RouterLink,
     ReactiveFormsModule,
     CommonModule,
-    FormErrorLabelComponent
-],
+    FormErrorLabelComponent,
+  ],
   templateUrl: './incident-create-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

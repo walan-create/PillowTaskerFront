@@ -12,7 +12,7 @@ import { ListToolbarComponent } from '@shared/components/list-toolbar/list-toolb
 import { AppListComponent } from '@shared/components/list/list.component';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
 import { AppTableComponent } from '@shared/components/table/table.component';
-import { IncidentsService } from '../../services/incident.service';
+import { IncidentsService } from '../../../services/incident.service';
 import { AppTableColumn } from '@shared/interfaces/app-table-column.interface';
 import { BreakpointService } from '../../../../services/breakpoint.service';
 
@@ -24,15 +24,15 @@ import { BreakpointService } from '../../../../services/breakpoint.service';
     RouterLink,
     ListToolbarComponent,
     ReusableModalComponent,
-    AppListComponent
-],
+    AppListComponent,
+  ],
   templateUrl: './incidents-page.component.html',
 })
 export class IncidentsPageComponent implements OnInit {
   incidentsService = inject(IncidentsService);
   breakpointService = inject(BreakpointService);
 
-  incidentColumns : AppTableColumn<Incident>[] = [
+  incidentColumns: AppTableColumn<Incident>[] = [
     { key: 'title', label: 'Título', headerClass: 'col-3' },
     { key: 'concept', label: 'Concepto', headerClass: 'col-5' },
     {
@@ -79,7 +79,7 @@ export class IncidentsPageComponent implements OnInit {
   openDeleteIncidentModal(incidentId: number) {
     const modalElement = document.getElementById('reusableModal');
     if (modalElement) {
-    this.incidentIdToDelete.set(incidentId);
+      this.incidentIdToDelete.set(incidentId);
       const bootstrapModal = new (window as any).bootstrap.Modal(modalElement);
       bootstrapModal.show();
     }

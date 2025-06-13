@@ -144,12 +144,14 @@
             class="form-check-input"
             type="checkbox"
             id="privacyPolicy"
-            name="acceptPolicy"
-            required
+            formControlName="acceptPolicy"
           />
-          <label class="form-check-label" for="privacyPolicy"
-            >Acepto la política de privacidad</label
-          >
+          <label class="form-check-label" for="privacyPolicy">
+            Acepto la política de privacidad
+          </label>
+          <form-error-label
+            [control]="registerForm.get('acceptPolicy')!"
+          ></form-error-label>
         </div>
         <!-- Botón de Registro -->
         <button type="submit" class="btn btn-secondary w-100">

@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Client } from '../../interfaces/client.interface';
-import { ClientsService } from '../../services/clients.service';
+import { ClientsService } from '../../../services/clients.service';
 import { RouterLink } from '@angular/router';
 import { ListToolbarComponent } from '../../../../shared/components/list-toolbar/list-toolbar.component';
 import { AppTableComponent } from '@shared/components/table/table.component';

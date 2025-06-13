@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable, tap, catchError, of } from 'rxjs';
-import { HotelSessionService } from '../../services/hotel-session.service';
-import { Reservation } from '../interfaces/reservation.interface';
-import { ReservationStateEnum } from '../interfaces/reservation-state.enum';
-import { ReservationDTO } from '../interfaces/reservationDTO.interface';
+import { HotelSessionService } from './hotel-session.service';
+import { Reservation } from '../reservations/interfaces/reservation.interface';
+import { ReservationStateEnum } from '../reservations/interfaces/reservation-state.enum';
+import { ReservationDTO } from '../reservations/interfaces/reservationDTO.interface';
 
 const baseUrl = environment.baseUrl;
 

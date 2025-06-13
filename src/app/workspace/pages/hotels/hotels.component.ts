@@ -38,17 +38,17 @@ export class HotelsComponent implements OnInit {
 
   hotelColumns: AppTableColumn<Hotel>[] = [
     { key: 'name', label: 'Nombre', headerClass: 'col-2' },
-    { key: 'address', label: 'Dirección', headerClass: 'col-3' },
-    { key: 'postalCode', label: 'Código Postal', headerClass: 'col-2' },
+    { key: 'address', label: 'Dirección', headerClass: 'col-2' },
+    { key: 'postalCode', label: 'C.Postal', headerClass: 'col-1' },
     {
       key: 'userId',
       label: 'Propiedad',
-      headerClass: 'col-1',
+      headerClass: 'col-2',
       cellTemplate: (hotel: Hotel) =>
         hotel.userId === this.authService.user()?.id ? 'Propio' : 'Ajeno',
     },
-    { key: 'totalRooms', label: 'Habitaciones', headerClass: 'col-1' },
-    { key: 'totalEmployees', label: 'Empleados', headerClass: 'col-1' },
+    { key: 'totalRooms', label: 'Habs', headerClass: 'col-1' },
+    { key: 'totalEmployees', label: 'Empleados', headerClass: 'col-2' },
   ];
 
   searchText: string = '';

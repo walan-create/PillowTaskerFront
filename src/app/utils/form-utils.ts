@@ -15,7 +15,7 @@ async function sleep() {
 
 export class FormUtils {
   // Expresiones regulares
-  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static namePattern = '^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$';
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
   static slugPattern = '^[a-z0-9_]+(?:-[a-z0-9_]+)*$';
@@ -46,11 +46,28 @@ export class FormUtils {
           return `No se puede usar el username de strider en la app`;
 
         case 'pattern':
+          // NIF
+          if (errors['pattern'].requiredPattern === '^[0-9]{8}[A-Z]$') {
+            return 'El NIF debe tener 8 números seguidos de una letra mayúscula (ej: 12345678A)';
+          }
+          // Nombre y apellidos
+          if (errors['pattern'].requiredPattern === '^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$') {
+            return 'Solo letras y espacios, mínimo 2 caracteres';
+          }
+          // Código postal
+          if (errors['pattern'].requiredPattern === '^[0-9]{5}$') {
+            return 'El código postal debe tener 5 números';
+          }
+          // Teléfono
+          if (errors['pattern'].requiredPattern === '^[0-9]{9}$') {
+            return 'El teléfono debe tener 9 dígitos';
+          }
+          // Email
           if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
             return 'El valor ingresado no luce como un correo electrónico';
           }
-
-          return 'Error de patrón contra expresión regular';
+          // Por defecto
+          return 'Formato inválido';
 
         case 'invalidDniFormat':
           return 'El DNI debe tener 8 números seguidos de una letra mayúscula';

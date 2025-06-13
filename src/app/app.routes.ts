@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from '@landing/pages/landing-page/landing-page.component';
-import { NotFoundPageComponent } from './workspace/pages/not-found-page/not-found-page.component';
 import { NotAuthenticatedGuard } from '@auth/guards/not-authenticated.guard';
 import { AuthenticatedGuard } from '@auth/guards/authenticated.guard';
 import { HotelSessionActiveGuard } from './hotelsession/guards/hotel-session-active.guard';
@@ -10,6 +9,7 @@ export const routes: Routes = [
   {
     path: 'landing',
     component: LandingPageComponent,
+    canMatch: [NotAuthenticatedGuard],
   },
   {
     path: 'auth',

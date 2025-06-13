@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../../../services/breakpoint.service';
-import { CredentialsService } from '../../services/credentials.service';
+import { CredentialsService } from '../../../services/credentials.service';
 import { AuthService } from '@auth/services/auth.service';
 import { AppTableComponent } from '@shared/components/table/table.component';
 import { ListToolbarComponent } from '@shared/components/list-toolbar/list-toolbar.component';
@@ -39,16 +39,16 @@ export class EmployeesPageComponent implements OnInit {
 
   employeeColumns: AppTableColumn<any>[] = [
     { key: 'name', label: 'Nombre', headerClass: 'col-1' },
-    { key: 'mail', label: 'Correo', headerClass: 'col-2' },
     { key: 'surname1', label: 'Apellido 1', headerClass: 'col-2' },
     { key: 'surname2', label: 'Apellido 2', headerClass: 'col-2' },
+    { key: 'mail', label: 'Correo', headerClass: 'col-2' },
     { key: 'dni', label: 'DNI', headerClass: 'col-2' },
     {
-    key: 'rol',
-    label: 'Rol',
-    headerClass: 'col-2',
-    cellTemplate: (row: any) => new RolPipe().transform(row.rol), // Pipe para que el rol salga en español y en TitleCase
-  },
+      key: 'rol',
+      label: 'Rol',
+      headerClass: 'col-2',
+      cellTemplate: (row: any) => new RolPipe().transform(row.rol), // Pipe para que el rol salga en español y en TitleCase
+    },
   ];
 
   searchText: string = '';

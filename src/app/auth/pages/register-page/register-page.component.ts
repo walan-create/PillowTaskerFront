@@ -17,11 +17,17 @@ import { User } from '@auth/interfaces/user.interface';
 import { AuthService } from '@auth/services/auth.service';
 import { FormUtils } from '@utils/form-utils';
 import { NotificationService } from '../../../services/notification.service';
-import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
+import { FormErrorLabelComponent } from '../../../shared/components/form-error-label/form-error-label.component';
 
 @Component({
   selector: 'app-register-page',
-  imports: [RouterModule, CommonModule, FormsModule, ReactiveFormsModule, FormErrorLabelComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FormErrorLabelComponent,
+  ],
   templateUrl: './register-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -46,12 +52,26 @@ export class RegisterPageComponent {
   registerForm = this.fb.group(
     {
       mail: ['', [Validators.required, Validators.email]], // Campo de email con validaciones: requerido y formato de email.
-      name: ['', [Validators.required]],
-      surname1: ['', [Validators.required]],
-      surname2: ['', [Validators.required]],
+      // Sustituye los validadores de los campos de nombre y apellidos:
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$'),
+        ],
+      ],
+      surname1: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$'),
+        ],
+      ],
+      surname2: ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$')]],
       dni: ['', [Validators.required, FormUtils.validDni]], // Agregamos el validador de DNI.
       password: ['', [Validators.required, Validators.minLength(6)]], // Campo de contraseña con validaciones: requerido y longitud mínima de 6 caracteres.
       password2: ['', Validators.required],
+      acceptPolicy: [false, Validators.requiredTrue], // <-- Añadido aquí
     },
     {
       //Añadimos Validadores a nivel global del formulario
@@ -68,8 +88,10 @@ export class RegisterPageComponent {
   }
 
   onSubmit() {
+    const isValid = this.registerForm.valid;
+    this.registerForm.markAllAsTouched();
     // Verifica si el formulario es inválido.
-    if (this.registerForm.invalid) {
+    if (!isValid) {
       this.hasError.set(true); // Activa la señal de error.
       setTimeout(() => {
         this.hasError.set(false); // Desactiva la señal de error después de 2 segundos.
@@ -99,7 +121,6 @@ export class RegisterPageComponent {
         }
       },
       error: (err) => {
-
         // Muestra el mensaje personalizado del backend
         const backendMessage = err?.error?.message || 'Error desconocido';
         this.notificationService.showError(backendMessage);

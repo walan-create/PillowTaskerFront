@@ -65,7 +65,8 @@
       </div>
     </div>
   </div>
-  } } @else {
-  <div class="alert alert-warning text-center" role="alert">No hay datos</div>
-  }
+  } }
+  @if (data().length === 0) {
+<div class="alert alert-warning text-center mt-3" role="alert">No hay datos</div>
+}
 </div>

@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable, tap, catchError, of } from 'rxjs';
-import { HotelSessionService } from '../../services/hotel-session.service';
-import { Client } from '../interfaces/client.interface';
+import { HotelSessionService } from './hotel-session.service';
+import { Client } from '../clients/interfaces/client.interface';
 
 const baseUrl = environment.baseUrl;
 

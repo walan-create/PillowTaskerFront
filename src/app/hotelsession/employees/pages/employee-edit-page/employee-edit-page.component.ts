@@ -9,7 +9,7 @@ import { toSignal, rxResource } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { map, firstValueFrom } from 'rxjs';
-import { CredentialsService } from '../../services/credentials.service';
+import { CredentialsService } from '../../../services/credentials.service';
 import { CommonModule } from '@angular/common';
 import { CredentialTypeEnum } from '../../interfaces/credential-rol.enum';
 import { Credential } from '../../interfaces/credential.interface';

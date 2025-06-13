@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable, tap, catchError, of } from 'rxjs';
-import { HotelSessionService } from '../../services/hotel-session.service';
-import { Credential } from '../interfaces/credential.interface';
-import { CredentialTypeEnum } from '../interfaces/credential-rol.enum';
+import { HotelSessionService } from './hotel-session.service';
+import { Credential } from '../employees/interfaces/credential.interface';
+import { CredentialTypeEnum } from '../employees/interfaces/credential-rol.enum';
 
 const baseUrl = environment.baseUrl;
 
@@ -34,7 +34,7 @@ export class CredentialsService {
           localStorage.setItem('hotelCredentials', JSON.stringify(credentials));
         }),
         catchError((error) => {
-          console.error('Error al cargar los hoteles:', error);
+          console.error('Error al cargar las credenciales:', error);
           return of([]); // Devuelve un array vacío para mantener el flujo
         })
       );

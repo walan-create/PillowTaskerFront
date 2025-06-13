@@ -21,68 +21,78 @@ export class HeaderComponent implements OnInit {
 
   // Configuración de los botones del workspace
   buttons = [
-    {
-      area: '/workspace',
-      routerLink: '/workspace/home',
-      label: 'Inicio',
-      icon: 'fa-solid fa-house',
-    },
-    {
-      area: '/workspace',
-      routerLink: '/workspace/hotels',
-      label: 'Hoteles',
-      icon: 'fa-solid fa-hotel',
-    },
-    {
-      area: '/workspace',
-      routerLink: '/workspace/invitations',
-      label: 'Invitaciones',
-      icon: 'fa-solid fa-envelope',
-    },
-    // Botones de hotelsession
-    {
-      area: '/hotelsession',
-      routerLink: '/hotelsession/board',
-      label: 'Tablero',
-      icon: 'fa-solid fa-clipboard-list',
-    },
-    {
-      area: '/hotelsession',
-      routerLink: '/hotelsession/employees',
-      label: 'Empleados',
-      icon: 'fa-solid fa-user-gear',
-    },
-    {
-      area: '/hotelsession',
-      routerLink: '/hotelsession/rooms',
-      label: 'Habitaciones',
-      icon: 'fa-solid fa-bed',
-    },
-    {
-      area: '/hotelsession',
-      routerLink: '/hotelsession/clients',
-      label: 'Clientes',
-      icon: 'fa-solid fa-users-gear',
-    },
-    {
-      area: '/hotelsession',
-      routerLink: '/hotelsession/supports',
-      label: 'Servicios',
-      icon: 'fa-solid fa-hands-bubbles',
-    },
-    {
-      area: '/hotelsession',
-      routerLink: '/hotelsession/incidents',
-      label: 'Incidencias',
-      icon: 'fa-solid fa-triangle-exclamation',
-    },
-    {
-      area: '/hotelsession',
-      routerLink: '/hotelsession/reservations',
-      label: 'Reservas',
-      icon: 'fa-solid fa-bell-concierge',
-    },
-  ];
+  {
+    area: '/workspace',
+    routerLink: '/workspace/home',
+    label: 'Inicio',
+    icon: 'fa-solid fa-house',
+    roles: [], // vacío = todos pueden verlo
+  },
+  {
+    area: '/workspace',
+    routerLink: '/workspace/hotels',
+    label: 'Hoteles',
+    icon: 'fa-solid fa-hotel',
+    roles: [],
+  },
+  {
+    area: '/workspace',
+    routerLink: '/workspace/invitations',
+    label: 'Invitaciones',
+    icon: 'fa-solid fa-envelope',
+    roles: [],
+  },
+  // Botones de hotelsession
+  {
+    area: '/hotelsession',
+    routerLink: '/hotelsession/board',
+    label: 'Tablero',
+    icon: 'fa-solid fa-clipboard-list',
+    roles: [], // todos los roles
+  },
+  {
+    area: '/hotelsession',
+    routerLink: '/hotelsession/employees',
+    label: 'Empleados',
+    icon: 'fa-solid fa-user-gear',
+    roles: ['ADMIN'],
+  },
+  {
+    area: '/hotelsession',
+    routerLink: '/hotelsession/rooms',
+    label: 'Habitaciones',
+    icon: 'fa-solid fa-bed',
+    roles: ['ADMIN', 'RECEPTIONIST'],
+  },
+  {
+    area: '/hotelsession',
+    routerLink: '/hotelsession/clients',
+    label: 'Clientes',
+    icon: 'fa-solid fa-users-gear',
+    roles: ['ADMIN', 'RECEPTIONIST'],
+  },
+  {
+    area: '/hotelsession',
+    routerLink: '/hotelsession/supports',
+    label: 'Servicios',
+    icon: 'fa-solid fa-hands-bubbles',
+    roles: [], // todos los roles
+  },
+  {
+    area: '/hotelsession',
+    routerLink: '/hotelsession/incidents',
+    label: 'Incidencias',
+    icon: 'fa-solid fa-triangle-exclamation',
+    roles: ['ADMIN', 'RECEPTIONIST'],
+  },
+  {
+    area: '/hotelsession',
+    routerLink: '/hotelsession/reservations',
+    label: 'Reservas',
+    icon: 'fa-solid fa-bell-concierge',
+    roles: ['ADMIN', 'RECEPTIONIST'],
+  },
+];
 
   ngOnInit(): void {
     // Detectar cambios en la ruta
@@ -97,4 +107,15 @@ export class HeaderComponent implements OnInit {
   private updateCurrentRoute(): void {
     this.currentRoute.set(this.router.url); // Actualiza la señal con la ruta actual
   }
+
+  getVisibleButtons() {
+  // Si estamos en hotelsession, obtenemos el rol del hotelSession
+  let userRole = this.hotelSessionService.hotelSession()?.rol;
+  return this.buttons.filter(button => {
+    // Si no hay restricción de roles, mostrar siempre
+    if (!button.roles || button.roles.length === 0) return true;
+    // Si hay restricción, mostrar solo si el rol está permitido
+    return userRole && button.roles.includes(userRole);
+  });
+}
 }

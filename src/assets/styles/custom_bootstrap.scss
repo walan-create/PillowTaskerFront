@@ -91,7 +91,7 @@ $headings-font-weight:        bold;
 }
 
 .logo-text {
-  font-size: 36px; /* Tamaño de fuente */
+  font-size: 32px; /* Tamaño de fuente */
   color: $brown-500; /* Color de texto */
   font-family: $lobster-font-family; /* Tipografía */
   text-decoration: none; /* Quitar subrayado */
@@ -145,7 +145,7 @@ html, body {
 main {
 
   position: absolute;
-  top: 90px;  /* altura del header */
+  top: 80px;  /* altura del header */
   bottom: 0;
   left: 0;
   right: 0;
@@ -157,12 +157,6 @@ main {
   flex-direction: column;
 }
 
-.custom-header {
-  height: 90px;
-  background-color: white;
-  z-index: 1050;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
 
 .overlay {
   background: linear-gradient(

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { RoomTypeEnum } from '../../interfaces/room-type.enum';
 import { RoomStateEnum } from '../../interfaces/room-state.enum';
-import { RoomsService } from '../../services/rooms.service';
+import { RoomsService } from '../../../services/rooms.service';
 import { firstValueFrom } from 'rxjs';
 import { Room } from '../../interfaces/room.interface';
 

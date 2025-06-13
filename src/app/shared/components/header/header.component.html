@@ -1,8 +1,10 @@
 <!-- fixed-top -->
-<header class="d-grid fixed-top custom-header" style="height: 90px">
+<header
+  class="d-grid fixed-top custom-header bg-white shadow-lg"
+  style="height: 80px"
+>
   <nav class="navbar navbar-light shadow">
     <div class="container-xxl">
-
       <!-- Botón desplegable (Visible en Móvil) -->
       <button
         [ngClass]="{
@@ -11,102 +13,176 @@
             currentRoute().startsWith('/workspace') ||
             currentRoute().startsWith('/hotelsession')
         }"
-        class="navbar-toggler text-white border-0 fs-2"
+        class="navbar-toggler text-white border-0"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasDarkNavbar"
         aria-controls="offcanvasDarkNavbar"
       >
-        <i class="fa-solid fa-bars fs-1 text-primary"></i>
+        <i class="fa-solid fa-bars fs-2 text-primary"></i>
       </button>
 
       <!-- Logo -->
       <div class="navbar-brand me-auto ms-3">
-        <a [routerLink]="'/landing'" class="d-flex align-items-center no-decoration" href="#">
-          <img src="assets/images/almohada-logo.png" alt="Bootstrap" width="60" height="40" class="me-2">
+        <a
+          [routerLink]="'/workspace'"
+          (click)="hotelSessionService.logout()"
+          class="d-flex align-items-center no-decoration"
+          href="#"
+        >
+          <img
+            src="assets/images/almohada-logo.png"
+            alt="Bootstrap"
+            width="50"
+            height="33"
+            class="me-2"
+          />
           <h3
-          [ngClass]="{
-          'd-none d-md-flex':
-            currentRoute().startsWith('/workspace') ||
-            currentRoute().startsWith('/hotelsession')
-        }"
-         class="logo-text mb-0">PillowTasker</h3>
+            [ngClass]="{
+              'd-none d-md-flex':
+                currentRoute().startsWith('/workspace') ||
+                currentRoute().startsWith('/hotelsession')
+            }"
+            class="logo-text mb-0"
+          >
+            PillowTasker
+          </h3>
         </a>
       </div>
 
       <!-- (LANDING) Botones de Registro e Iniciar Sesión (Visible en Escritorio) -->
       @if ( currentRoute().startsWith('/landing') ) {
       <div class="justify-content-end d-none d-md-flex">
-
-        <!--  -->
-        @if (authService.authStatus() === 'authenticated') {
-          <div class="d-flex gap-2">
-            <a [routerLink]="'/workspace'" class="btn btn-tertiary d-flex py-2 px-3">
-              <i class="fa-solid fa-house fs-3 m-0 d-flex align-items-center" style="width:32px;"></i>
-              <p class="my-0 ms-2 align-items-center d-flex"> <b>Entrar</b> </p>
-            </a>
-            <a [routerLink]="'/landing'" (click)="authService.logout()" class="btn btn-danger d-flex py-2 px-3">
-              <i class="fa-solid fa-arrow-right-from-bracket fs-3 m-0 d-flex align-items-center" style="width:32px;"></i>
-              <p class="my-0 ms-2 align-items-center d-flex"> <b>Salir</b> </p>
-            </a>
-          </div>
-        }
-        <!--  -->
-        @else if (authService.authStatus() === 'not-authenticated'){
-          <div class="d-flex gap-2">
-            <a [routerLink]="'/auth/login'" class="btn btn-tertiary d-flex py-2 px-3">
-              <i class="fa-solid fa-user fs-3 m-0 d-flex align-items-center"></i>
-              <p class="my-0 ms-2 align-items-center d-flex"> <b>Inicar Sesión</b> </p>
-            </a>
-            <a [routerLink]="'/auth/register'" class="btn btn-secondary d-flex py-2 px-3">
-              <i class="fa-solid fa-pen-to-square fs-3 m-0 d-flex align-items-center"></i>
-              <p class="my-0 ms-2 align-items-center d-flex"> <b>Registrarse</b> </p>
-            </a>
-          </div>
-        }
-
-
-      </div>
-      }
-
-      <!-- (WORKSPACE) Informacion Usuario -->
-      @if ( currentRoute().startsWith('/workspace') ) {
-      <div class="align-items-end d-flex flex-column text-primary">
-        <p class="mb-0"><span class="badge text-bg-secondary">{{ authService.user()?.name }} {{ authService.user()?.surname1 }} {{ authService.user()?.surname2 }}</span></p>
-        <p class="mb-0"><span class="badge text-bg-tertiary text-white">{{ authService.user()?.mail }}</span></p>
-      </div>
-      }
-
-      <!-- (HOTELSESSION) Informacion HotelSession -->
-      @if ( currentRoute().startsWith('/hotelsession') ) {
-        <div class="align-items-end d-flex flex-column text-primary">
-          <small class="mb-0"><span class="badge text-bg-primary">{{hotelSessionService.hotelSession()?.hotelName}}</span></small>
-          <small class="mb-0"><span class="badge text-bg-secondary">{{hotelSessionService.hotelSession()?.userName}} {{hotelSessionService.hotelSession()?.userSurname1}}</span></small>
-          <small class="mb-0"><span class="badge text-bg-tertiary text-white">{{hotelSessionService.hotelSession()?.rol | rol}}</span></small>
+        @if (authService.authStatus() === 'not-authenticated'){
+        <div class="d-flex gap-2">
+          <a
+            [routerLink]="'/auth/login'"
+            class="btn btn-tertiary d-flex py-2 px-3"
+          >
+            <i class="fa-solid fa-user fs-4 m-0 d-flex align-items-center"></i>
+            <p class="my-0 ms-2 align-items-center d-flex">
+              <b>Inicar Sesión</b>
+            </p>
+          </a>
+          <a
+            [routerLink]="'/auth/register'"
+            class="btn btn-secondary d-flex py-2 px-3"
+          >
+            <i
+              class="fa-solid fa-pen-to-square fs-4 m-0 d-flex align-items-center"
+            ></i>
+            <p class="my-0 ms-2 align-items-center d-flex">
+              <b>Registrarse</b>
+            </p>
+          </a>
         </div>
+        }
+      </div>
+      } @if (currentRoute().startsWith('/workspace') ||
+      currentRoute().startsWith('/hotelsession')) {
+      <div class="dropdown">
+        <button
+          class="btn btn-lg btn-outline-primary d-flex align-items-center rounded-circle p-1 border-0"
+          type="button"
+          id="userDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-user-circle" style="font-size: 3rem"></i>
+        </button>
+        <ul
+          class="dropdown-menu dropdown-menu-end shadow py-2 px-4"
+          style="width: auto; min-width: unset"
+          aria-labelledby="userDropdown"
+          style="min-width: 190px"
+        >
+          @if (currentRoute().startsWith('/workspace')) {
+          <li class="mb-1">
+            <strong style="white-space: nowrap; display: inline-block"
+              >{{ authService.user()?.name }}
+              {{ authService.user()?.surname1 }}
+              {{ authService.user()?.surname2 }}</strong
+            >
+          </li>
+          <li class="mb-1 text-muted">{{ authService.user()?.mail }}</li>
+          } @if (currentRoute().startsWith('/hotelsession')) {
+          <li class="mb-1">
+            <strong style="white-space: nowrap; display: inline-block">{{
+              hotelSessionService.hotelSession()?.hotelName
+            }}</strong>
+          </li>
+          <li class="mb-1" style="white-space: nowrap; display: inline-block">
+            {{ hotelSessionService.hotelSession()?.userName }}
+            {{ hotelSessionService.hotelSession()?.userSurname1 }}
+          </li>
+          <li class="mb-1 text-muted">
+            {{ hotelSessionService.hotelSession()?.rol | rol }}
+          </li>
+          }
+          <li><hr class="dropdown-divider" /></li>
+
+          <li>
+            <a
+              class="btn btn-danger w-100 d-flex"
+              [routerLink]="'/landing'"
+              (click)="authService.logout()"
+            >
+              <i
+                class="fa-solid fa-arrow-right-from-bracket m-0 d-flex align-items-center justify-content-center"
+                style="width: 32px"
+              ></i>
+              <p
+                class="my-0 ms-1 align-items-center justify-content-center d-flex"
+              >
+                <b style="white-space: nowrap; display: inline-block"
+                  >Cerrar Sesión</b
+                >
+              </p>
+            </a>
+          </li>
+        </ul>
+      </div>
       }
 
-      <div class="offcanvas offcanvas-start text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar"  #offcanvasDarkNavbar aria-labelledby="offcanvasDarkNavbarLabel" style="width: 330px;" >
-
+      <div
+        class="offcanvas offcanvas-start text-bg-primary"
+        tabindex="-1"
+        id="offcanvasDarkNavbar"
+        #offcanvasDarkNavbar
+        aria-labelledby="offcanvasDarkNavbarLabel"
+        style="width: 330px"
+      >
         <!-- Encabezado del Desplegable -->
-        <div class="offcanvas-header align-items-center px-4" style="height: 90px;">
-          <a class="d-flex align-items-center no-decoration" href="#">
+        <div
+          class="offcanvas-header align-items-center px-4"
+          style="height: 80px"
+        >
+          <a
+            class="d-flex align-items-center no-decoration"
+            [routerLink]="'/workspace'"
+            (click)="hotelSessionService.logout()"
+          >
             <h3 class="logo-text text-bg-primary">PillowTasker</h3>
           </a>
-          <button type="button" class="text-white border-0 bg-transparent ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
-            <i class="fa-solid fa-chevron-left fs-2"></i>
+
+          <button
+            type="button"
+            class="text-white border-0 bg-transparent ms-auto"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          >
+            <i class="fa-solid fa-chevron-left fs-3"></i>
           </button>
         </div>
 
         <!-- Línea horizontal -->
-         <hr class="my-0 border border-white border-1 opacity-50">
+        <hr class="my-0 border border-white border-1 opacity-50" />
 
         <!-- Cuerpo del desplegable -->
         <div class="offcanvas-body px-4 d-flex flex-column">
-
           <!-- (LANDING) Información del footer -->
           @if ( currentRoute().startsWith('/landing')) {
-            <div class="d-md-none mt-4">
+          <div class="d-md-none mt-4">
             <!-- Sección Sobre Nosotros -->
             <h5 class="fw-bold">Sobre Nosotros</h5>
             <ul class="list-unstyled">
@@ -164,66 +240,90 @@
           </div>
           }
 
-
-           <!-- Botones dinamicos para cada ruta -->
-          @for ( button of buttons; track $index ) {
-            <div class="list-unstyled" id="list-tab" role="tablist">
-            <!-- Si el area del boton coincide con la ruta actual se muestra -->
+          <!-- Botones dinamicos para cada ruta -->
+          <!-- ...existing code... -->
+          @for ( button of getVisibleButtons(); track $index ) {
+          <div class="list-unstyled" id="list-tab" role="tablist">
             @if ( currentRoute().startsWith(button.area) ) {
-              <a [routerLink]="button.routerLink" routerLinkActive="btn-light-brown text-primary" class="btn btn-lg btn-primary w-100 d-flex mb-2">
-                <i [class]="button.icon" class="fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
-                <p class="my-0 mx-4 align-items-center justify-content-center d-flex"><b>{{ button.label }}</b> </p>
-              </a>
-
+            <a
+              [routerLink]="button.routerLink"
+              routerLinkActive="btn-light-brown text-primary"
+              class="btn btn-lg btn-primary w-100 d-flex mb-2"
+            >
+              <i
+                [class]="button.icon"
+                class="fs-3 m-0 ms-2 d-flex align-items-center justify-content-center"
+                style="width: 32px"
+              ></i>
+              <p
+                class="my-0 mx-4 align-items-center justify-content-center d-flex"
+              >
+                <b>{{ button.label }}</b>
+              </p>
+            </a>
             }
-            </div>
+          </div>
           }
+          <!-- ...existing code... -->
 
           <!-- (LANDING USUARIO NO VERIFICADO) Login y register -->
-        @if (!currentRoute().startsWith('/hotelsession') && authService.authStatus() === 'authenticated' ) {
+          @if (authService.authStatus() === 'not-authenticated'){
           <div class="d-flex flex-column mt-auto">
-            @if (currentRoute().startsWith('/landing')) {
-              <a [routerLink]="'/workspace'" class="btn btn-lg btn-tertiary w-100 d-flex mb-2">
-                <i class="fa-solid fa-house fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
-                <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Entrar</b> </p>
-              </a>
-            }
-
-            <a [routerLink]="'/landing'" (click)="authService.logout()" class="btn btn-lg btn-danger w-100 d-flex mb-2">
-              <i class="fa-solid fa-arrow-right-from-bracket fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
-              <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Cerrar Sesión</b> </p>
+            <a
+              [routerLink]="'/auth/login'"
+              class="btn btn-lg btn-tertiary w-100 d-flex mb-2"
+            >
+              <i
+                class="fa-solid fa-user fs-3 m-0 ms-2 d-flex align-items-center justify-content-center"
+                style="width: 32px"
+              ></i>
+              <p
+                class="my-0 mx-4 align-items-center justify-content-center d-flex"
+              >
+                <b>Inicar Sesión</b>
+              </p>
+            </a>
+            <a
+              [routerLink]="'/auth/register'"
+              class="btn btn-lg btn-secondary w-100 d-flex mb-2"
+            >
+              <i
+                class="fa-solid fa-pen-to-square fs-3 m-0 ms-2 d-flex align-items-center justify-content-center"
+                style="width: 32px"
+              ></i>
+              <p
+                class="my-0 mx-4 align-items-center justify-content-center d-flex"
+              >
+                <b>Registrarse</b>
+              </p>
             </a>
           </div>
-        }
-        <!--  -->
-        @else if (authService.authStatus() === 'not-authenticated'){
-          <div class="d-flex flex-column mt-auto">
-            <a [routerLink]="'/auth/login'" class="btn btn-lg btn-tertiary w-100 d-flex mb-2">
-              <i class="fa-solid fa-user fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
-              <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Inicar Sesión</b> </p>
-            </a>
-            <a [routerLink]="'/auth/register'" class="btn btn-lg btn-secondary w-100 d-flex mb-2">
-              <i class="fa-solid fa-pen-to-square fs-2 m-0 ms-2 d-flex align-items-center justify-content-center" style="width:32px;"></i>
-              <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Registrarse</b> </p>
-            </a>
-          </div>
-        }
+          }
 
           <!-- (LANDING-WORKSPACE USUARIO VERIFICADO) Entrar y Cerrar Sesion -->
 
           <!-- (HOTELSESSION) Salir Hotel -->
           @if (currentRoute().startsWith('/hotelsession') ) {
-            <div class="d-flex flex-column mb-2 mt-auto">
-              <a [routerLink]="'/workspace'" (click)="hotelSessionService.logout()" class="btn btn-lg btn-danger w-100 d-flex mb-2">
-                <i class="fa-solid fa-door-open fs-2 m-0 ms-2 d-flex align-items-center" style="width: 32px;"></i>
-                <p class="my-0 mx-4 align-items-center justify-content-center d-flex"> <b>Salir Hotel</b> </p>
-              </a>
-            </div>
+          <div class="d-flex flex-column mb-2 mt-auto">
+            <a
+              [routerLink]="'/workspace'"
+              (click)="hotelSessionService.logout()"
+              class="btn btn-lg btn-danger w-100 d-flex mb-2"
+            >
+              <i
+                class="fa-solid fa-door-open fs-3 m-0 ms-2 d-flex align-items-center"
+                style="width: 32px"
+              ></i>
+              <p
+                class="my-0 mx-4 align-items-center justify-content-center d-flex"
+              >
+                <b>Salir Hotel</b>
+              </p>
+            </a>
+          </div>
           }
-
         </div>
       </div>
-
     </div>
   </nav>
 </header>

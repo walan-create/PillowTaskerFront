@@ -79,10 +79,13 @@ export class AuthService {
       this.logout();
       return of(false);
     }
-    return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`).pipe(
-      map((resp) => this.handleAuthSuccess(resp)), // Manejo de éxito
-      catchError((error: any) => this.handleAuthError(error)) // Manejo de errores
-    );
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http
+      .get<AuthResponse>(`${baseUrl}/auth/check-status`)
+      .pipe(
+        map((resp) => this.handleAuthSuccess(resp)),
+        catchError((error: any) => this.handleAuthError(error))
+      );
   }
 
   //----------------------------------

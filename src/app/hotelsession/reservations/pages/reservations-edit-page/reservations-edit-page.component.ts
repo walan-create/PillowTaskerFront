@@ -14,9 +14,9 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReservationsService } from '../../services/reservations.service';
-import { RoomsService } from '../../../rooms/services/rooms.service';
-import { ClientsService } from '../../../clients/services/clients.service';
+import { ReservationsService } from '../../../services/reservations.service';
+import { RoomsService } from '../../../services/rooms.service';
+import { ClientsService } from '../../../services/clients.service';
 import { RoomTypePipe } from '@shared/pipes/room-type.pipe';
 import { Room } from '../../../rooms/interfaces/room.interface';
 import { Client } from '../../../clients/interfaces/client.interface';

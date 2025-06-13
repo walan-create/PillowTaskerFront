@@ -1,8 +1,14 @@
-<div class="d-flex flex-column align-items-center justify-content-center bg-white h-100 rounded-3 py-4">
+<div
+  class="d-flex flex-column align-items-center justify-content-center bg-white rounded-3 py-4"
+>
   <h2 class="fw-bold mb-4">Nuevo Cliente</h2>
 
-  <form class="w-100 px-3" style="max-width: 30rem;" [formGroup]="clientForm" (ngSubmit)="onSubmit()">
-
+  <form
+    class="w-100 px-3"
+    style="max-width: 30rem"
+    [formGroup]="clientForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="row mb-2">
       <div class="col-6">
         <label class="form-label fw-bold">NIF</label>
@@ -13,7 +19,9 @@
           formControlName="nif"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('nif')?.invalid && clientForm.get('nif')?.touched"
+          [class.is-invalid]="
+            clientForm.get('nif')?.invalid && clientForm.get('nif')?.touched
+          "
         />
         <form-error-label [control]="clientForm.get('nif')!"></form-error-label>
       </div>
@@ -26,9 +34,14 @@
           formControlName="phoneNumber"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('phoneNumber')?.invalid && clientForm.get('phoneNumber')?.touched"
+          [class.is-invalid]="
+            clientForm.get('phoneNumber')?.invalid &&
+            clientForm.get('phoneNumber')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('phoneNumber')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('phoneNumber')!"
+        ></form-error-label>
       </div>
     </div>
 
@@ -42,9 +55,13 @@
           formControlName="name"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('name')?.invalid && clientForm.get('name')?.touched"
+          [class.is-invalid]="
+            clientForm.get('name')?.invalid && clientForm.get('name')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('name')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('name')!"
+        ></form-error-label>
       </div>
       <div class="col-6">
         <label class="form-label fw-bold">Primer Apellido</label>
@@ -55,9 +72,14 @@
           formControlName="surname1"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('surname1')?.invalid && clientForm.get('surname1')?.touched"
+          [class.is-invalid]="
+            clientForm.get('surname1')?.invalid &&
+            clientForm.get('surname1')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('surname1')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('surname1')!"
+        ></form-error-label>
       </div>
     </div>
 
@@ -71,9 +93,14 @@
           formControlName="surname2"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('surname2')?.invalid && clientForm.get('surname2')?.touched"
+          [class.is-invalid]="
+            clientForm.get('surname2')?.invalid &&
+            clientForm.get('surname2')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('surname2')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('surname2')!"
+        ></form-error-label>
       </div>
       <div class="col-6">
         <label class="form-label fw-bold">Fecha de Nacimiento</label>
@@ -82,9 +109,15 @@
           class="form-control custom-input bg-beige"
           formControlName="birthDate"
           required
-          [class.is-invalid]="clientForm.get('birthDate')?.invalid && clientForm.get('birthDate')?.touched"
+          [max]="today"
+          [class.is-invalid]="
+            clientForm.get('birthDate')?.invalid &&
+            clientForm.get('birthDate')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('birthDate')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('birthDate')!"
+        ></form-error-label>
       </div>
     </div>
 
@@ -98,9 +131,14 @@
           formControlName="nationality"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('nationality')?.invalid && clientForm.get('nationality')?.touched"
+          [class.is-invalid]="
+            clientForm.get('nationality')?.invalid &&
+            clientForm.get('nationality')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('nationality')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('nationality')!"
+        ></form-error-label>
       </div>
       <div class="col-6">
         <label class="form-label fw-bold">Dirección</label>
@@ -111,9 +149,14 @@
           formControlName="address"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('address')?.invalid && clientForm.get('address')?.touched"
+          [class.is-invalid]="
+            clientForm.get('address')?.invalid &&
+            clientForm.get('address')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('address')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('address')!"
+        ></form-error-label>
       </div>
     </div>
 
@@ -127,20 +170,30 @@
           formControlName="postalCode"
           autocomplete="off"
           required
-          [class.is-invalid]="clientForm.get('postalCode')?.invalid && clientForm.get('postalCode')?.touched"
+          [class.is-invalid]="
+            clientForm.get('postalCode')?.invalid &&
+            clientForm.get('postalCode')?.touched
+          "
         />
-        <form-error-label [control]="clientForm.get('postalCode')!"></form-error-label>
+        <form-error-label
+          [control]="clientForm.get('postalCode')!"
+        ></form-error-label>
       </div>
     </div>
 
     <button type="submit" class="btn btn-secondary w-100">Crear</button>
   </form>
 
-  <a routerLink="/hotelsession/clients" class="text-sm text-primary mt-3 small">Volver a la lista de clientes</a>
+  <a routerLink="/hotelsession/clients" class="text-sm text-primary mt-3 small"
+    >Volver a la lista de clientes</a
+  >
 
   @if (wasSaved()) {
-    <div class="alert alert-success mx-3 position-fixed my-4 py-4 shadow" role="alert" >
-      <span>Cliente creado correctamente</span>
-    </div>
+  <div
+    class="alert alert-success mx-3 position-fixed my-4 py-4 shadow"
+    role="alert"
+  >
+    <span>Cliente creado correctamente</span>
+  </div>
   }
 </div>

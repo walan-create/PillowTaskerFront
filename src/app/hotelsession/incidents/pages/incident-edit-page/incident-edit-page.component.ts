@@ -9,14 +9,19 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Incident } from '../../interfaces/incident.interface';
 import { CommonModule } from '@angular/common';
 import { firstValueFrom, map } from 'rxjs';
-import { IncidentsService } from '../../services/incident.service';
+import { IncidentsService } from '../../../services/incident.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormErrorLabelComponent } from "../../../../shared/components/form-error-label/form-error-label.component";
+import { FormErrorLabelComponent } from '../../../../shared/components/form-error-label/form-error-label.component';
 
 @Component({
   selector: 'app-incident-edit-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule, FormErrorLabelComponent],
+  imports: [
+    RouterLink,
+    ReactiveFormsModule,
+    CommonModule,
+    FormErrorLabelComponent,
+  ],
   templateUrl: './incident-edit-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -35,8 +40,8 @@ export class IncidentEditPageComponent {
   });
 
   incidentId = toSignal(
-      this.activatedRoute.params.pipe(map((params) => params['id']))
-    );
+    this.activatedRoute.params.pipe(map((params) => params['id']))
+  );
 
   ngOnInit() {
     const incidentId = this.incidentId();

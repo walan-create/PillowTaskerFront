@@ -6,10 +6,10 @@ import {
   signal,
   computed,
 } from '@angular/core';
-import { RoomsService } from '../../../rooms/services/rooms.service';
+import { RoomsService } from '../../../services/rooms.service';
 import { RoomStateEnum } from '../../../rooms/interfaces/room-state.enum';
 import { ReusableModalComponent } from '@shared/components/reusable-modal/reusable-modal.component';
-import { SupportCardComponent } from "../../components/support-card/support-card.component";
+import { SupportCardComponent } from '../../components/support-card/support-card.component';
 
 @Component({
   selector: 'app-supports-page',
@@ -56,21 +56,21 @@ export class SupportsPageComponent implements OnInit {
   }
 
   handleResolveRoom() {
-  const id = this.roomIdToResolve();
-  if (id !== null) {
-    // Busca la habitación original
-    const room = this.roomsService.rooms().find(r => r.id !== null && r.id === id);
-    if (!room) return;
+    const id = this.roomIdToResolve();
+    if (id !== null) {
+      // Busca la habitación original
+      const room = this.roomsService
+        .rooms()
+        .find((r) => r.id !== null && r.id === id);
+      if (!room) return;
 
-    // Crea un nuevo objeto con el estado actualizado
-    const updatedRoom = {
-      ...room,
-      state: RoomStateEnum.AVAILABLE
-    };
+      // Crea un nuevo objeto con el estado actualizado
+      const updatedRoom = {
+        ...room,
+        state: RoomStateEnum.AVAILABLE,
+      };
 
-    this.roomsService
-      .updateRoom(id, updatedRoom)
-      .subscribe({
+      this.roomsService.updateRoom(id, updatedRoom).subscribe({
         next: () => {
           // Aquí se podrían recargar habitaciones
         },
@@ -78,13 +78,15 @@ export class SupportsPageComponent implements OnInit {
           console.error('Error al actualizar la habitación', err);
         },
       });
+    }
   }
-}
 
   get modalText(): string {
     const id = this.roomIdToResolve();
     if (id === null) return '';
-    const room = this.roomsService.rooms().find(r => r.id !== null && r.id === id);
+    const room = this.roomsService
+      .rooms()
+      .find((r) => r.id !== null && r.id === id);
     if (!room) return '';
     return room.state === 'DIRTY'
       ? '¿Seguro que quieres marcar la habitación como limpia?'

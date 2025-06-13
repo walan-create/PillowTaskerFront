@@ -19,6 +19,7 @@ import { ReservationsPageComponent } from './reservations/pages/reservations-pag
 import { ReservationsCreatePageComponent } from './reservations/pages/reservations-create-page/reservations-create-page.component';
 import { ReservationsCheckinPageComponent } from './reservations/pages/reservations-checkin-page/reservations-checkin-page.component';
 import { ReservationsEditPageComponent } from './reservations/pages/reservations-edit-page/reservations-edit-page.component';
+import { RoleGuard } from '@auth/guards/role.guard';
 
 export const hotelessionRoutes: Routes = [
   {
@@ -34,87 +35,102 @@ export const hotelessionRoutes: Routes = [
         path: 'board',
         component: BoardComponent,
       },
-      //Employees
+      // Employees (solo ADMIN)
       {
         path: 'employees',
         component: EmployeesPageComponent,
+        canMatch: [RoleGuard(['ADMIN'])],
       },
       {
         path: 'employees/invite',
         component: EmployeeInvitePageComponent,
+        canMatch: [RoleGuard(['ADMIN'])],
       },
       {
         path: 'employees/:id',
         component: EmployeeEditPageComponent,
+        canMatch: [RoleGuard(['ADMIN'])],
       },
 
-      //Rooms
+      // Rooms (ADMIN y RECEPTIONIST)
       {
         path: 'rooms',
         component: RoomsPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'rooms/create',
         component: RoomCreatePageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'rooms/:id',
         component: RoomEditPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
 
-      //Clients
+      // Clients (ADMIN y RECEPTIONIST)
       {
         path: 'clients',
         component: ClientsPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'clients/create',
         component: ClientCreatePageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'clients/:id',
         component: ClientsEditPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
 
-      //Supports
+      // Supports (cualquiera)
       {
         path: 'supports',
         component: SupportsPageComponent,
+        // No se aplica guard, acceso libre a cualquier rol autenticado
       },
 
-      //Incidents
+      // Incidents (ADMIN y RECEPTIONIST)
       {
         path: 'incidents',
         component: IncidentsPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'incidents/create',
         component: IncidentCreatePageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'incidents/:id',
         component: IncidentEditPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
 
-      //Incidents
+      // Reservations (ADMIN y RECEPTIONIST)
       {
         path: 'reservations',
         component: ReservationsPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'reservations/create',
         component: ReservationsCreatePageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'reservations/checkin/:id',
         component: ReservationsCheckinPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
       {
         path: 'reservations/edit/:id',
         component: ReservationsEditPageComponent,
+        canMatch: [RoleGuard(['ADMIN', 'RECEPTIONIST'])],
       },
-
-      //-----------------------------------------
     ],
   },
   {
